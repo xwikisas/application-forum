@@ -37,7 +37,7 @@
   <title/>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.1</syntaxId>
+  <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## Classes
 ForumCode.TopicClass_title=Title
@@ -75,7 +75,7 @@ forum.admin.action.delete.success=Forum deleted
 forum.admin.action.delete.failed=The forum could not be deleted
 conversations.forum.all=All forums
 conversations.forum.add=Add forum
-
+forum.error.noValidLicense=There is no valid license for the Forum Application (Pro). To get one, please visit the {0}Licenses section{1}.
 
 ## Topics
 conversations.topic.tooltip.totalcommentsandanswers=Total answers and comments
