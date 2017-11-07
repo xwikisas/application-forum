@@ -37,8 +37,8 @@
     <licensing.version>1.6</licensing.version>
   </properties>
   <scm>
-    <connection>scm:git:git://github.com/xwikisas/application-forum.git</connection>
-    <developerConnection>scm:git:git@github.com:xwikisas/application-forum.git</developerConnection>
+    <connection>scm:git:https://github.com/xwikisas/application-forum.git</connection>
+    <developerConnection>scm:git:https://github.com/xwikisas/application-forum.git</developerConnection>
     <url>https://github.com/xwikisas/application-forum/</url>
     <tag>HEAD</tag>
   </scm>
