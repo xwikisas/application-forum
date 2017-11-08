@@ -1,9 +1,9 @@
-# Forum Application
+# Forum Application (Pro)
 
 Forum application with multiple forums, topics, answers, comments, supporting WYSIWYG editor and Votes.
 
 * Project Lead: [Alex Cotiugă](https://github.com/acotiuga)
-* [Documentation](https://store.xwiki.com/xwiki/bin/view/Extension/ForumApplication)
+* [Documentation](https://store.xwiki.com/xwiki/bin/view/Extension/ForumApplication
 * [Issue Tracker](https://github.com/xwikisas/application-forum/issues)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [IRC]( http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
