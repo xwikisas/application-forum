@@ -41,7 +41,7 @@
   <hidden>false</hidden>
   <content>{{velocity}}
 {{error}}
-  $services.localization.render('forum.error.noValidLicense', ['[[', "&gt;&gt;path:$xwiki.getURL('XWiki.XWikiPreferences', 'admin', 'editor=globaladmin&amp;section=Licenses')]]"])
+  $services.localization.render('forum.error.noValidLicense')
 {{/error}}
 {{/velocity}}
 </content>

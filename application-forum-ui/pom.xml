@@ -31,10 +31,6 @@
   <packaging>xar</packaging>
   <name>Forum Application - UI</name>
   <properties>
-    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-    <xwiki.extension.features>
-      org.xwiki.contrib.forum:application-forum-ui
-    </xwiki.extension.features>
     <!-- The list of documents that have an implicit unlimited free license. The users can view these documents without
       buying a license or getting a trial license, but they cannot edit or delete them. -->
     <xwiki.extension.licensing.publicDocuments>
@@ -70,16 +66,6 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
-  <build>
-    <!-- Needed to add support for the XAR packaging -->
-    <extensions>
-      <extension>
-        <groupId>org.xwiki.commons</groupId>
-        <artifactId>xwiki-commons-tool-xar-handlers</artifactId>
-        <version>${commons.version}</version>
-      </extension>
-    </extensions>
-  </build>
   <!-- Put the project URL here so Extension Manager will not try to compute a wrong url by adding
        "/application-forum-ui" to the parent module url... -->
   <scm>
