@@ -34,7 +34,7 @@
   <name>Forum Application - Parent POM</name>
   <description>Forum application with multiple forums, topics, answers, comments, supporting Wysiwyg and Votes</description>
   <properties>
-    <licensing.version>1.6</licensing.version>
+    <licensing.version>1.7</licensing.version>
   </properties>
   <scm>
     <connection>scm:git:https://github.com/xwikisas/application-forum.git</connection>
