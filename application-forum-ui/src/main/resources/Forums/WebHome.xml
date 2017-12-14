@@ -39,10 +39,10 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{velocity}}
-{{error}}
-  $services.localization.render('forum.error.noValidLicense')
-{{/error}}
+  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
+
+{{velocity}}
+  {{error}}#getMissingLicenseMessage('forum.extension.name'){{/error}}
 {{/velocity}}
 </content>
   <object>
