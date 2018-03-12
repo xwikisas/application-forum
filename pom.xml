@@ -36,6 +36,10 @@
   <properties>
     <licensing.version>1.8</licensing.version>
   </properties>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/xwikisas/application-forum/issues</url>
+  </issueManagement>
   <scm>
     <connection>scm:git:https://github.com/xwikisas/application-forum.git</connection>
     <developerConnection>scm:git:https://github.com/xwikisas/application-forum.git</developerConnection>
