@@ -187,11 +187,7 @@
       &lt;div class="comment-content"&gt;
         $commentDoc.getRenderedContent($comment.getProperty('comment').getValue(), $doc.getSyntax().toIdString())
         &lt;span class="actions"&gt;
-          #if ($xcontext.user != 'XWiki.XWikiGuest')
-            &lt;span class="flag" title="$services.localization.render('conversation.flag.tooltip')"&gt;
-             &lt;a href="$xwiki.getURL('Forums.NewFlag', 'view', "target=${escapetool.url($doc.fullName)}:xwikicomment_${conversationId}_${comment.number}")"&gt;$services.localization.render('conversations.flag.button')&lt;/a&gt;
-            &lt;/span&gt;
-          #end
+          #getFlagAction($doc.fullName "xwikicomment_${conversationId}_${comment.number}")
           ## compose the comment permalink in conversation carefully, taking care of making it point to the article's conversation view and not to the conversation itself
           #set ($commentPermalinkInConversation = $doc.getURL('view'))
           #set ($parentArticle = $doc.parent)
@@ -593,12 +589,8 @@
   &lt;/div&gt;
 #end
 ##
-#macro(displayForumActions $topicDoc) 
-  #if (!$isGuest)
-    &lt;span class="topic-actions-flag conversation-flag" title="$services.localization.render('conversation.flag.tooltip')"&gt;
-      &lt;a href="$xwiki.getURL('Forums.NewFlag', 'view', "target=${escapetool.url($topicDoc.fullName)}")"&gt;$services.localization.render("conversations.flag.button")&lt;/a&gt;
-    &lt;/span&gt;
-  #end
+#macro(displayForumActions $topicDoc)
+  #getFlagAction($topicDoc.fullName '')
   &lt;span class="topic-actions-permalink" title="$services.localization.render('conversation.permalink.tooltip')"&gt;
    &lt;a href="$topicDoc.getURL()"&gt;&lt;/a&gt;
   &lt;/span&gt;
@@ -727,11 +719,7 @@
                 &lt;div class="answer-content"&gt;
                   #cleanHTMLMacro($topicAnswerDoc.description)
                   &lt;span class="actions"&gt;
-                    #if (!$isGuest)
-                      &lt;span class="flag" title="$services.localization.render('conversation.flag.tooltip')"&gt;
-                        &lt;a href="$xwiki.getURL('Forums.NewFlag', 'view', "target=${escapetool.url($doc.fullName)}:${topicAnswerID}")"&gt;$services.localization.render("conversations.flag.button")&lt;/a&gt;
-                      &lt;/span&gt;
-                    #end
+                    #getFlagAction($doc.fullName $topicAnswerID)
                     &lt;span class="conversation-permalink"&gt;
                       &lt;a class="permalink" href="$escapetool.xml($doc.getURL('view'))#${topicAnswerID}" title="$services.localization.render('conversation.permalink.tooltip')"&gt;
                       ## We need to put image here since we cannot do background + indented text + fixed width as we do for comment tools, because overflow: hidden is messing up the display of the other icons.
@@ -999,9 +987,18 @@
       &lt;/dd&gt;
   #end
 #end
-## 
+##
 #macro(getTopicAnswers $space $topicAnswers)
   #set ($discard = $topicAnswers.addAll($services.query.xwql('from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace order by doc.date desc').bindValue('topicSpace', "${topicSpace}.%").execute()))
+#end
+
+#macro (getFlagAction $target $anchor)
+  #if (!$isGuest)
+    #set ($flagURL = $xwiki.getURL('Forums.NewFlag', 'view', $escapetool.url({'target': $target, 'anchor': $anchor})))
+    &lt;span class="flag" title="$escapetool.xml($services.localization.render('conversation.flag.tooltip'))"&gt;
+      &lt;a href="$flagURL"&gt;$services.localization.render("conversations.flag.button")&lt;/a&gt;
+    &lt;/span&gt;
+  #end
 #end
 {{/velocity}}</content>
   <object>

@@ -64,18 +64,8 @@
         (% class="col-xs-12 col-sm-4 col-md-4" %)
         (((
           ; &lt;label&gt;$target&lt;/label&gt;
-          #if($xcontext.action=="view")
-            #set($target = $doc.getValue("target"))
-            #set($pos = $target.indexOf(":"))
-            #if($pos==-1)
-              #set($targetDocName = $target)
-              #set($anchor = "")
-            #else
-              #set($targetDocName = $target.substring(0, $pos))
-              #set($pos = $pos + 1)
-              #set($anchor = $target.substring($pos))
-            #end
-            : &lt;label&gt;[[$services.localization.render("conversations.flag.viewsource")&gt;&gt;${targetDocName}||target="_blank" anchor="${anchor}"]]&lt;/label&gt;
+          #if ($xcontext.action == 'view')
+            : &lt;label&gt;[[$services.localization.render('conversations.flag.viewsource')&gt;&gt;$doc.getValue('target')||target="_blank" anchor="${doc.getValue('anchor')}"]]&lt;/label&gt;
           #else
             : $doc.display('target')
           #end

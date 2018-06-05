@@ -538,31 +538,11 @@ Topic Metadata
 Topic Actions
 --------------------------------------------------------------------------------------------------
 */
-.topic-actions {
-  background: none repeat scroll 0 0 transparent;
-  clear: both;
-  font-size: 33px;
-  height: 1em;
-  overflow: hidden;
-}
-
-.topic-actions .left {
-  float: left; display: inline-block;
-  width: 8%;
-}
-.topic-actions-flag,
 .topic-actions-permalink {
   float: left;
   display: inline-block;
   line-height: 1em;
   margin: 0 10px;
-}
-.topic-actions-flag a {
-  background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px 0px;
-  font-size: 0;  padding: 10px;
-}
-.topic-actions-flag a:hover {
-  background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px -100px;
 }
 .topic-actions-permalink a {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -700px -100px;
@@ -807,13 +787,18 @@ Limit content / make it responsive
   margin-right: 10px;
 }
 
-.answer-content .actions .flag a, .comment-content .actions .flag a {
+.answer-content .actions .flag a,
+.comment-content .actions .flag a,
+.topic-actions .flag a
+{
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px 0px;
   font-size: 0;
   padding: 10px;
 }
 
-.answer-content .actions .flag a:hover, .comment-content .actions .flag a:hover {
+.answer-content .actions .flag a:hover,
+.comment-content .actions .flag a:hover,
+.topic-actions .flag a:hover {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px -100px;
 }
 

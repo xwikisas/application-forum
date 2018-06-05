@@ -87,26 +87,22 @@
   #end
   ## sending notification email
 
-  [[$services.localization.render('conversations.flag.success.dialog.goback') &gt;&gt;$request.targetDocName]]
+  [[$services.localization.render('conversations.flag.success.dialog.goback') &gt;&gt;$request.target]]
 #else
   #set($discard = $flagDoc.set("user", $xcontext.user))
-  #if($request.target)
-    #set($target = $request.target)
-    #set($discard = $flagDoc.set('target', $target))
-    #if($target.indexOf(':') != -1)
-      #set($targetDocName = $target.substring(0, $target.indexOf(':')))
-    #else
-      #set($targetDocName = $target)
-    #end
-    #set($targetDoc = $xwiki.getDocument($targetDocName))
-    #set($discard = $flagDoc.set('moderator', $targetDoc.creator))
-  #else
-    #set($targetDocName = $request.targetDocName)
+  #if ("$!request.target" != '')
+    #set ($target = $request.target)
+    #set ($discard = $flagDoc.set('target', $target))
+    #set ($targetDoc = $xwiki.getDocument($target))
+    #set ($discard = $flagDoc.set('moderator', $targetDoc.creator))
+  #end
+  #if ("$!request.anchor" != '')
+     #set ($discard = $flagDoc.set('anchor', $request.anchor))
   #end
   {{html clean='false' wiki='true'}}
   &lt;form action="" method="post" class="xform"&gt;
-    &lt;input type="hidden" name="targetDocName" value="${escapetool.xml($targetDocName)}" /&gt;
     $flagDoc.display('target', 'hidden')
+    $flagDoc.display('anchor', 'hidden')
     $flagDoc.display('user', 'hidden')
     $flagDoc.display('moderator', 'hidden')
     &lt;h2&gt;$services.localization.render('conversations.flag.dialog.guidingquestion1.txt')&lt;/h2&gt;
