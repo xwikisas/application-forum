@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.2" reference="ForumCode.StyleSheetExtension" locale="">
   <web>ForumCode</web>
   <name>StyleSheetExtension</name>
   <language/>
@@ -141,30 +141,48 @@
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>cache</name>
-        <number>5</number>
+        <number>6</number>
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>long|short|default|forbid</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
-        <number>2</number>
+        <number>3</number>
         <prettyName>Code</prettyName>
         <rows>20</rows>
         <size>50</size>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>1</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
       <name>
         <disabled>0</disabled>
         <name>name</name>
-        <number>1</number>
+        <number>2</number>
         <prettyName>Name</prettyName>
         <size>30</size>
         <unmodifiable>0</unmodifiable>
@@ -175,7 +193,7 @@
         <displayFormType>select</displayFormType>
         <displayType>yesno</displayType>
         <name>parse</name>
-        <number>4</number>
+        <number>5</number>
         <prettyName>Parse content</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -186,14 +204,14 @@
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>use</name>
-        <number>3</number>
+        <number>4</number>
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
-        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <values>currentPage|onDemand|always</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
@@ -1257,6 +1275,9 @@ Various Fixes
   overflow: hidden;
 }
 </code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
     </property>
     <property>
       <name>Forum</name>

@@ -20,30 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.2" reference="ForumCode.FlagTemplate" locale="">
   <web>ForumCode</web>
   <name>FlagTemplate</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>ForumCode.FlagClass</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1375308000000</creationDate>
-  <date>1375308000000</date>
-  <contentUpdateDate>1375308000000</contentUpdateDate>
+  <parent>ForumCode.FlagClass</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1528200456000</date>
+  <contentUpdateDate>1528200456000</contentUpdateDate>
   <version>1.1</version>
   <title/>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content/>
   <object>
+    <name>ForumCode.FlagTemplate</name>
+    <number>0</number>
+    <className>ForumCode.FlagClass</className>
+    <guid>f46c70e8-7db5-464a-a7fd-73aa51a30ef1</guid>
     <class>
       <name>ForumCode.FlagClass</name>
       <customClass/>
@@ -198,15 +199,14 @@ $xwiki.getUserName($value)
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </user>
     </class>
-    <name>ForumCode.FlagTemplate</name>
-    <number>0</number>
-    <className>ForumCode.FlagClass</className>
-    <guid>f46c70e8-7db5-464a-a7fd-73aa51a30ef1</guid>
     <property>
       <comment/>
     </property>
     <property>
       <message/>
+    </property>
+    <property>
+      <moderator/>
     </property>
     <property>
       <reason>alt</reason>
@@ -216,6 +216,9 @@ $xwiki.getUserName($value)
     </property>
     <property>
       <target/>
+    </property>
+    <property>
+      <user/>
     </property>
   </object>
 </xwikidoc>
