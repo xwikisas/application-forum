@@ -65,7 +65,11 @@
         (((
           ; &lt;label&gt;$target&lt;/label&gt;
           #if ($xcontext.action == 'view')
-            : &lt;label&gt;[[$services.localization.render('conversations.flag.viewsource')&gt;&gt;$doc.getValue('target')||target="_blank" anchor="${doc.getValue('anchor')}"]]&lt;/label&gt;
+            #set ($anchor = $doc.getValue('anchor'))
+            #if ("$!anchor" != '')
+              #set ($urlAnchor = "anchor='$anchor'")
+            #end
+            : &lt;label&gt;[[$services.localization.render('conversations.flag.viewsource')&gt;&gt;$doc.getValue('target')||target="_blank" $urlAnchor]]&lt;/label&gt;
           #else
             : $doc.display('target')
           #end
