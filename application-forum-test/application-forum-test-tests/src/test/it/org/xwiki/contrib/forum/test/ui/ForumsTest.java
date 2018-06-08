@@ -121,10 +121,6 @@ public class ForumsTest extends AbstractTest
         TopicViewPage flagTopicView = flagViewPage.clickTargetURL();
         Assert.assertEquals(true, flagTopicView.checkFlaggedAnswer());
 
-        // TODO: Test the visit on Topic page + creation of Answers and Comments after
-        // http://jira.xwiki.org/browse/XAFORUM-222 is fixed
-        // Topic page can't be visited due the fact that the name contains timestamp(no static value can be taken).
-
         cleanUp(FORUM_TITLE);
     }
 

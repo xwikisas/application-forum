@@ -47,11 +47,6 @@ public class FlagEditElement extends BaseElement
         select.selectByIndex(3);
     }
 
-    public WebElement getMessage()
-    {
-        return message;
-    }
-
     public void setMessage(String flagMessage)
     {
         message.clear();
