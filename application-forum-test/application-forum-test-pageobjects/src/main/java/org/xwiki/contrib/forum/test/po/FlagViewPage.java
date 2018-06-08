@@ -21,37 +21,34 @@ package org.xwiki.contrib.forum.test.po;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.ui.po.BaseElement;
 
 /**
- * Represents the Answer edit elements. This po is shared by AnswerAddElement and AnswerEditPage
+ * Represents the Answer add elements.
  * 
  * @version $Id$
  * @since 2.1
  */
-public class AnswerEditElement extends BaseElement
+public class FlagViewPage extends BaseElement
 {
-    @FindBy(id = "ForumCode.AnswerClass_0_description")
-    private WebElement answer;
-    
-    @FindBy(css = ".addanswer-container .button[type=submit]")
-    private WebElement confirmAddAnswerButton;
+    @FindBy(css = ".answers answer:first-child .flag")
+    private WebElement flagButton;
 
-    /**
-     * @return the answer
-     */
-    public WebElement getAnswer()
+    // Hard to find a proper selector for this element.
+    @FindBy(xpath = "//a[text() = 'View Flag Source']")
+    private WebElement target;
+
+    public static FlagViewPage goToPage()
     {
-        return answer;
+        DocumentReference reference = new DocumentReference("wiki", "Flags", "Flag");
+        getUtil().gotoPage(reference);
+        return new FlagViewPage();
     }
 
-    /**
-     * @param givenAnswer to set
-     */
-    public void setAnswer(String givenAnswer)
+    public TopicViewPage clickTargetURL()
     {
-        answer.clear();
-        answer.sendKeys(givenAnswer);
-        confirmAddAnswerButton.click();
+        target.click();
+        return TopicViewPage.gotoPage(target.getAttribute("href"));
     }
 }

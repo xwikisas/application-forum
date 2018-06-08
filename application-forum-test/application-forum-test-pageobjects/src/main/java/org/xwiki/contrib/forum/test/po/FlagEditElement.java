@@ -21,37 +21,46 @@ package org.xwiki.contrib.forum.test.po;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import org.xwiki.test.ui.po.BaseElement;
 
 /**
- * Represents the Answer edit elements. This po is shared by AnswerAddElement and AnswerEditPage
+ * Represents the Topic edit elements. This po is shared by TopicAddElement and TopicEditPage
  * 
  * @version $Id$
- * @since 2.1
+ * @since 1.9.4
  */
-public class AnswerEditElement extends BaseElement
+public class FlagEditElement extends BaseElement
 {
-    @FindBy(id = "ForumCode.AnswerClass_0_description")
-    private WebElement answer;
-    
-    @FindBy(css = ".addanswer-container .button[type=submit]")
-    private WebElement confirmAddAnswerButton;
+    @FindBy(id = "ForumCode.FlagClass_0_reason")
+    private WebElement reason;
 
-    /**
-     * @return the answer
-     */
-    public WebElement getAnswer()
+    @FindBy(id = "ForumCode.FlagClass_0_message")
+    private WebElement message;
+
+    @FindBy(css = ".button[type=submit]")
+    private WebElement submitButton;
+
+    public void setReason()
     {
-        return answer;
+        Select select = new Select(reason);
+        select.selectByIndex(3);
     }
 
-    /**
-     * @param givenAnswer to set
-     */
-    public void setAnswer(String givenAnswer)
+    public WebElement getMessage()
     {
-        answer.clear();
-        answer.sendKeys(givenAnswer);
-        confirmAddAnswerButton.click();
+        return message;
+    }
+
+    public void setMessage(String flagMessage)
+    {
+        message.clear();
+        message.sendKeys(flagMessage);
+    }
+
+    public void clickSubmit()
+    {
+        submitButton.click();
+
     }
 }

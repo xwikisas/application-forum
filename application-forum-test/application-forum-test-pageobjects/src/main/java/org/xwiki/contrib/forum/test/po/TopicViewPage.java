@@ -19,8 +19,16 @@
  */
 package org.xwiki.contrib.forum.test.po;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -37,29 +45,56 @@ public class TopicViewPage extends ViewPage
     @FindBy(css = ".topic-description>p")
     private WebElement description;
 
+    @FindBy(css = ".topic-answers")
+    private WebElement summaryAnswersNb;
+
+    @FindBy(css = ".answers .answer")
+    private List<WebElement> pageAnswersElements;
+
+    @FindBy(css = ".answers .answer:first-child .flag")
+    private WebElement flagButton;
+
+    @FindBy(css = "answer:target")
+    private WebElement answerTarget;
+
+    // Tour steps
+    @FindBy(css = "#step-0 [data-role = 'next']")
+    private WebElement step0;
+
+    @FindBy(css = "#step-1 [data-role = 'next']")
+    private WebElement step1;
+
+    @FindBy(css = "#step-2 [data-role = 'next']")
+    private WebElement step2;
+
+    @FindBy(css = "#step-3 [data-role = 'next']")
+    private WebElement step3;
+
+    @FindBy(css = "#step-4 [data-role = 'next']")
+    private WebElement step4;
+
+    @FindBy(css = "#step-5 [data-role = 'end']")
+    private WebElement step5;
+
+    @Inject
+    @Named("current")
+    private static DocumentReferenceResolver<String> documentReferenceResolver;
+
     /**
      * @return the topic page
      */
     public static TopicViewPage gotoPage()
     {
-        getUtil().gotoPage(getSpace(), getPage());
+        DocumentReference reference =
+            new DocumentReference("wiki", Arrays.asList("Forums", "MyForum", "MyTopic"), "WebHome");
+        getUtil().gotoPage(reference);
         return new TopicViewPage();
     }
 
-    /**
-     * @return the space name of the topic
-     */
-    public static String getSpace()
+    public static TopicViewPage gotoPage(String url)
     {
-        return "Forums_MyForum";
-    }
-
-    /**
-     * @return the page name of the topic
-     */
-    public static String getPage()
-    {
-        return "Topic";
+        getUtil().gotoPage(url);
+        return new TopicViewPage();
     }
 
     /**
@@ -87,5 +122,43 @@ public class TopicViewPage extends ViewPage
     public String getDescription()
     {
         return description.getText();
+    }
+
+    public int getAnswersNumber()
+    {
+        // Get the answers number by counting the elements in the page.
+        int first = pageAnswersElements.size();
+        // Get the answers number by parsing the topic summary "1 answer".
+        String asnwersNb = summaryAnswersNb.getText().split(" ")[0];
+        int second = Integer.parseInt(asnwersNb);
+        if (first == second) {
+            return first;
+        }
+        return -1;
+    }
+
+    public FlagAddElement flagAnswer()
+    {
+        flagButton.click();
+        FlagAddElement flagAddForm = new FlagAddElement();
+        return flagAddForm;
+    }
+
+    public boolean checkFlaggedAnswer()
+    {
+        return answerTarget != null ? true : false;
+    }
+
+    /**
+     * Navigates through the Topic tour.
+     */
+    public void viewTour()
+    {
+        step0.click();
+        step1.click();
+        step2.click();
+        step3.click();
+        step4.click();
+        step5.click();
     }
 }

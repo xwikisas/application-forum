@@ -24,6 +24,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -67,32 +68,9 @@ public class ForumsHomePage extends ViewPage
      */
     public static ForumsHomePage gotoPage()
     {
-        getUtil().gotoPage(getSpace(), getPage());
+        DocumentReference reference = new DocumentReference("wiki", "Forums", "WebHome");
+        getUtil().gotoPage(reference);
         return new ForumsHomePage();
-    }
-
-    /**
-     * @return space name of the Forums homepage
-     */
-    public static String getSpace()
-    {
-        return getAppTitle();
-    }
-
-    /**
-     * @return page name of the Forums homepage
-     */
-    public static String getPage()
-    {
-        return "WebHome";
-    }
-
-    /**
-     * @return title of the application displayed in the AppBar
-     */
-    public static String getAppTitle()
-    {
-        return "Forums";
     }
 
     /**

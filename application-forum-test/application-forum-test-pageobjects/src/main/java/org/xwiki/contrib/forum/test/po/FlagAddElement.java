@@ -19,39 +19,23 @@
  */
 package org.xwiki.contrib.forum.test.po;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.BaseElement;
 
 /**
- * Represents the Answer edit elements. This po is shared by AnswerAddElement and AnswerEditPage
+ * Represents the Answer add elements.
  * 
  * @version $Id$
  * @since 2.1
  */
-public class AnswerEditElement extends BaseElement
+public class FlagAddElement extends BaseElement
 {
-    @FindBy(id = "ForumCode.AnswerClass_0_description")
-    private WebElement answer;
+    private FlagEditElement editForm = new FlagEditElement();
     
-    @FindBy(css = ".addanswer-container .button[type=submit]")
-    private WebElement confirmAddAnswerButton;
-
     /**
-     * @return the answer
+     * @return the edit form
      */
-    public WebElement getAnswer()
+    public FlagEditElement getEditForm()
     {
-        return answer;
-    }
-
-    /**
-     * @param givenAnswer to set
-     */
-    public void setAnswer(String givenAnswer)
-    {
-        answer.clear();
-        answer.sendKeys(givenAnswer);
-        confirmAddAnswerButton.click();
+        return editForm;
     }
 }

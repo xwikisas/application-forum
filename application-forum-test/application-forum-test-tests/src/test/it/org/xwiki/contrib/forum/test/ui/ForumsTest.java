@@ -19,11 +19,14 @@
  */
 package org.xwiki.contrib.forum.test.ui;
 
+import java.util.Arrays;
+
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.xwiki.contrib.forum.test.po.*;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.panels.test.po.ApplicationsPanel;
 import org.xwiki.test.ui.AbstractTest;
 import org.xwiki.test.ui.SuperAdminAuthenticationRule;
@@ -40,7 +43,11 @@ public class ForumsTest extends AbstractTest
     @Rule
     public SuperAdminAuthenticationRule authenticationRule = new SuperAdminAuthenticationRule(getUtil());
 
+    private static final String FORUM_SPACE = "Forums";
+
     private static final String FORUM_TITLE = "MyForum";
+
+    private static final String WEBHOME = "WebHome";
 
     private static final String FORUM_DESCRIPTION = "MyForum Description";
 
@@ -48,14 +55,19 @@ public class ForumsTest extends AbstractTest
 
     private static final String TOPIC_DESCRIPTION = "MyTopic Description";
 
+    private static final String ANSWER = "Hello! This is my answer!";
+
+    private static final String FLAG_MESSAGE = "This message promotes hate or violence.";
+
     @Test
     public void testApplicationPanelLinksToForumsHomePage()
     {
         ApplicationsPanel applicationPanel = ApplicationsPanel.gotoPage();
-        ViewPage vp = applicationPanel.clickApplication(ForumsHomePage.getAppTitle());
+        ViewPage vp = applicationPanel.clickApplication(FORUM_SPACE);
 
-        Assert.assertEquals(ForumsHomePage.getSpace(), vp.getMetaDataValue("space"));
-        Assert.assertEquals(ForumsHomePage.getPage(), vp.getMetaDataValue("page"));
+        DocumentReference reference = new DocumentReference("wiki", Arrays.asList(FORUM_SPACE), WEBHOME);
+
+        Assert.assertEquals(reference.toString(), String.format("wiki:%s", vp.getMetaDataValue("document")));
     }
 
     @Test
@@ -70,7 +82,6 @@ public class ForumsTest extends AbstractTest
         forumsHomePage.setAddForumEntryInput(FORUM_TITLE);
 
         ForumEditPage forumEditPage = forumsHomePage.clickAddForumEntryButton();
-        Assert.assertEquals(FORUM_TITLE, forumEditPage.getTitle());
         forumEditPage.setDescription(FORUM_DESCRIPTION);
         forumEditPage.clickSaveAndView();
 
@@ -87,11 +98,34 @@ public class ForumsTest extends AbstractTest
         topicAddForm.getEditForm().setDescription(TOPIC_DESCRIPTION);
         forumViewPage = topicAddForm.clickAddTopicButton();
 
+        TopicViewPage topicViewPage = TopicViewPage.gotoPage();
+        Assert.assertEquals(TOPIC_TITLE, topicViewPage.getDocumentTitle());
+        Assert.assertEquals(TOPIC_DESCRIPTION, topicViewPage.getDescription());
+
+        // View Topic tour
+        topicViewPage.viewTour();
+        waitUntilTourDisappears();
+
+        // Create new answer
+        AnswerAddElement answerAddForm = topicViewPage.clickAddAnswerActivator();
+        answerAddForm.getEditForm().setAnswer(ANSWER);
+        Assert.assertEquals(1, topicViewPage.getAnswersNumber());
+
+        // Flag the answer
+        FlagAddElement flagAddForm = topicViewPage.flagAnswer();
+        flagAddForm.getEditForm().setReason();
+        flagAddForm.getEditForm().setMessage(FLAG_MESSAGE);
+        flagAddForm.getEditForm().clickSubmit();
+
+        FlagViewPage flagViewPage = FlagViewPage.goToPage();
+        TopicViewPage flagTopicView = flagViewPage.clickTargetURL();
+        Assert.assertEquals(true, flagTopicView.checkFlaggedAnswer());
+
         // TODO: Test the visit on Topic page + creation of Answers and Comments after
         // http://jira.xwiki.org/browse/XAFORUM-222 is fixed
         // Topic page can't be visited due the fact that the name contains timestamp(no static value can be taken).
 
-        cleanUp(FORUM_TITLE);    
+        cleanUp(FORUM_TITLE);
     }
 
     private void cleanUp(String page) throws Exception
