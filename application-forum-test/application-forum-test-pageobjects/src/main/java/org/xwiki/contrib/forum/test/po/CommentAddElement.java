@@ -19,8 +19,6 @@
  */
 package org.xwiki.contrib.forum.test.po;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.BaseElement;
 
 /**
@@ -31,9 +29,6 @@ import org.xwiki.test.ui.po.BaseElement;
  */
 public class CommentAddElement extends BaseElement
 {
-    @FindBy(css = ".AddComment .button[type=submit]")
-    private WebElement addCommentButton;
-
     private CommentEditElement editForm = new CommentEditElement();
 
     /**
@@ -42,15 +37,5 @@ public class CommentAddElement extends BaseElement
     public CommentEditElement getEditForm()
     {
         return editForm;
-    }
-
-    /**
-     * @return the form to enter new answer
-     */
-    public TopicViewPage clickAddCommentButton()
-    {
-        addCommentButton.click();
-        TopicViewPage topicViewPage = new TopicViewPage();
-        return topicViewPage;
     }
 }

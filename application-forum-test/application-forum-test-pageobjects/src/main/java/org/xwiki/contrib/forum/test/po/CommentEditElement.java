@@ -31,16 +31,12 @@ import org.xwiki.test.ui.po.BaseElement;
  */
 public class CommentEditElement extends BaseElement
 {
-    @FindBy(id = "XWiki.XWikiComments_comment_TopicAnswer")
+    // Get comment from the first answer, knowing partially the id XWiki.XWikiComments_comment*.
+    @FindBy(css = ".answers .answer:first-child .comments .comment:first-of-type *[id^='XWiki.XWikiComments_comment'].maximizable")
     private WebElement comment;
 
-    /**
-     * @return the comment
-     */
-    public WebElement getComment()
-    {
-        return comment;
-    }
+    @FindBy(css = ".answers .answer:first-child .comments .comment:first-of-type .button[type=submit]")
+    private WebElement confirmAddCommentButton;
 
     /**
      * @param givenComment to set
@@ -49,5 +45,6 @@ public class CommentEditElement extends BaseElement
     {
         comment.clear();
         comment.sendKeys(givenComment);
+        confirmAddCommentButton.click();
     }
 }

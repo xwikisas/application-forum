@@ -74,10 +74,10 @@ public class ForumsTest extends AbstractTest
     public void testCreateForumEntities() throws Exception
     {
         ForumsHomePage forumsHomePage = ForumsHomePage.gotoPage();
-        // View Forums homepage tour
+        // View Forums homepage tour.
         forumsHomePage.viewTour();
         waitUntilTourDisappears();
-        // Create new forum
+        // Create new forum.
         forumsHomePage.clickAddForumButton();
         forumsHomePage.setAddForumEntryInput(FORUM_TITLE);
 
@@ -89,10 +89,10 @@ public class ForumsTest extends AbstractTest
         Assert.assertEquals(FORUM_TITLE, forumViewPage.getDocumentTitle());
         Assert.assertEquals(FORUM_DESCRIPTION, forumViewPage.getDescription());
 
-        // View Forum tour
+        // View Forum tour.
         forumViewPage.viewTour();
         waitUntilTourDisappears();
-        // Create new topic
+        // Create new topic.
         TopicAddElement topicAddForm = forumViewPage.clickAddTopicActivator();
         topicAddForm.getEditForm().setTitle(TOPIC_TITLE);
         topicAddForm.getEditForm().setDescription(TOPIC_DESCRIPTION);
@@ -102,16 +102,16 @@ public class ForumsTest extends AbstractTest
         Assert.assertEquals(TOPIC_TITLE, topicViewPage.getDocumentTitle());
         Assert.assertEquals(TOPIC_DESCRIPTION, topicViewPage.getDescription());
 
-        // View Topic tour
+        // View Topic tour.
         topicViewPage.viewTour();
         waitUntilTourDisappears();
 
-        // Create new answer
-        AnswerAddElement answerAddForm = topicViewPage.clickAddAnswerActivator();
-        answerAddForm.getEditForm().setAnswer(ANSWER);
-        Assert.assertEquals(1, topicViewPage.getAnswersNumber());
+        // Create multiple answers.
+        createAnswer(topicViewPage, "Hello\nworld!\n!@#$%^&*()_\"';:`~");
+        createAnswer(topicViewPage, "Another message");
+        Assert.assertEquals(2, topicViewPage.getAnswersNumber());
 
-        // Flag the answer
+        // Flag the answer.
         FlagAddElement flagAddForm = topicViewPage.flagAnswer();
         flagAddForm.getEditForm().setReason();
         flagAddForm.getEditForm().setMessage(FLAG_MESSAGE);
@@ -121,7 +121,23 @@ public class ForumsTest extends AbstractTest
         TopicViewPage flagTopicView = flagViewPage.clickTargetURL();
         Assert.assertEquals(true, flagTopicView.checkFlaggedAnswer());
 
+        // Add multiple comments.
+        createComment(topicViewPage, "Hello\\nworld!\\n!@#$%^&*()_\\\"';:`~1");
+        createComment(topicViewPage, "Another message");
+
         cleanUp(FORUM_TITLE);
+    }
+
+    private void createComment(TopicViewPage topicViewPage, String comment)
+    {
+        CommentAddElement commentAddForm = topicViewPage.clickAddCommentButton();
+        commentAddForm.getEditForm().setComment(comment);
+    }
+
+    void createAnswer(TopicViewPage topicViewPage, String answer)
+    {
+        AnswerAddElement answerAddForm = topicViewPage.clickAddAnswerActivator();
+        answerAddForm.getEditForm().setAnswer(answer);
     }
 
     private void cleanUp(String page) throws Exception

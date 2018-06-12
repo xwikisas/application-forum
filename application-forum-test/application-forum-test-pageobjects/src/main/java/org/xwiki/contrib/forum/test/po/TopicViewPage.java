@@ -54,6 +54,9 @@ public class TopicViewPage extends ViewPage
     @FindBy(css = ".answers .answer:first-child .flag")
     private WebElement flagButton;
 
+    @FindBy(css = ".answers .answer:first-child .comments .comment:first-of-type .button[type=submit]")
+    private WebElement addCommentButton;
+
     @FindBy(css = "answer:target")
     private WebElement answerTarget;
 
@@ -160,5 +163,15 @@ public class TopicViewPage extends ViewPage
         step3.click();
         step4.click();
         step5.click();
+    }
+    
+    /**
+     * @return the form to enter new answer
+     */
+    public CommentAddElement clickAddCommentButton()
+    {
+        addCommentButton.click();
+        CommentAddElement commentAddForm = new CommentAddElement();
+        return commentAddForm;
     }
 }
