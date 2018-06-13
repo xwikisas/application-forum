@@ -668,6 +668,9 @@ Comment Level
   margin-right: 60px;
   margin-bottom: 10px;
 }
+.reply .successmessage {
+  margin-right: 60px;
+}
 .commentavatar img.photo {
   width: 30px;
   height: 30px;
