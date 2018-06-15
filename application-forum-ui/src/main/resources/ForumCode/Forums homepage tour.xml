@@ -71,7 +71,7 @@
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -212,7 +212,7 @@ $services.localization.render('tour.forumsHomepageTour.welcome.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -307,7 +307,7 @@ $services.localization.render('tour.forumsHomepageTour.addForum.content')
 {{/velocity}}</content>
     </property>
     <property>
-      <element>#addForum</element>
+      <element>#actionBox&gt;a</element>
     </property>
     <property>
       <order>1</order>
@@ -353,7 +353,7 @@ $services.localization.render('tour.forumsHomepageTour.addForum.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -495,7 +495,7 @@ $services.localization.render('tour.forumsHomepageTour.forumsLivetable.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>

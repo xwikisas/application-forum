@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.2" reference="ForumCode.ForumsHomePage" locale="">
   <web>ForumCode</web>
   <name>ForumsHomePage</name>
   <language/>
@@ -40,65 +40,42 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#set ($discard=$xwiki.ssx.use('ForumCode.StyleSheetExtension'))
-## only allow users that have create page right on this page to create a forum. This is a way to restrict the users which can create a forum.
-#set ($forumName = $request.forumName)
-#if ("$!{forumName}" != '' &amp;&amp; $hasCreatePage)
-  #set ($newForumDocName = "Forums_${forumName}.WebHome")
-  #if ($newForumDocName.length &gt; 230)
-    #set ($newForumDocName = $newForumDocName.substring(0, 230))
-  #end
-  #set ($newForumDoc = $xwiki.getDocument($newForumDocName))
-  #if (!$newForumDoc.isNew())
-    {{warning}}$services.localization.render('forum.create.alreadyexists', [$forumName, $newForumDocName])
-  #else
-	  ## Add encode uri to handle special chars in the title
-    #set ($forumTitle = $escapetool.url($forumName))
-    ##
-    $response.sendRedirect($newForumDoc.getURL('edit', "title=${forumTitle}&amp;parent=Forums.WebHome&amp;template=ForumCode.ForumTemplate"))
-  #end
-#else
-  #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
-  #set ($discard = $xwiki.ssfx.use('uicomponents/pagination/pagination.css', 'true'))
-  #set ($discard = $xwiki.jsx.use('ForumCode.ForumsHomePage', {'language' : $xcontext.language, 'derfer' : false}))
-  {{html clean='false'}}
-    &lt;div class="row all-forums-home-title"&gt;
-    	&lt;div class="document-info col-xs-12 col-md-7"&gt;
-      		&lt;h3 class="forums-title"&gt;$services.localization.render('conversations.forum.all')&lt;/h3&gt;
-    	&lt;/div&gt;
-      ## only allow users that have create page right on this page to create a forum. This is a way to restrict the users which can create a forum.
-      #if ($hasCreatePage)
-        #set($discard = $xwiki.ssx.use('ForumCode.ForumsHomePage'))
-      	&lt;div class="document-info col-xs-12 col-md-5 pull-right" id="actionBox"&gt;
-      		&lt;div class="pull-right buttonwrapper"&gt;
-            &lt;a class="btn btn-success hasIcon add button" id="addForum" href="#AddNewEntry"&gt;
-              $!services.icon.renderHTML('add') $services.localization.render('conversations.forum.add')
-            &lt;/a&gt;
-      		&lt;/div&gt;
-          #set ($entryDoc = $services.model.createDocumentReference($doc.wiki, ['Forums', '__entryName__'], 'WebHome'))
-          #set ($queryString = 'editor=inline&amp;title=__entryName__&amp;template=ForumCode.ForumTemplate&amp;parent=Forums.WebHome')
-          &lt;input type="hidden" value="$escapetool.xml($xwiki.getURL($entryDoc, 'edit', $queryString))" /&gt;
-      	&lt;/div&gt;
-      #end
-      &lt;div class="clearfloats"&gt;&lt;/div&gt;
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
+{{html clean='false'}}
+&lt;div class="row"&gt;
+  &lt;div class="col-md-7"&gt;
+    &lt;h3 class="forums-title"&gt;$services.localization.render('conversations.forum.all')&lt;/h3&gt;
+  &lt;/div&gt;
+  ## only allow users that have create page right on this page to create a forum. This is a way to restrict the users which can create a forum.
+  #if ($hasCreatePage)
+    #set ($discard = $xwiki.ssx.use('ForumCode.ForumsHomePage'))
+    #set ($discard = $xwiki.jsx.use('ForumCode.ForumsHomePage', {'language' : $xcontext.locale, 'derfer' : false}))
+    &lt;div class="col-md-5" id="actionBox"&gt;
+      &lt;a class="btn btn-success" href="#AddNewEntry"&gt;
+        $!services.icon.renderHTML('add') $services.localization.render('conversations.forum.add')
+      &lt;/a&gt;
+      #set ($entryDoc = $services.model.createDocumentReference('', ['Forums', '__entryName__'], 'WebHome'))
+      #set ($queryString = $escapetool.url({'editor': 'inline', 'title': '__entryName__',
+        'template': 'ForumCode.ForumTemplate', 'parent': 'Forums.WebHome'}))
+      &lt;input type="hidden" value="$escapetool.xml($xwiki.getURL($entryDoc, 'edit', $queryString))" /&gt;
     &lt;/div&gt;
-  {{/html}}
-  ##
-  #set($columns = ['doc.title', 'doc.date', 'doc.creator', 'actions'])
-  #set($columnsProperties = {
-    'doc.title'   : {'type' : 'text', 'link' : 'view'},
-    'doc.creator' : {'type' : 'text', 'html' : true},
-    'actions'     : {'html' : true, 'sortable' : false}
-  })
-  #set($options = {
-    'className'         : 'ForumCode.ForumClass',
-    'translationPrefix' : 'conversations.',
-    'resultPage'        : 'ForumCode.GetForumsJson',
-    'rowCount'          : 10
-  })
-  #livetable('forums' $columns $columnsProperties $options)
-#end
-#set($docextras = [])
+  #end
+&lt;/div&gt;
+{{/html}}
+#set ($columns = ['doc.title', 'doc.date', 'doc.creator', 'actions'])
+#set ($columnsProperties = {
+  'doc.title'   : {'type' : 'text', 'link' : 'view'},
+  'doc.creator' : {'type' : 'text', 'html' : true},
+  'actions'     : {'html' : true, 'sortable' : false}
+})
+#set ($options = {
+  'className'         : 'ForumCode.ForumClass',
+  'translationPrefix' : 'conversations.',
+  'resultPage'        : 'ForumCode.GetForumsJson',
+  'rowCount'          : 10
+})
+#livetable('forums' $columns $columnsProperties $options)
+#set ($docextras = [])
 {{/velocity}}
 </content>
   <object>
@@ -132,6 +109,7 @@
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
         <editor>PureText</editor>
         <name>code</name>
@@ -287,6 +265,7 @@
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
         <editor>PureText</editor>
         <name>code</name>
@@ -342,7 +321,7 @@ var XWiki = (function (XWiki) {
 XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
   initialize : function($super, trigger) {
     trigger.observe('click', this.showDialog.bindAsEventListener(this));
-    this.urlTemplate = trigger.up().next('input[type=hidden]').value;
+    this.urlTemplate = trigger.next('input[type=hidden]').value;
 
     this.input = new Element('input', {type: 'text'});
     this.addButton = new Element('input', {type: 'image', src: '$xwiki.getSkinFile('icons/silk/add.png')', alt: '$escapetool.javascript($services.localization.render('platform.appwithinminutes.appHomePageAddEntryLabel'))'});
@@ -379,7 +358,7 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
 function init() {
   var actionBox = $('actionBox');
   if(actionBox) {
-    new XWiki.EntryNamePopup(actionBox.down('.add'));
+    new XWiki.EntryNamePopup(actionBox.down('a'));
     return true;
   }
   return false;
@@ -431,6 +410,7 @@ return XWiki;
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
         <editor>PureText</editor>
         <name>code</name>
@@ -497,24 +477,27 @@ return XWiki;
       <cache>long</cache>
     </property>
     <property>
-      <code>
-    #actionBox{
-      float: right;
-    }
-    #entryNamePopup {
-      margin-right: 20px;
-    }
-
-    #entryNamePopup input[type=text] {
-      width: 99%;
-    }
-
-    #entryNamePopup input[type=image] {
-      margin: .3em .5em;
-      padding: 0;
-      position: absolute;
-    }
-      </code>
+      <code>#actionBox{
+  text-align: right;
+}
+#entryNamePopup {
+  margin-right: 20px;
+}
+#entryNamePopup input[type=text] {
+  width: 99%;
+}
+#entryNamePopup input[type=image] {
+  margin: .3em .5em;
+  padding: 0;
+  position: absolute;
+}
+.forums-title {
+  margin: 5px auto;
+}
+</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
     </property>
     <property>
       <name>Style</name>

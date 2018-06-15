@@ -705,7 +705,7 @@ New Comment
 Answers and Comments for a Topic
 -------------------------------------------------------------------------------------------------- 
 */
-.forums-title, .topics-title, .answers-title {
+.topics-title, .answers-title {
   border: 0;
   float: left;
   margin: 5px 0;
@@ -1252,10 +1252,6 @@ Various Fixes
 /* removing preview button from edit comment */
 .edit-xcomment input[type="button"] {
     display: none;
-}
-
-.all-forums-home-title{
-  padding-bottom: 20px;
 }
 
 /* remove scroll bar from the livetable on homepage */
