@@ -35,7 +35,7 @@ import org.xwiki.test.ui.po.ViewPage;
  */
 public class ForumsHomePage extends ViewPage
 {
-    @FindBy(id = "addForum")
+    @FindBy(css = "#actionBox a")
     private WebElement addForumButton;
 
     @FindBy(xpath = "//div[@id = 'entryNamePopup']//input[@type = 'text']")
