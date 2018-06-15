@@ -103,11 +103,11 @@
   #end##
 #end##
 ## use curriki avatars
-#macro(mediumUserAvatar2 $user)
+#macro(mediumUserAvatar $user)
   #curriki_avatar_width_height($xwiki.getDocument($user) 48 '')
 #end
 ##
-#macro(smallUserAvater2 $user)
+#macro(smallUserAvatar $user)
   #curriki_avatar_width_height($xwiki.getDocument($user) 48 '')
 #end
 ##
@@ -177,7 +177,7 @@
   &lt;div id="xwikicomment_${conversationId}_${comment.number}" objtype="comment" class="comment $commentodd #if ($comment.getProperty('author').value == $commentDoc.creator) commentByCreator#end"&gt;
     &lt;div class="comment-layout"&gt;
       &lt;span class="user-avatar"&gt;
-        #if ("$!comment.replyto" == '')#smallUserAvater2($comment.author)#{else}#smallUserAvater2($comment.author)#end
+        #if ("$!comment.replyto" == '')#smallUserAvatar($comment.author)#{else}#smallUserAvatar($comment.author)#end
       &lt;/span&gt; 
       &lt;span class="comment-meta"&gt;
         &lt;span class="user"&gt;$!xwiki.getUserName($doc.display('author', 'view', $comment))&lt;/span&gt;
@@ -231,7 +231,7 @@
         &lt;form id="${conversationId}_addcommentform" action="$escapetool.xml($commentDoc.getURL('commentadd', "xredirect=$escapetool.url($redirectURL)"))" method="post" class="AddComment"&gt;
           &lt;div class="comment-layout"&gt;
             &lt;span class="user-avatar"&gt;
-             #mediumUserAvatar2($xcontext.user)
+             #mediumUserAvatar($xcontext.user)
             &lt;/span&gt;
             &lt;div class="comment-reply"&gt;
               &lt;span class="comment-meta"&gt;
@@ -623,7 +623,7 @@
     &lt;div class="topic"&gt;
       &lt;div class="topic-layout"&gt;
         #if (!$withdetails)
-          &lt;span class="user-avatar"&gt;#smallUserAvater2($topicDoc.creator)&lt;/span&gt;
+          &lt;span class="user-avatar"&gt;#smallUserAvatar($topicDoc.creator)&lt;/span&gt;
         #end
         &lt;div class="topic-container"&gt;
           #if (!$withdetails)
@@ -647,7 +647,7 @@
             &lt;span class="topic-metas"&gt;
               &lt;span class="topic-author"&gt;
                 #if ($withdetails)
-                  &lt;span class="user-avatar"&gt;#smallUserAvater2($topicDoc.creator)&lt;/span&gt;
+                  &lt;span class="user-avatar"&gt;#smallUserAvatar($topicDoc.creator)&lt;/span&gt;
                 #end
                 $!xwiki.getUserName($topicDoc.creator)
               &lt;/span&gt;
@@ -703,7 +703,7 @@
           &lt;div class="answer" objtype="answer" id="$topicAnswerID"&gt;
             &lt;div class="answer-layout"&gt;
               &lt;span class="user-avatar"&gt;
-                #smallUserAvater2($topicAnswerDoc.creator)
+                #smallUserAvatar($topicAnswerDoc.creator)
               &lt;/span&gt;
               &lt;div class="answer-reply"&gt;
                 &lt;span class="answer-meta"&gt;
@@ -958,10 +958,10 @@
  *#
 #macro(displayAlertsMessages)
   #if ("$!{request.success}" != '')
-    {{success}}$services.localization.render("conversations.$!{request.success}.success"){{/success}}
+  {{success}}$services.localization.render("conversations.$!{request.success}.success"){{/success}}
   #end
   #if ($request.mailsent == '0')
-    {{warning}}$services.localization.render("conversations.$!{request.success}.error.nomailsent"){{/warning}}
+  {{warning}}$services.localization.render("conversations.$!{request.success}.error.nomailsent"){{/warning}}
   #end
 #end
 #**
