@@ -812,12 +812,13 @@
   &lt;script type="text/javascript"&gt;
     //&lt;![CDATA[
       // force waiting for dom loaded to activate wysiwyg
-      document.observe('xwiki:dom:loaded', function(){
+      document.observe('xwiki:dom:loaded', function() {
         var Wysiwyg = Wysiwyg || {};
         window.WysiwygConfig = window.WysiwygConfig || {};
-        WysiwygConfig["${parameters.hookId}"] = $jsVarName; 
+        WysiwygConfig["${parameters.hookId}"] = $jsVarName;
         #if ($parameters.hookId.startsWith('XWiki.XWikiComments_'))
-          WysiwygConfig["${parameters.hookId}"].inputURL = "$xwiki.getURL('ForumCode.CommentTemplate', 'edit', 'xpage=wysiwyginput&amp;token=$services.csrf.getToken()')";
+          #set ($queryString = $escapetool.url({'xpage': 'wysiwyginput', 'token': $services.csrf.token}))
+          WysiwygConfig["${parameters.hookId}"].inputURL = "$xwiki.getURL('ForumCode.CommentTemplate', 'edit', $queryString)";
         #end
         $jsVarName = undefined;
         $("${parameters.hookId}").observe('focus', function(event){
