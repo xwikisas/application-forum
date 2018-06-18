@@ -69,7 +69,7 @@
             #if ("$!anchor" != '')
               #set ($urlAnchor = "anchor='$anchor'")
             #end
-            : &lt;label&gt;[[$services.localization.render('conversations.flag.viewsource')&gt;&gt;$doc.getValue('target')||target="_blank" $urlAnchor]]&lt;/label&gt;
+            : &lt;label&gt;[[$services.localization.render('conversations.flag.viewsource')&gt;&gt;$doc.getValue('target')||$urlAnchor]]&lt;/label&gt;
           #else
             : $doc.display('target')
           #end
