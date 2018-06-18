@@ -257,55 +257,6 @@
   &lt;/div&gt;
 #end
 ###
-### Done copying
-###
-### Display the avatar of a user, or a standard image if the user has no avatar
-###
-### @param username The name of the user whose avatar will be displayed
-###
-#macro(resizedUserAvatar $username $size)
-  #if (!$picturelist)
-    #set ($picturelist = $collectionstool.map)
-  #end
-  #if (!$picturelist.containsKey("${username}--${size}"))
-    #set ($picture = "&lt;img class='avatar avatar_${escapetool.xml(${size})}' src='")
-    #if ($xwiki.getDocument($username).getObject('XWiki.XWikiGroups'))
-      #set ($picture = $picture.concat($xwiki.getSkinFile('icons/xwiki/noavatargroup.png', true)))
-    #else
-      #set ($picture = $picture.concat($xwiki.getSkinFile('icons/xwiki/noavatar.png', true)))
-    #end
-    #set ($profiledoc = $xwiki.getDocument($username))
-    #if (!$profiledoc.isNew())
-      #if ($profiledoc.attachmentList.size() != 0)
-        #set ($profileobj = $profiledoc.getObject('XWiki.XWikiUsers', 0))
-        #set ($avatarFileName = $profileobj.getProperty('avatar').value)
-        #if ("$!avatarFileName" != '')
-          #foreach ($attach in $profiledoc.attachmentList)
-            #if ($attach.filename == $avatarFileName)
-              #set ($pictureurl = $profiledoc.getAttachmentURL($avatarFileName))
-              #set ($picture = "&lt;img src='")
-              #set ($picture = $picture.concat($pictureurl))
-              #if ($size &gt; 0)
-                #set ($picture = $picture.concat("?width=${escapetool.xml(${size})}&amp;amp;height=${escapetool.xml(${size})}&amp;amp;keepAspectRatio=true"))
-              #end
-              #set ($picture = $picture.concat("' alt='"))
-              #set ($picture = $picture.concat(${xwiki.getUserName($username, false)}))
-              #set ($picture = $picture.concat("' title='"))
-              #set ($picture = $picture.concat(${xwiki.getUserName($username, false)}))
-              #set ($picture = $picture.concat("'/&gt;"))
-              #break
-            #end
-          #end
-        #end
-      #else
-        #set ($picture = $picture.concat("' width='${size}' alt='${xwiki.getUserName($username, false)}' title='${xwiki.getUserName($username, false)}'/&gt;"))
-      #end
-    #end
-    #set ($discard = $!picturelist.put("${username}--${size}", $picture))
-  #end
-  $picturelist.get("${username}--${size}")##
-#end
-###
 #macro(displayTopicSortButton $field)
   #set ($style = '')
   #set ($sortclass = 'forum-sort-button-inactive')
