@@ -71,7 +71,7 @@
     &lt;/div&gt;
     &lt;div class="forum-metas"&gt;
       &lt;span class="forum-author"&gt;
-        &lt;span class="user-avatar"&gt;#smallUserAvatar($doc.creator)&lt;/span&gt;$!xwiki.getUserName($doc.creator)
+        #smallUserAvatar($doc.creator)$!xwiki.getUserName($doc.creator)
       &lt;/span&gt;
       &lt;span class="forum-date"&gt;$xwiki.formatDate($doc.date)&lt;/span&gt;
       &lt;span class="forum-topics" title="$totalTopicsTitle"&gt;

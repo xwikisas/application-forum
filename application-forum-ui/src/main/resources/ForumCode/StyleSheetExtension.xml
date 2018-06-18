@@ -303,7 +303,6 @@ XWIKI STYLES
 /* profile sections */
 .blue, .members .headerbar, .groups .headerbar, .form-wrp fieldset h3 { background: #164891; }
 
-.odd, .even {background-color: transparent;}
 .none, .hidden { display: none; }
 
 /*
@@ -409,7 +408,7 @@ XWIKI STYLES
   margin-top: 50px;
 }
 
-.forum .user-avatar .photo, .topic-container .user-avatar .photo {
+.forum-metas img.avatar, .topic-metas img.avatar {
   width: 20px;
   height: 20px;
   margin-right: 5px;
@@ -671,13 +670,13 @@ Comment Level
 .reply .successmessage {
   margin-right: 60px;
 }
-.commentavatar img.photo {
+.comment-layout img.avatar {
   width: 30px;
   height: 30px;
 
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
-  border-radius: 50px; 
+  border-radius: 5px;
 }
 .commentheader {
   padding: 10px;
@@ -723,7 +722,7 @@ Answers and Comments for a Topic
   float: left;
 }
 
-.user-avatar img { 
+.user-avatar img {
   border-radius: 5px;
   height: 50px;
   width: 50px;
@@ -767,8 +766,8 @@ Answers and Comments for a Topic
   margin-left: 20px;
 }
 
-.answer-content { 
-  padding: 10px 10px 20px 10px; 
+.answer-content {
+  padding: 10px 10px 20px 10px;
   overflow: hidden;
 }
 
@@ -828,11 +827,11 @@ Limit content / make it responsive
   margin: 0 0 10px;
 }
 
-.comment.odd .comment-layout {
+.commentreplies .reply:nth-child(even) .comment-layout {
   background: $theme.backgroundSecondaryColor;
 }
 
-.comment.even .comment-layout {
+.commentreplies .reply:nth-child(odd) .comment-layout {
   background: $theme.pageContentBackgroundColor;
 }
 
@@ -866,11 +865,6 @@ Limit content / make it responsive
 
 .comment.user .comment-layout {
   margin-right: 0;
-}
-
-.comment .user-avatar img {
-  height: 30px;
-  width: 30px; 
 }
 
 .comment-meta {

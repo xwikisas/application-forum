@@ -43,73 +43,20 @@
 
 {{velocity output='false'}}
 ## make sure we have all these extensions
-#set ($discard = $xwiki.jsx.use('XWiki.Ratings', { 'minify' : false }))##
-#set ($discard = $xwiki.ssx.use('XWiki.Ratings'))##
-#set ($discard = $xwiki.ssfx.use('uicomponents/viewers/comments.css', true))##
-#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/notification.js', {'forceSkinAction' : true, 'defer' : false}))##
-#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/notification.css', true))##
-#set ($discard = $xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', {'forceSkinAction' : true, 'defer' : false}))##
-#set ($discard = $xwiki.ssfx.use('js/xwiki/widgets/modalPopup.css', true))##
-#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', {'forceSkinAction' : true, 'defer' : false}))##
-#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/confirmationBox.css', true))##
-#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', {'forceSkinAction' : true, 'defer' : false}))##
-#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/fullScreen.js', {'forceSkinAction' : true, 'defer' : false}))##
-#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/fullScreen.css', true))##
-#set ($discard = $xwiki.jsx.use('ForumCode.JavascriptExtension', {'forceSkinAction' : true, 'defer' : false, 'minify' : false}))##
-#set ($discard = $xwiki.ssx.use('ForumCode.StyleSheetExtension'))##
-#**
-  * Display the avatar of a user with maximum width and height
-  * keeping the aspect ratio.
-  *
-  * @param $userdoc User document
-  * @param $width the maximum width
-  * @param $height the maximum height
-  * @author plibbrecht@curriki.org
-  *#
-#macro(curriki_avatar_width_height $userdoc $width $height)
-  #set ($reqHeight = $!height + $!height)
-  #set ($reqWidth = $!width + $!width)
-  #set ($assetAuthorDisplayName = $!xwiki.getUserName($userdoc.fullName, false))
-  #set ($userobj = $userdoc.getObject('XWiki.XWikiUsers'))
-  #set ($current_avatar = $userobj.get('avatar'))
-
-  #if ($current_avatar &amp;&amp; "${current_avatar}" != '')##
-    #set ($attach = $userdoc.getAttachment("${current_avatar}").attachment)
-    #set ($src = $userdoc.getAttachmentURL($current_avatar, 'download'))##
-    &lt;a href="$userdoc.getURL('view')" title="$escapetool.xml($assetAuthorDisplayName)" class="photo"&gt;
-      #if ("$!width" == '' &amp;&amp; "$!height" == '')##
-         &lt;img src="$src" class="photo"/&gt;##
-      #elseif ("$!width" == '')##
-         &lt;img src="$src?height=$reqHeight" height="$height" class="photo"/&gt;##
-      #elseif ("$!height" == '')##
-         &lt;img src="$src?width=$reqWidth" width="$width" class="photo"/&gt;##
-      #else##
-         &lt;img src="$src?width=$reqWidth&amp;height=$reqHeight&amp;keepAspectRatio=true" class="photo"/&gt;
-      #end##
-    &lt;/a&gt;
-  #else ##
-    #set ($src = $xwiki.getSkinFile('icons/xwiki/noavatar.png'))##
-    &lt;a href="$userdoc.URL" title="$escapetool.xml($assetAuthorDisplayName)"&gt;
-      #if ("$!width" == '' &amp;&amp; "$!height" == '')##
-         &lt;img src="$src" class="photo"/&gt;
-      #elseif ("$!width" == '')##
-         &lt;img src="$src?height=$reqHeight" height="$height" class="photo"/&gt;
-      #elseif ("$!height" == '')##
-         &lt;img src="$src?width=$reqWidth" width="$width" class="photo"/&gt;
-      #else##
-         &lt;img src="$src?width=$width&amp;height=$reqHeight&amp;keepAspectRatio=true" class="photo"/&gt;
-      #end##
-    &lt;/a&gt;
-  #end##
-#end##
-## use curriki avatars
-#macro(mediumUserAvatar $user)
-  #curriki_avatar_width_height($xwiki.getDocument($user) 48 '')
-#end
-##
-#macro(smallUserAvatar $user)
-  #curriki_avatar_width_height($xwiki.getDocument($user) 48 '')
-#end
+#set ($discard = $xwiki.jsx.use('XWiki.Ratings', { 'minify' : false }))
+#set ($discard = $xwiki.ssx.use('XWiki.Ratings'))
+#set ($discard = $xwiki.ssfx.use('uicomponents/viewers/comments.css', true))
+#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/notification.js', {'forceSkinAction' : true, 'defer' : false}))
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/notification.css', true))
+#set ($discard = $xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', {'forceSkinAction' : true, 'defer' : false}))
+#set ($discard = $xwiki.ssfx.use('js/xwiki/widgets/modalPopup.css', true))
+#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', {'forceSkinAction' : true, 'defer' : false}))
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/confirmationBox.css', true))
+#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', {'forceSkinAction' : true, 'defer' : false}))
+#set ($discard = $xwiki.jsfx.use('uicomponents/widgets/fullScreen.js', {'forceSkinAction' : true, 'defer' : false}))
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/fullScreen.css', true))
+#set ($discard = $xwiki.jsx.use('ForumCode.JavascriptExtension', {'forceSkinAction' : true, 'defer' : false, 'minify' : false}))
+#set ($discard = $xwiki.ssx.use('ForumCode.StyleSheetExtension'))
 ##
 #macro(cleanHTMLMacro $value)
   $value.replaceFirst($regextool.quote('{{html clean="false" wiki="false"}}'), '').replaceFirst("$regextool.quote('{{/html}}')$", '')
@@ -166,15 +113,10 @@
   #end
 #end
 ##
-#macro(displayComment $comment, $commentDoc)
+#macro(displayComment $comment $commentDoc)
   ## compute the conversation id to make proper permalinks for comments
-    #set ($conversationId = $commentDoc.documentReference.lastSpaceReference.name)
-  #if (!$commentodd || $commentodd == 'even')
-   #set ($commentodd = 'odd')
-  #else
-   #set ($commentodd = 'even')
-  #end 
-  &lt;div id="xwikicomment_${conversationId}_${comment.number}" objtype="comment" class="comment $commentodd #if ($comment.getProperty('author').value == $commentDoc.creator) commentByCreator#end"&gt;
+  #set ($conversationId = $commentDoc.documentReference.lastSpaceReference.name)
+  &lt;div id="xwikicomment_${conversationId}_${comment.number}" objtype="comment" class="comment"&gt;
     &lt;div class="comment-layout"&gt;
       &lt;span class="user-avatar"&gt;
         #if ("$!comment.replyto" == '')#smallUserAvatar($comment.author)#{else}#smallUserAvatar($comment.author)#end
@@ -647,7 +589,7 @@
             &lt;span class="topic-metas"&gt;
               &lt;span class="topic-author"&gt;
                 #if ($withdetails)
-                  &lt;span class="user-avatar"&gt;#smallUserAvatar($topicDoc.creator)&lt;/span&gt;
+                  #smallUserAvatar($topicDoc.creator)
                 #end
                 $!xwiki.getUserName($topicDoc.creator)
               &lt;/span&gt;
