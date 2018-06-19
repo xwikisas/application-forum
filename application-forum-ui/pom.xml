@@ -36,6 +36,9 @@
     <xwiki.extension.licensing.publicDocuments>
       Forums.WebHome
     </xwiki.extension.licensing.publicDocuments>
+    <xwiki.extension.licensing.excludedDocuments>
+      ForumCode.ConfigurationAdmin
+    </xwiki.extension.licensing.excludedDocuments>
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Forum Application (Pro)</xwiki.extension.name>
     <xwiki.extension.category>application</xwiki.extension.category>
