@@ -71,7 +71,7 @@
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -212,7 +212,7 @@ $services.localization.render('tour.topicTour.topicDetails.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -307,7 +307,7 @@ $services.localization.render('tour.topicTour.flagAndPermalink.content')
 {{/velocity}}</content>
     </property>
     <property>
-      <element>.topic-actions&gt;.left</element>
+      <element>.topic .actions&gt;.left</element>
     </property>
     <property>
       <order>1</order>
@@ -353,7 +353,7 @@ $services.localization.render('tour.topicTour.flagAndPermalink.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -448,7 +448,7 @@ $services.localization.render('tour.topicTour.socialMedia.content')
 {{/velocity}}</content>
     </property>
     <property>
-      <element>.topic-actions&gt;.right&gt;.topic-addthis</element>
+      <element>.topic .actions&gt;.right&gt;.topic-addthis</element>
     </property>
     <property>
       <order>2</order>
@@ -494,7 +494,7 @@ $services.localization.render('tour.topicTour.socialMedia.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -635,7 +635,7 @@ $services.localization.render('tour.topicTour.topicModeration.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -776,7 +776,7 @@ $services.localization.render('tour.topicTour.vote.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>
@@ -917,7 +917,7 @@ $services.localization.render('tour.topicTour.addAnswer.content')
       <content>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>content</name>
         <number>3</number>
         <picker>0</picker>

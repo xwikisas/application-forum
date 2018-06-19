@@ -122,16 +122,15 @@ public class ForumsTest extends AbstractTest
         Assert.assertEquals(true, flagTopicView.checkFlaggedAnswer());
 
         // Add multiple comments.
-        createComment(topicViewPage, "Hello\\nworld!\\n!@#$%^&*()_\\\"';:`~1");
-        createComment(topicViewPage, "Another message");
+        createComment(flagTopicView, "Hello\\nworld!\\n!@#$%^&*()_\\\"';:`~1");
+        createComment(flagTopicView, "Another message");
 
         cleanUp(FORUM_TITLE);
     }
 
     private void createComment(TopicViewPage topicViewPage, String comment)
     {
-        CommentAddElement commentAddForm = topicViewPage.clickAddCommentButton();
-        commentAddForm.getEditForm().setComment(comment);
+        topicViewPage.addComment(comment);
     }
 
     void createAnswer(TopicViewPage topicViewPage, String answer)

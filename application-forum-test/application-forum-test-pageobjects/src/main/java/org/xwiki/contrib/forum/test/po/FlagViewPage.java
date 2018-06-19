@@ -48,7 +48,8 @@ public class FlagViewPage extends BaseElement
 
     public TopicViewPage clickTargetURL()
     {
+        String url = target.getAttribute("href");
         target.click();
-        return TopicViewPage.gotoPage(target.getAttribute("href"));
+        return TopicViewPage.gotoPage(url);
     }
 }

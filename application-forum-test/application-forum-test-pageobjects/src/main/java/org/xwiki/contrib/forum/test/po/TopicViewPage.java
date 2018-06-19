@@ -57,7 +57,7 @@ public class TopicViewPage extends ViewPage
     @FindBy(css = ".answers .answer:first-child .comments .comment:first-of-type .button[type=submit]")
     private WebElement addCommentButton;
 
-    @FindBy(css = "answer:target")
+    @FindBy(css = ".answer:target .answer-reply")
     private WebElement answerTarget;
 
     // Tour steps
@@ -111,15 +111,6 @@ public class TopicViewPage extends ViewPage
     }
 
     /**
-     * @return the form to enter new comment
-     */
-    public CommentAddElement clickAddCommentActivator()
-    {
-        CommentAddElement commentAddForm = new CommentAddElement();
-        return commentAddForm;
-    }
-
-    /**
      * @return the topic description
      */
     public String getDescription()
@@ -164,14 +155,11 @@ public class TopicViewPage extends ViewPage
         step4.click();
         step5.click();
     }
-    
-    /**
-     * @return the form to enter new answer
-     */
-    public CommentAddElement clickAddCommentButton()
+
+    public void addComment(String comment)
     {
-        addCommentButton.click();
         CommentAddElement commentAddForm = new CommentAddElement();
-        return commentAddForm;
+        commentAddForm.getEditForm().setComment(comment);
+        addCommentButton.click();
     }
 }

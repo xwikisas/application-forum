@@ -185,7 +185,7 @@
     #if ("$!replyTo" != '')
       #set ($replyAnchor = "xwikicomment_${conversationId}_${replyTo}")
     #end
-    #set ($redirectURL = $xwiki.getDocument($doc.fullName, 'view', '', $replyAnchor))
+    #set ($redirectURL = $xwiki.getURL($doc.fullName, 'view', '', $replyAnchor))
     #if ($xcontext.user != 'XWiki.XWikiGuest')
       &lt;div class="comment user"&gt;
         &lt;form id="${conversationId}_addcommentform" action="$commentDoc.getURL('commentadd', $escapetool.url({'xredirect': $redirectURL}))" method="post" class="AddComment"&gt;
