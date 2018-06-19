@@ -534,23 +534,6 @@ Topic Metadata
   box-sizing: content-box;
 }
 /*
-Topic Actions
---------------------------------------------------------------------------------------------------
-*/
-.topic-actions-permalink {
-  float: left;
-  display: inline-block;
-  line-height: 1em;
-  margin: 0 10px;
-}
-.topic-actions-permalink a {
-  background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -700px -100px;
-  font-size: 0;  padding: 10px;
-}
-.topic-actions-permalink a:hover {
-  background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -700px -150px;
-}
-/*
 Permalink modal box
 */
 .permalinkBox .xdialog-box input.full {
@@ -559,7 +542,7 @@ Permalink modal box
 /*
 Delete modal box
 */
-.topic-actions .center {
+.topic .actions .center {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -400px 0px;
   display: inline-block;
   font-size: 0;
@@ -567,13 +550,13 @@ Delete modal box
   padding: 20px;
   text-align: center;
 }
-.topic-actions .center:hover {
+.topic .actions .center:hover {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -400px -50px;  
 }
-.topic-actions .no-hover:hover {
+.topic .actions .no-hover:hover {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -400px 0px;
 }
-.topic-actions .right {
+.topic .actions .right {
   float: right; display: inline-block;
   width: 40%;
   text-align: right;
@@ -776,14 +759,19 @@ Answers and Comments for a Topic
   display: inline-block;
 }
 
-/* 
+/*
 Limit content / make it responsive
 --------------------------------------------------------------------------------------------------
 */
-.answer-content .actions .flag, .answer-content .actions .conversation-permalink, 
-.comment-content .actions .flag, .comment-content .actions .commentreply, .comment-content .actions .conversation-permalink {
-  float: left; 
-  display: inline-block;    
+.answer-content .actions .flag,
+.answer-content .actions .conversation-permalink,
+.comment-content .actions .flag,
+.comment-content .actions .conversation-permalink
+.comment-content .actions .commentreply 
+.topic .actions .actions .flag,
+.topic .actions .actions .conversation-permalink,{
+  float: left;
+  display: inline-block;
   height: 1em;
   line-height: 1em;
   margin-right: 10px;
@@ -791,7 +779,7 @@ Limit content / make it responsive
 
 .answer-content .actions .flag a,
 .comment-content .actions .flag a,
-.topic-actions .flag a
+.topic .actions .flag a
 {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px 0px;
   font-size: 0;
@@ -800,17 +788,21 @@ Limit content / make it responsive
 
 .answer-content .actions .flag a:hover,
 .comment-content .actions .flag a:hover,
-.topic-actions .flag a:hover {
+.topic .actions .flag a:hover {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -300px -100px;
 }
 
-.answer-content .actions .conversation-permalink a, .comment-content .actions .conversation-permalink a {
+.answer-content .actions .conversation-permalink a,
+.comment-content .actions .conversation-permalink a,
+.topic .actions .conversation-permalink a {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -700px -100px;
   font-size: 0;
   padding: 10px;
 }
 
-.answer-content .actions .conversation-permalink a:hover, .comment-content .actions .conversation-permalink a:hover {
+.answer-content .actions .conversation-permalink a:hover,
+.comment-content .actions .conversation-permalink a:hover,
+.topic .actions .conversation-permalink a:hover, {
   background: transparent url('$imageDoc.getAttachmentURL("forums.png")') no-repeat -700px -150px;
 }
 

@@ -115,33 +115,36 @@
 ##
 #macro(displayComment $comment $commentDoc)
   ## compute the conversation id to make proper permalinks for comments
-  #set ($conversationId = $commentDoc.documentReference.lastSpaceReference.name)
-  &lt;div id="xwikicomment_${conversationId}_${comment.number}" objtype="comment" class="comment"&gt;
+  #set ($answerName = $commentDoc.documentReference.lastSpaceReference.name)
+  #set ($conversationId = "xwikicomment_${answerName}_${comment.number}")
+  &lt;div id="$escapetool.xml($conversationId)" objtype="comment" class="comment"&gt;
     &lt;div class="comment-layout"&gt;
       &lt;span class="user-avatar"&gt;
-        #if ("$!comment.replyto" == '')#smallUserAvatar($comment.author)#{else}#smallUserAvatar($comment.author)#end
-      &lt;/span&gt; 
+        #smallUserAvatar($comment.author)
+      &lt;/span&gt;
       &lt;span class="comment-meta"&gt;
         &lt;span class="user"&gt;$!xwiki.getUserName($doc.display('author', 'view', $comment))&lt;/span&gt;
-        #set ($date = $comment.getProperty('date').value)
+        #set ($date = $comment.getValue('date'))
         &lt;span class="time"&gt;$!xwiki.formatDate($date)&lt;/span&gt;
       &lt;/span&gt;
       &lt;div class="comment-content"&gt;
-        $commentDoc.getRenderedContent($comment.getProperty('comment').getValue(), $doc.getSyntax().toIdString())
+        $commentDoc.getRenderedContent($comment.getValue('comment'), $doc.syntax.toIdString())
         &lt;span class="actions"&gt;
-          #getFlagAction($doc.fullName "xwikicomment_${conversationId}_${comment.number}")
+          #getFlagAction($doc.fullName $conversationId)
           ## compose the comment permalink in conversation carefully, taking care of making it point to the article's conversation view and not to the conversation itself
-          #set ($commentPermalinkInConversation = $doc.getURL('view'))
-          #set ($parentArticle = $doc.parent)
-          &lt;span class="conversation-permalink"&gt;
-            &lt;a class="permalink" href="$escapetool.xml($commentPermalinkInConversation)#xwikicomment_${conversationId}_${comment.number}" title="$services.localization.render('core.viewers.comments.permalink')"&gt;$services.localization.render('core.viewers.comments.permalink')&lt;/a&gt;
-          &lt;/span&gt;
+          #set ($permalinkURL = $xwiki.getURL($doc.fullName, 'view', '', $conversationId))
+          #getPermalinkAction($permalinkURL)
           #if ($commentDoc.hasAccessLevel('comment'))
+            #set ($commentReplyQueryString = $escapetool.url({'replyto': $comment.number,
+                                                              'replytoconversation': $commentDoc.fullName}))
+            #set ($commentReplyURL = ($xwiki.getURL($doc.fullName, 'view', $commentReplyQueryString, $conversationId)))
             &lt;span class="commenttool commentreply"&gt;
-              &lt;a class="commentreply" href="$escapetool.xml($xredirect.replaceAll('&amp;?replyto=\d++', ''))&amp;amp;replyto=${comment.number}&amp;amp;replytoconversation=${escapetool.url($commentDoc.fullName)}#xwikicomment_${conversationId}_${comment.number}" title="$services.localization.render('core.viewers.comments.reply')"#if ("$!replyTo" == "${comment.number}" &amp;&amp; "$!replyToConversation" == "$!commentDoc.fullName") style="display: none;"#end&gt;$services.localization.render('core.viewers.comments.reply')&lt;/a&gt;
+              &lt;a class="commentreply" href="$commentReplyURL" title="$services.localization.render('core.viewers.comments.reply')"&gt;
+                $services.localization.render('core.viewers.comments.reply')
+              &lt;/a&gt;
             &lt;/span&gt;
           #end
-        &lt;/span&gt;    
+        &lt;/span&gt;
       &lt;/div&gt;&lt;!-- /.comment-content --&gt;
     &lt;/div&gt; &lt;!-- /.comment-layout --&gt;
     &lt;div class="comment-moderation"&gt;
@@ -154,11 +157,20 @@
                                                   'xredirect': $commentEditRedirect,
                                                   'xpage': 'xpart',
                                                   'vm': 'commentsinline.vm'}))
-        &lt;a class="edit" href="$commentDoc.getURL('view', $editQueryString)" title="$services.localization.render('core.viewers.comments.edit')"&gt;
+        #set ($editURL = $commentDoc.getURL('view', $editQueryString))
+        &lt;a class="edit" href="$editURL" title="$services.localization.render('core.viewers.comments.edit')"&gt;
           $services.localization.render('core.viewers.comments.edit')
         &lt;/a&gt;
         ## delete
-        &lt;a class="delete" href="$xwiki.getURL('ForumCode.Actions', 'view', "action=deletecomment&amp;amp;form_token=$!{services.csrf.getToken()}&amp;amp;conversationdoc=${escapetool.url($commentDoc.fullName)}&amp;amp;commentnumber=${comment.number}&amp;amp;xredirect=$escapetool.url($xredirect)")" title="$services.localization.render('core.viewers.comments.delete')"&gt;$services.localization.render('core.viewers.comments.delete')&lt;/a&gt;
+        #set ($deleteQueryString = $escapetool.url({'action': 'deletecomment',
+                                                    'form_token': $services.csrf.token,
+                                                    'conversationdoc': $commentDoc.fullName,
+                                                    'commentnumber': $comment.number,
+                                                    'xredirect': $xredirect}))
+        #set ($deleteURL = $xwiki.getURL('ForumCode.Actions', 'view', $deleteQueryString))
+        &lt;a class="delete" href="$deleteURL" title="$services.localization.render('core.viewers.comments.delete')"&gt;
+          $services.localization.render('core.viewers.comments.delete')
+        &lt;/a&gt;
       #end
     &lt;/div&gt;
 #end
@@ -167,36 +179,38 @@
   ## compute the conversation id to make proper permalinks for comments
   #set ($conversationId = $commentDoc.documentReference.lastSpaceReference.name)
   #if ($commentDoc.hasAccessLevel('comment'))
-    ## prepare a nice redirect URL: for the reply form, redirect to the comemnt to which we replied, 
+    ## prepare a nice redirect URL: for the reply form, redirect to the comemnt to which we replied,
     ## for the new comment form, redirect to the conversation itself
+    #set ($replyAnchor = $conversationId)
     #if ("$!replyTo" != '')
-      #set ($redirectURL = $doc.getURL('view', "#xwikicomment_${conversationId}_${replyTo}"))
-    #else
-      #set ($redirectURL = $doc.getURL('view', "#${conversationId}"))
+      #set ($replyAnchor = "xwikicomment_${conversationId}_${replyTo}")
     #end
+    #set ($redirectURL = $xwiki.getDocument($doc.fullName, 'view', '', $replyAnchor))
     #if ($xcontext.user != 'XWiki.XWikiGuest')
       &lt;div class="comment user"&gt;
-        &lt;form id="${conversationId}_addcommentform" action="$escapetool.xml($commentDoc.getURL('commentadd', "xredirect=$escapetool.url($redirectURL)"))" method="post" class="AddComment"&gt;
+        &lt;form id="${conversationId}_addcommentform" action="$commentDoc.getURL('commentadd', $escapetool.url({'xredirect': $redirectURL}))" method="post" class="AddComment"&gt;
           &lt;div class="comment-layout"&gt;
             &lt;span class="user-avatar"&gt;
              #mediumUserAvatar($xcontext.user)
             &lt;/span&gt;
             &lt;div class="comment-reply"&gt;
               &lt;span class="comment-meta"&gt;
+                $services.localization.render('core.viewers.comments.add.guestName.prompt')
                 #if ($xcontext.user != 'XWiki.XWikiGuest')
-                  $services.localization.render('core.viewers.comments.add.guestName.prompt') $xwiki.getUserName($xcontext.user)
+                  $xwiki.getUserName($xcontext.user)
                   &lt;input type="hidden" name="${xCommentClass}_author" value="$xcontext.user"/&gt;
                 #else
-                  $services.localization.render('core.viewers.comments.add.guestName.prompt') 
                   &lt;input type="text" id="${xCommentClass}_author" name="${xCommentClass}_author" value="$author"/&gt;
-                  &lt;a href="$escapetool.xml($xwiki.getURL('XWiki.XWikiLogin', 'login', "xredirect=$escapetool.url($xwiki.getRequestURL())"))"&gt;$services.localization.render('login')&lt;/a&gt;
+                  &lt;a href="$xwiki.getURL('XWiki.XWikiLogin', 'login', $escapetool.url({'xredirect': $xwiki.requestURL}))"&gt;
+                    $services.localization.render('login')
+                  &lt;/a&gt;
                 #end
               &lt;/span&gt;
               &lt;div class="comment-content"&gt;
                 ## CSRF prevention
-                &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
+                &lt;input type="hidden" name="form_token" value="$services.csrf.token" /&gt;
                 &lt;input type="hidden" name="${xCommentClass}_date" value=""/&gt;
-                &lt;input type="hidden" name="${xCommentClass}_replyto" value="$!replyTo"/&gt;
+                &lt;input type="hidden" name="${xCommentClass}_replyto" value="$escapetool.xml($!replyTo)"/&gt;
                 &lt;div class="commentcontainer"&gt;
                   &lt;label for="${xCommentClass}_comment_${conversationId}"&gt;$services.localization.render('core.viewers.comments.add.comment.label')&lt;/label&gt;
                   &lt;textarea id='${xCommentClass}_comment_${conversationId}' rows="5" cols="80" name="${xCommentClass}_comment" class="maximizable"&gt;$!comment&lt;/textarea&gt;
@@ -214,12 +228,12 @@
                     &lt;a class="cancel secondary button" href="$doc.getURL('view')"&gt;$services.localization.render('core.viewers.comments.add.cancel')&lt;/a&gt;
                   &lt;/span&gt;
                 &lt;/div&gt;
-              &lt;/div&gt;&lt;!-- comment-content --&gt; 
-            &lt;/div&gt;&lt;!-- comment-reply --&gt; 
-          &lt;/div&gt;&lt;!-- comment-layout --&gt; 
+              &lt;/div&gt;&lt;!-- comment-content --&gt;
+            &lt;/div&gt;&lt;!-- comment-reply --&gt;
+          &lt;/div&gt;&lt;!-- comment-layout --&gt;
         &lt;/form&gt;
-      &lt;/div&gt;  
-    #end   
+      &lt;/div&gt;
+    #end
   #else
     &lt;div class="answer user"&gt;
       #if ($doc.space.startsWith('Group_') || $doc.space.startsWith('Discussions_Group_'))
@@ -490,9 +504,7 @@
 ##
 #macro(displayForumActions $topicDoc)
   #getFlagAction($topicDoc.fullName '')
-  &lt;span class="topic-actions-permalink" title="$services.localization.render('conversation.permalink.tooltip')"&gt;
-   &lt;a href="$topicDoc.getURL()"&gt;&lt;/a&gt;
-  &lt;/span&gt;
+  #getPermalinkAction($topicDoc.URL)
 #end
 ##
 #macro(displayForumTopic $topic $withdetails)
@@ -532,7 +544,7 @@
           &lt;div class="topic-description"&gt;
             #cleanHTMLMacro($!topicDescription)
             #if ($withdetails)
-              &lt;div class="topic-actions"&gt;
+              &lt;div class="actions"&gt;
                 &lt;span class="left"&gt;
                   #displayForumActions($topicDoc)
                 &lt;/span&gt;
@@ -619,11 +631,8 @@
                   #cleanHTMLMacro($topicAnswerDoc.description)
                   &lt;span class="actions"&gt;
                     #getFlagAction($doc.fullName $topicAnswerID)
-                    &lt;span class="conversation-permalink"&gt;
-                      &lt;a class="permalink" href="$escapetool.xml($doc.getURL('view'))#${topicAnswerID}" title="$services.localization.render('conversation.permalink.tooltip')"&gt;
-                      ## We need to put image here since we cannot do background + indented text + fixed width as we do for comment tools, because overflow: hidden is messing up the display of the other icons.
-                      &lt;/a&gt;
-                    &lt;/span&gt;
+                    #set ($permalinkURL = $xwiki.getURL($doc.fullName, 'view', '', $topicAnswerID))
+                    #getPermalinkAction($permalinkURL)
                   &lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;&lt;!-- / .answer-reply --&gt;
@@ -899,6 +908,14 @@
       &lt;a href="$flagURL"&gt;$services.localization.render("conversations.flag.button")&lt;/a&gt;
     &lt;/span&gt;
   #end
+#end
+
+#macro (getPermalinkAction $url)
+  &lt;span class="conversation-permalink"&gt;
+      &lt;a class="permalink" href="$url" title="$services.localization.render('core.viewers.comments.permalink')"&gt;
+      $services.localization.render('core.viewers.comments.permalink')
+      &lt;/a&gt;
+  &lt;/span&gt;
 #end
 {{/velocity}}</content>
   <object>
