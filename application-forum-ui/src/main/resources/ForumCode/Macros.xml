@@ -210,7 +210,7 @@
                 ## CSRF prevention
                 &lt;input type="hidden" name="form_token" value="$services.csrf.token" /&gt;
                 &lt;input type="hidden" name="${xCommentClass}_date" value=""/&gt;
-                &lt;input type="hidden" name="${xCommentClass}_replyto" value="$escapetool.xml($!replyTo)"/&gt;
+                &lt;input type="hidden" name="${xCommentClass}_replyto" value="$!escapetool.xml($replyTo)"/&gt;
                 &lt;div class="commentcontainer"&gt;
                   &lt;label for="${xCommentClass}_comment_${conversationId}"&gt;$services.localization.render('core.viewers.comments.add.comment.label')&lt;/label&gt;
                   &lt;textarea id='${xCommentClass}_comment_${conversationId}' rows="5" cols="80" name="${xCommentClass}_comment" class="maximizable"&gt;$!comment&lt;/textarea&gt;
@@ -826,7 +826,10 @@
       &lt;/dt&gt;
       &lt;dd&gt;
         #set ($title = $request.title)
-        &lt;input name='title' type="text" value="#if ("$!title" != '')$!{escapetool.xml($title)}#else$!{escapetool.xml($doc.title)}#end" id="forum-title" /&gt;
+        #if ("$!title" == '')
+          #set ($title = $doc.title)
+        #end
+        &lt;input name='title' type="text" value="$escapetool.xml($title)" id="forum-title" /&gt;
       &lt;/dd&gt;
   #end
 #end
