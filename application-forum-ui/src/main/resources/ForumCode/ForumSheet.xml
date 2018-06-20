@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.2" reference="ForumCode.ForumSheet" locale="">
+<xwikidoc version="1.3" reference="ForumCode.ForumSheet" locale="">
   <web>ForumCode</web>
   <name>ForumSheet</name>
   <language/>
@@ -91,8 +91,6 @@
   &lt;div class="topics"&gt;
     #displayTopics()
   &lt;/div&gt;
-  ## Enable WYSIWYG editors loading when adding comments
-  #displayEditors()
   {{/html}}
 #end
 #set ($docextras = [])
