@@ -374,21 +374,7 @@ viewers.Comments = Class.create({
       item.observe('click', function(event) {
         item.blur();
         event.stop();
-        var permalinkBox = new XWiki.widgets.ConfirmationBox(
-          {
-            onYes : function () {
-              window.location = item.href;
-            }
-          },
-        /* Interaction parameters */
-          {
-            confirmationText: "$services.localization.render('core.viewers.comments.permalink'): &lt;input type='text' class='full' value='" + item.href + "'/&gt;",
-            yesButtonText: "$services.localization.render('core.viewers.comments.permalink.goto')",
-            noButtonText : "$services.localization.render('core.viewers.comments.permalink.hide')"
-          }
-        );
-        permalinkBox.dialog.addClassName('permalinkBox')
-        permalinkBox.dialog.down('input[type="text"]').select();
+        showPermalinkBox(item);
       });
     });
   },
@@ -772,25 +758,10 @@ viewers.Comments = Class.create({
     conversationPermalink.observe('click', function(event) {
       conversationPermalink.blur();
       event.stop();
-      var permalinkBox = new XWiki.widgets.ConfirmationBox(
-        {
-          onYes : function () {
-            window.location = conversationPermalink.href;
-          }
-        },
-        /* Interaction parameters */
-        {
-          confirmationText: "$services.localization.render('core.viewers.comments.permalink'): &lt;input type='text' class='full' value='" + conversationPermalink.href + "'/&gt;",
-          yesButtonText: "$services.localization.render('core.viewers.comments.permalink.goto')",
-          noButtonText : "$services.localization.render('core.viewers.comments.permalink.hide')"
-        }
-      );
-      permalinkBox.dialog.addClassName('permalinkBox')
-      permalinkBox.dialog.down('input[type="text"]').select();
+      showPermalinkBox(conversationPermalink);
     });
   }
 });
-  
 function conversationLikeHandler(event) {
   console.log('In click');
 
@@ -878,26 +849,12 @@ function init() {
   });
 
   // add permalink for topic
-  $$('.topic-actions-permalink a').each(function(topicPermalink) {
-    if (topicPermalink) {
-      topicPermalink.observe('click', function(event) {
-        topicPermalink.blur();
+  $$('.topic-description a.permalink').each(function(item) {
+    if (item) {
+      item.observe('click', function(event) {
+        item.blur();
         event.stop();
-        var permalinkBox = new XWiki.widgets.ConfirmationBox(
-          {
-            onYes : function () {
-              window.location = topicPermalink.href;
-            }
-          },
-          /* Interaction parameters */
-          {
-            confirmationText: "$services.localization.render('core.viewers.comments.permalink'): &lt;input type='text' class='full' value='" + topicPermalink.href + "'/&gt;",
-            yesButtonText: "$services.localization.render('core.viewers.comments.permalink.goto')",
-            noButtonText : "$services.localization.render('core.viewers.comments.permalink.hide')"
-          }
-        );
-        permalinkBox.dialog.addClassName('permalinkBox')
-        permalinkBox.dialog.down("input[type='text']").select();
+        showPermalinkBox(item);
       });
     }
   });
@@ -947,6 +904,22 @@ function init() {
       }
     });
   });
+}
+
+function showPermalinkBox(item) {
+  var permalinkBox = new XWiki.widgets.ConfirmationBox({
+    onYes : function () {
+      window.location = item.href;
+    }
+  },
+  /* Interaction parameters */
+  {
+    confirmationText: "$services.localization.render('core.viewers.comments.permalink'): &lt;input type='text' class='full' value='" + item.href + "'/&gt;",
+    yesButtonText: "$services.localization.render('core.viewers.comments.permalink.goto')",
+    noButtonText : "$services.localization.render('core.viewers.comments.permalink.hide')"
+  });
+  permalinkBox.dialog.addClassName('permalinkBox')
+  permalinkBox.dialog.down("input[type='text']").select();
 }
 
 // When the document is loaded, trigger the Comments form enhancements.
