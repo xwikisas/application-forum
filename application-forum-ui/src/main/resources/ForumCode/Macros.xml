@@ -304,8 +304,10 @@
 ##
 #macro (displayAddConversationButton $space $entity)
   #set ($uniquePageReference = '')
-  ## Use a fake document in order to use the user input for topics and answers creation (title and description to compute the name) 
-  #set ($fakeEntityDoc = $xwiki.getDocument('Forums.FakeDocument'))
+  ## Use a fake document in order to use the user input for topics and answers creation (title and description to compute the name)
+  #set ($spaceReference = $services.model.resolveSpace($space))
+  #set ($fakeEntityRef = $services.model.createDocumentReference('FakeDocument', $spaceReference))
+  #set ($fakeEntityDoc = $xwiki.getDocument($fakeEntityRef))
   #if ($fakeEntityDoc.hasAccessLevel('edit'))
     &lt;div class="addconversation-container add${entity.toLowerCase()}-container"&gt;
       &lt;div class="addconversation-container-button add${entity.toLowerCase()}-container-button buttonwrapper"&gt;
