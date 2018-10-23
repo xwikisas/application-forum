@@ -123,7 +123,7 @@
         #smallUserAvatar($comment.author)
       &lt;/span&gt;
       &lt;span class="comment-meta"&gt;
-        &lt;span class="user"&gt;$!xwiki.getUserName($doc.display('author', 'view', $comment))&lt;/span&gt;
+        &lt;span class="user"&gt;$!xwiki.getUserName($comment.getValue('author'))&lt;/span&gt;
         #set ($date = $comment.getValue('date'))
         &lt;span class="time"&gt;$!xwiki.formatDate($date)&lt;/span&gt;
       &lt;/span&gt;
