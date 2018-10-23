@@ -303,11 +303,10 @@
 #end
 ##
 #macro (displayAddConversationButton $space $entity)
-  ## Use a unique fake document for each request, in order to use the user input for topics and answers creation.
-  ## Use a mix of timestamp and random in order to get unique name for each fake document.
-  ## Fake documents are deleted by a refactoring step, in ForumCode.Actions#getForumEntityDoc.
+  #set ($uniquePageReference = '')
+  ## Use a fake document in order to use the user input for topics and answers creation (title and description to compute the name)
   #set ($spaceReference = $services.model.resolveSpace($space))
-  #set ($fakeEntityRef = $services.model.createDocumentReference("FakeDocument_${datetool.date.time}_${mathtool.random(1, 99)}", $spaceReference))
+  #set ($fakeEntityRef = $services.model.createDocumentReference('FakeDocument', $spaceReference))
   #set ($fakeEntityDoc = $xwiki.getDocument($fakeEntityRef))
   #if ($fakeEntityDoc.hasAccessLevel('edit'))
     &lt;div class="addconversation-container add${entity.toLowerCase()}-container"&gt;
@@ -319,7 +318,6 @@
         #set ($fakeEntity = $fakeEntityDoc.newObject("ForumCode.${entity}Class"))
         &lt;form class="#if ("$!request.action" != "add${entity.toLowerCase()}")hidden#end addconversation xform" method="post" action="$xwiki.getURL('ForumCode.Actions')"&gt;
           &lt;div&gt;
-            &lt;input type="hidden" name="fakeDocName" value="$escapetool.xml($fakeEntityDoc.fullName)" /&gt;
             &lt;input type="hidden" name="action" value="add${entity.toLowerCase()}" /&gt;
             &lt;input type="hidden" name="space" value="$escapetool.xml($space)" /&gt;
             &lt;input type="hidden" name="parent" value="$escapetool.xml($doc.fullName)" /&gt;

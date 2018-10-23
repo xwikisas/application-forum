@@ -69,18 +69,18 @@
     #set ($title = $request.title.trim())
     #if ("$!title" != '')
       #if ("$!request.space" != '')
-        #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
+        #getForumEntityDoc($request.space $title $entityDoc)
         #if ($entityDoc.hasAccessLevel('edit'))
           ## Add the TopicClass object
-          #set ($discard = $entityDoc.updateObjectFromRequest('ForumCode.TopicClass'))
+          #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.TopicClass'))
           ## We add a XWiki.AverageRatingsClass object to simplify sorting topics by votes
           ## when some topics don't have any votes.
-          #set ($averageObj = $entityDoc.newObject('XWiki.AverageRatingsClass'))
-          #set ($discard = $averageObj.set('nbvotes', 0))
-          #set ($discard = $averageObj.set('method', 'average'))
-          #set ($discard = $entityDoc.setTitle($title))
-          #set ($discard = $entityDoc.setParent("$!request.parent"))
-          #set ($discard = $entityDoc.save())
+          #set($averageObj = $entityDoc.newObject('XWiki.AverageRatingsClass'))
+          #set($discard = $averageObj.set('nbvotes', 0))
+          #set($discard = $averageObj.set('method', 'average'))
+          #set($discard = $entityDoc.setTitle($title))
+          #set($discard = $entityDoc.setParent("$!request.parent"))
+          #set($discard = $entityDoc.saveWithProgrammingRights())
           #if ("$!request.xredirect" != '')
             #set($discard = $response.sendRedirect("$!request.xredirect"))
           #end
@@ -98,7 +98,7 @@
   #elseif ("$!request.action" == 'addanswer')
     #if ("$!request.space" != '')
       #set ($title = "Answer_${datetool.date.time}_${mathtool.random(1, 99)}")
-      #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
+      #getForumEntityDoc($request.space $title $entityDoc)
       #if ($entityDoc.hasAccessLevel('edit')) 
         #set($discard = $entityDoc.setParent("${request.parent}"))
         #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.AnswerClass'))
@@ -229,15 +229,10 @@
     #set($discard = $xwiki.getDocument($flag).delete())
   #end
 #end
-#macro (getForumEntityDoc $parentSpace $fakeDocName $title $entityDoc)
+#macro (getForumEntityDoc $parentSpace $title $entityDoc)
   #set ($parentReference = $services.model.resolveSpace($parentSpace))
   #set ($entitySpaceReference = $services.model.createSpaceReference($title, $parentReference))
   #set ($entityDocReference = $services.model.createDocumentReference('WebHome', $entitySpaceReference))
-  ## Rename the fake document with the real one in order to keep initial actions performed in the form (e.g: attaching an image).
-  #set ($fakeDocRef = $services.model.resolveDocument($fakeDocName))
-  #set ($renameRequest = $services.refactoring.createRenameRequest($fakeDocRef, $entityDocReference))
-  #set ($discard = $renameRequest.setDeleteSource(true))
-  #set ($discard = $services.refactoring.rename($renameRequest).join())
   #set ($entityDoc = $xwiki.getDocument($entityDocReference))
 #end</content>
   <object>
