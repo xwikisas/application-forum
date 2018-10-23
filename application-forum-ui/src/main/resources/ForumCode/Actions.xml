@@ -69,7 +69,7 @@
     #set ($title = $request.title.trim())
     #if ("$!title" != '')
       #if ("$!request.space" != '')
-        #getForumEntityDoc($request.space $title $entityDoc)
+        #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
         #if ($entityDoc.hasAccessLevel('edit'))
           ## Add the TopicClass object
           #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.TopicClass'))
@@ -98,7 +98,7 @@
   #elseif ("$!request.action" == 'addanswer')
     #if ("$!request.space" != '')
       #set ($title = "Answer_${datetool.date.time}_${mathtool.random(1, 99)}")
-      #getForumEntityDoc($request.space $title $entityDoc)
+      #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
       #if ($entityDoc.hasAccessLevel('edit')) 
         #set($discard = $entityDoc.setParent("${request.parent}"))
         #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.AnswerClass'))
@@ -229,10 +229,15 @@
     #set($discard = $xwiki.getDocument($flag).delete())
   #end
 #end
-#macro (getForumEntityDoc $parentSpace $title $entityDoc)
+#macro (getForumEntityDoc $parentSpace $fakeDocName $title $entityDoc)
   #set ($parentReference = $services.model.resolveSpace($parentSpace))
   #set ($entitySpaceReference = $services.model.createSpaceReference($title, $parentReference))
   #set ($entityDocReference = $services.model.createDocumentReference('WebHome', $entitySpaceReference))
+  ## Rename the fake document with the real one in order to keep initial actions performed in the form (e.g: attaching an image).
+  #set ($fakeDocRef = $services.model.resolveDocument($fakeDocName))
+  #set ($renameRequest = $services.refactoring.createRenameRequest($fakeDocRef, $entityDocReference))
+  #set ($discard = $renameRequest.setDeleteSource(true))
+  #set ($discard = $services.refactoring.rename($renameRequest).join())
   #set ($entityDoc = $xwiki.getDocument($entityDocReference))
 #end</content>
   <object>
