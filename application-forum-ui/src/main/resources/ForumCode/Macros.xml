@@ -840,7 +840,7 @@
 #end
 ##
 #macro(getTopicAnswers $space $topicAnswers)
-  #set ($discard = $topicAnswers.addAll($services.query.xwql('from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace order by doc.date desc').bindValue('topicSpace', "${topicSpace}.%").execute()))
+  #set ($discard = $topicAnswers.addAll($services.query.xwql('from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace order by doc.date desc').bindValue('topicSpace', "${space}.%").execute()))
 #end
 
 #macro (getFlagAction $target $anchor)
