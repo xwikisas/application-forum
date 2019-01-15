@@ -391,7 +391,13 @@
   #set ($forumReference = $services.model.resolveDocument($forum))
   #set ($forumSpace = $services.model.serialize($forumReference.parent))
   ## Depending on XE version, we consider parent-child relationship for Pre NS or space-subspace for NS.
-  #set ($hierarchyCondition = 'doc.space like :forumSpace and ')
+  #if ($services.query.parameter())
+    ## Binding a LIKE value starting 8.4.5, 9.3RC1
+    #set ($hierarchyCondition = 'doc.space like :forumSpace and ')
+  #else
+    ## Binding a LIKE value before 8.4.5, 9.3RC1
+    #set ($hierarchyCondition = "doc.space like :forumSpace escape '!' and ")
+  #end
   #set ($templateCondition = "doc.fullName&lt;&gt;'ForumCode.TopicTemplate' and ")
   #if ($isPanelSort != 1)
     #set ($currentorder = $request.sortorder)
@@ -408,9 +414,15 @@
   #end
   #if ($sortField == 'votes')
     ## sort by votes - requires programming rights
-    #set ($query = $services.query.hql(", BaseObject as obj, BaseObject as votesobj, IntegerProperty as nbvotes where $condition obj.name = doc.fullName and obj.className = 'ForumCode.TopicClass' and votesobj.name=doc.fullName and votesobj.className='XWiki.AverageRatingsClass' and votesobj.id=nbvotes.id.id and nbvotes.id.name='nbvotes' order by nbvotes.value $!{currentorder}").setOffset($start).setLimit($nb))   
+    #set ($query = $services.query.hql(", BaseObject as obj, BaseObject as votesobj, IntegerProperty as nbvotes where $condition obj.name = doc.fullName and obj.className = 'ForumCode.TopicClass' and votesobj.name=doc.fullName and votesobj.className='XWiki.AverageRatingsClass' and votesobj.id=nbvotes.id.id and nbvotes.id.name='nbvotes' order by nbvotes.value $!{currentorder}").setOffset($start).setLimit($nb))
     #if (!$allTopics)
-      #set ($discard = $query.bindValue('forumSpace', "${forumSpace}.%"))
+      #if ($services.query.parameter())
+        ## Binding a LIKE value starting 8.4.5, 9.3RC1
+        #set ($query = $query.bindValue('forumSpace').literal("${forumSpace}.").anyChars().query())
+      #else
+        ## Binding a LIKE value before 8.4.5, 9.3RC1
+        #set ($query = $query.bindValue('forumSpace', $forumSpace.replaceAll('([%_!])', '!$1').concat('.%')))
+      #end
     #end
     #set ($result = $query.execute())
   #elseif ($sortField == 'comments')
@@ -436,7 +448,13 @@
     })
     #if (!$allTopics)
       #foreach ($query in $option.values())
-        #set ($discard = $query.bindValue('forumSpace', "${forumSpace}.%"))
+        #if ($services.query.parameter())
+          ## Binding a LIKE value starting 8.4.5, 9.3RC1
+          #set ($query = $query.bindValue('forumSpace').literal("${forumSpace}.").anyChars().query())
+        #else
+          ## Binding a LIKE value before 8.4.5, 9.3RC1
+          #set ($query = $query.bindValue('forumSpace', $forumSpace.replaceAll('([%_!])', '!$1').concat('.%')))
+        #end
       #end
     #end
     #sortAsOutterjoin($option $start $nb $currentorder $result)
@@ -444,7 +462,13 @@
     ## sort by last update date
     #set ($query = $services.query.hql(", BaseObject as obj where $condition obj.name = doc.fullName and obj.className='ForumCode.TopicClass' order by doc.date $!{currentorder}").setOffset($start).setLimit($nb))
     #if (!$allTopics)
-      #set ($discard = $query.bindValue('forumSpace', "${forumSpace}.%"))
+      #if ($services.query.parameter())
+        ## Binding a LIKE value starting 8.4.5, 9.3RC1
+        #set ($query = $query.bindValue('forumSpace').literal("${forumSpace}.").anyChars().query())
+      #else
+        ## Binding a LIKE value before 8.4.5, 9.3RC1
+        #set ($query = $query.bindValue('forumSpace', $forumSpace.replaceAll('([%_!])', '!$1').concat('.%')))
+      #end
     #end
     #set ($result = $query.execute())
   #end
@@ -840,7 +864,19 @@
 #end
 ##
 #macro(getTopicAnswers $space $topicAnswers)
-  #set ($discard = $topicAnswers.addAll($services.query.xwql('from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace order by doc.date desc').bindValue('topicSpace', "${space}.%").execute()))
+  #if ($services.query.parameter())
+    ## Binding a LIKE value starting 8.4.5, 9.3RC1
+    #set ($statement = "from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace order by doc.date desc")
+    #set ($answersQuery = $services.query.xwql($statement))
+    #set ($answersQuery = $answersQuery.bindValue('topicSpace').literal("${space}.").anyChars().query())
+  #else
+    ## Binding a LIKE value before 8.4.5, 9.3RC1
+    #set ($statement = "from doc.object(ForumCode.AnswerClass) as answer where doc.space like :topicSpace escape '!' order by doc.date desc")
+    #set ($answersQuery = $services.query.xwql($statement))
+    #set ($answersQuery = $answersQuery.bindValue('topicSpace', $space.replaceAll('([%_!])', '!$1').concat('.%')))
+  #end
+  #set ($answers = $answersQuery.execute())
+  #set ($discard = $topicAnswers.addAll($answers))
 #end
 
 #macro (getFlagAction $target $anchor)
