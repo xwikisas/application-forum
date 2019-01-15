@@ -60,8 +60,8 @@
   #set ($statement = 'from doc.object(ForumCode.TopicClass) as topic where doc.space like :space')
   #if ($services.query.parameter())
     ## Binding a LIKE value starting 8.4.5, 9.3RC1
-  	#set ($topicsQuery = $services.query.xwql($statement))
-  	#set ($topicsQuery = $topicsQuery.bindValue('space').literal("${doc.space}.").anyChars().query())
+    #set ($topicsQuery = $services.query.xwql($statement))
+    #set ($topicsQuery = $topicsQuery.bindValue('space').literal("${doc.space}.").anyChars().query())
   #else
     ## Binding a LIKE value before 8.4.5, 9.3RC1.
     #set ($statement = "$statement escape'!'")
