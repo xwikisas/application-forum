@@ -239,6 +239,9 @@
   #set ($discard = $renameRequest.setDeleteSource(true))
   #set ($discard = $services.refactoring.rename($renameRequest).join())
   #set ($entityDoc = $xwiki.getDocument($entityDocReference))
+  ## The default language is set on a document at the moment of the first edit, when the document is created.
+  ## This condition is not met with the current "Fake document" strategy and we need to explicitly set the locale.
+  #set ($discard = $entityDoc.document.setDefaultLocale($xwiki.localePreference))
 #end</content>
   <object>
     <name>ForumCode.Actions</name>
