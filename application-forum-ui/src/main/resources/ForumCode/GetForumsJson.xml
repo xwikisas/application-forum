@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.2" reference="ForumCode.GetForumsJson" locale="">
   <web>ForumCode</web>
   <name>GetForumsJson</name>
   <language/>
@@ -44,8 +44,7 @@
 #set ($map = {})
 #gridresult_buildJSON($request.classname $request.collist.split(',') $map)
 #foreach ($row in $map.get('rows'))
-  #set ($forumName  = "${row.get('doc_space')}.WebHome")
-  #set ($forumDoc   = $xwiki.getDocument($forumName))
+  #set ($forumDoc = $xwiki.getDocument($row.get('doc_fullName')))
   #set ($creatorDoc = $xwiki.getDocument($forumDoc.creator))
   #set ($discard = $row.put('doc_creator', 
     "&lt;ul class='users'&gt;
@@ -56,12 +55,12 @@
       &lt;/li&gt;
     &lt;/ul&gt;"))
   #set ($actionsLink = '')
-  #if ($xwiki.hasAccessLevel('delete', $xcontext.user, $docName))
+  #if ($xwiki.hasAccessLevel('delete', $xcontext.user, $forumDoc))
     #set ($text = $services.localization.render('platform.livetable._actions.delete'))
     #set ($deleteURL = 'javascript:void(0)')
     #set ($actionsLink = "&lt;a href='$deleteURL' class='action actiondelete deleteforum' space='$escapetool.xml($forumDoc.space)'&gt;${text}&lt;/a&gt;")
   #end
-  #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $docName))
+  #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $forumDoc))
     #set ($editURL = $forumDoc.getURL('edit'))
     #set ($text = $services.localization.render('platform.livetable._actions.edit'))
     #set ($actionsLink = "&lt;a href='$editURL' class='action actionedit'&gt;${text}&lt;/a&gt; ${actionsLink}")
