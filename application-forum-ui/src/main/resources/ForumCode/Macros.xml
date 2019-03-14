@@ -610,12 +610,19 @@
             &lt;div id="moderation-buttons"&gt;
               #set ($forumReference = $services.model.resolveDocument($topicDoc.parent))
               #if ($services.forum.hasTopicEdit($topicDoc, $forumReference))
-                &lt;a class="edit" href="$topicDoc.getURL('edit')" title="$services.localization.render('conversations.forum.edit')"&gt;$services.localization.render('conversations.forum.edit')&lt;/a&gt;
-                #set ($redirecToParentForum = $xwiki.getURL($topicDoc.parent))
-                #set ($actionParams =  "action=deleteconversation&amp;amp;form_token=$!{services.csrf.getToken()}&amp;amp;conversationdoc=${escapetool.url($topicDoc.fullName)}&amp;amp;xredirect=${escapetool.url($redirecToParentForum)}")
+                &lt;a class="edit" href="$topicDoc.getURL('edit')" title="$services.localization.render('conversations.forum.edit')"&gt;
+                  $services.localization.render('conversations.forum.edit')
+                &lt;/a&gt;
               #end
               #if ($services.forum.hasTopicDelete($topicDoc, $forumReference))
-                &lt;a class="delete" href="$xwiki.getURL('ForumCode.Actions', 'view', $actionParams)" title="$services.localization.render('conversation.forum.delete.title')"&gt;$services.localization.render('conversations.forum.delete')&lt;/a&gt;
+                #set ($deleteQueryString = $escapetool.url({'action': 'deleteconversation',
+                                                            'form_token': $services.csrf.token,
+                                                            'conversationdoc': $topicDoc.fullName,
+                                                            'xredirect': $xwiki.getURL($topicDoc.parent)}))
+                #set ($deleteURL = $xwiki.getURL('ForumCode.Actions', 'view', $deleteQueryString))
+                &lt;a class="delete" href="$deleteURL" title="$services.localization.render('conversation.forum.delete.title')"&gt;
+                  $services.localization.render('conversations.forum.delete')
+                &lt;/a&gt;
               #end
             &lt;/div&gt;
           &lt;/div&gt;
@@ -668,10 +675,18 @@
               &lt;div class="answer-moderation"&gt;
                 #set ($forumReference = $services.model.resolveDocument($doc.parent))
                 #if ($services.forum.hasAnswerEdit($topicAnswerDoc, $forumReference))
-                  &lt;a class="edit" href="$topicAnswerDoc.getURL('edit')" title="$services.localization.render('conversation.edit.title')"&gt;$services.localization.render('conversation.edit')&lt;/a&gt;
+                  &lt;a class="edit" href="$topicAnswerDoc.getURL('edit')" title="$services.localization.render('conversation.edit.title')"&gt;
+                    $services.localization.render('conversation.edit')
+                  &lt;/a&gt;
                 #end
                 #if ($services.forum.hasAnswerDelete($topicAnswerDoc, $forumReference))
-                  &lt;a class="delete" href="$xwiki.getURL('ForumCode.Actions', 'get', "action=deleteconversation&amp;amp;form_token=$!{services.csrf.getToken()}&amp;amp;conversationdoc=${escapetool.url($topicAnswerDoc.fullName)}")" title="$services.localization.render('conversation.delete.title')"&gt;$services.localization.render('conversation.delete')&lt;/a&gt;
+                  #set ($deleteQueryString = $escapetool.url({'action': 'deleteconversation',
+                                                              'form_token': $services.csrf.token,
+                                                              'conversationdoc': $topicAnswerDoc.fullName}))
+                  #set ($deleteURL = $xwiki.getURL('ForumCode.Actions', 'get', $deleteQueryString))
+                  &lt;a class="delete" href="$deleteURL")" title="$services.localization.render('conversation.delete.title')"&gt;
+                    $services.localization.render('conversation.delete')
+                  &lt;/a&gt;
                 #end
               &lt;/div&gt;&lt;!-- / .answer-moderation --&gt;
             &lt;/div&gt;&lt;!-- / .answer-layout --&gt;
