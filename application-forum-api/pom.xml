@@ -23,39 +23,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.xwiki.parent</groupId>
-    <artifactId>xwikisas-parent-platform</artifactId>
-    <version>8.4-12</version>
+    <groupId>com.xwiki.forum</groupId>
+    <artifactId>application-forum</artifactId>
+    <version>2.6-SNAPSHOT</version>
   </parent>
-  <groupId>com.xwiki.forum</groupId>
-  <artifactId>application-forum</artifactId>
-  <version>2.6-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>Forum Application - Parent POM</name>
-  <description>Forum application with multiple forums, topics, answers, comments, supporting Wysiwyg and Votes</description>
+  <artifactId>application-forum-api</artifactId>
+  <packaging>jar</packaging>
+  <name>Forum Application - API</name>
+  <description>APIs to manage forums.</description>
   <properties>
-    <licensing.version>1.13.2</licensing.version>
+    <xwiki.extension.category>api</xwiki.extension.category>
   </properties>
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/xwikisas/application-forum/issues</url>
-  </issueManagement>
-  <scm>
-    <connection>scm:git:https://github.com/xwikisas/application-forum.git</connection>
-    <developerConnection>scm:git:https://github.com/xwikisas/application-forum.git</developerConnection>
-    <url>https://github.com/xwikisas/application-forum/</url>
-    <tag>HEAD</tag>
-  </scm>
-  <modules>
-    <module>application-forum-api</module>
-    <module>application-forum-ui</module>
-  </modules>
-  <profiles>
-    <profile>
-      <id>integration-tests</id>
-      <modules>
-        <module>application-forum-test</module>
-      </modules>
-    </profile>
-  </profiles>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-component-api</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-script</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-model</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-oldcore</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+  </dependencies>
 </project>

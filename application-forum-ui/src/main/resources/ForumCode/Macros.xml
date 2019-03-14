@@ -148,12 +148,11 @@
       &lt;/div&gt;&lt;!-- /.comment-content --&gt;
     &lt;/div&gt; &lt;!-- /.comment-layout --&gt;
     &lt;div class="comment-moderation"&gt;
-      #set ($isUserComment = $services.model.resolveDocument("$!comment.getValue('author')", 'user') == $xcontext.userReference)
-      #if ($isUserComment || $doc.creator == $xcontext.user || $hasAdmin)
+      #set ($forumReference = $services.model.resolveDocument($doc.parent))
+      #if ($services.forum.hasCommentEdit($comment.number, $commentDoc, $forumReference))
         ## Although this will fail if the javascript is not working, we assume it's always working
         ## so edit comment will redirect to the conversations view of the article for which we edited comment, so that we have a correct reloading after save
         #set ($commentEditRedirect = $commentDoc.getURL('get', $escapetool.url({'xpage': 'xpart', 'vm': 'conversations.vm'})))
-        ## edit
         #set ($editQueryString = $escapetool.url({'number': $comment.number,
                                                   'xredirect': $commentEditRedirect,
                                                   'xpage': 'xpart',
@@ -162,7 +161,8 @@
         &lt;a class="edit" href="$editURL" title="$services.localization.render('core.viewers.comments.edit')"&gt;
           $services.localization.render('core.viewers.comments.edit')
         &lt;/a&gt;
-        ## delete
+      #end
+      #if ($services.forum.hasCommentDelete($comment.number, $commentDoc, $forumReference))
         #set ($deleteQueryString = $escapetool.url({'action': 'deletecomment',
                                                     'form_token': $services.csrf.token,
                                                     'conversationdoc': $commentDoc.fullName,
@@ -607,16 +607,17 @@
         &lt;/div&gt;
         #if ($withdetails)
           &lt;div class="topic-moderation"&gt;
-            #if (($topicDoc.creator==$xcontext.user) || $doc.creator == $xcontext.user || $hasAdmin)
-              &lt;div id="moderation-buttons"&gt;
-                ## edit
+            &lt;div id="moderation-buttons"&gt;
+              #set ($forumReference = $services.model.resolveDocument($topicDoc.parent))
+              #if ($services.forum.hasTopicEdit($topicDoc, $forumReference))
                 &lt;a class="edit" href="$topicDoc.getURL('edit')" title="$services.localization.render('conversations.forum.edit')"&gt;$services.localization.render('conversations.forum.edit')&lt;/a&gt;
                 #set ($redirecToParentForum = $xwiki.getURL($topicDoc.parent))
                 #set ($actionParams =  "action=deleteconversation&amp;amp;form_token=$!{services.csrf.getToken()}&amp;amp;conversationdoc=${escapetool.url($topicDoc.fullName)}&amp;amp;xredirect=${escapetool.url($redirecToParentForum)}")
-                ## delete
+              #end
+              #if ($services.forum.hasTopicDelete($topicDoc, $forumReference))
                 &lt;a class="delete" href="$xwiki.getURL('ForumCode.Actions', 'view', $actionParams)" title="$services.localization.render('conversation.forum.delete.title')"&gt;$services.localization.render('conversations.forum.delete')&lt;/a&gt;
-              &lt;/div&gt;
-            #end
+              #end
+            &lt;/div&gt;
           &lt;/div&gt;
         #end
       &lt;/div&gt;
@@ -665,10 +666,11 @@
                 &lt;/div&gt;
               &lt;/div&gt;&lt;!-- / .answer-reply --&gt;
               &lt;div class="answer-moderation"&gt;
-                #if (($topicAnswerDoc.creator==$xcontext.user) || $hasAdmin)
-                  ## edit
+                #set ($forumReference = $services.model.resolveDocument($doc.parent))
+                #if ($services.forum.hasAnswerEdit($topicAnswerDoc, $forumReference))
                   &lt;a class="edit" href="$topicAnswerDoc.getURL('edit')" title="$services.localization.render('conversation.edit.title')"&gt;$services.localization.render('conversation.edit')&lt;/a&gt;
-                  ## delete
+                #end
+                #if ($services.forum.hasAnswerDelete($topicAnswerDoc, $forumReference))
                   &lt;a class="delete" href="$xwiki.getURL('ForumCode.Actions', 'get', "action=deleteconversation&amp;amp;form_token=$!{services.csrf.getToken()}&amp;amp;conversationdoc=${escapetool.url($topicAnswerDoc.fullName)}")" title="$services.localization.render('conversation.delete.title')"&gt;$services.localization.render('conversation.delete')&lt;/a&gt;
                 #end
               &lt;/div&gt;&lt;!-- / .answer-moderation --&gt;

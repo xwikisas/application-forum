@@ -1,0 +1,2 @@
+com.xwiki.forum.script.ForumScriptService
+com.xwiki.forum.internal.DefaultForumManager

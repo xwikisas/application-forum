@@ -47,6 +47,11 @@
       <version>${licensing.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.xwiki.forum</groupId>
+      <artifactId>application-forum-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-tour-ui</artifactId>
       <type>xar</type>
