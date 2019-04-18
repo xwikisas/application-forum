@@ -68,5 +68,7 @@ conversation.empty=Bez komentarza
 conversation.flag.tooltip=Flaga
 conversation.like.button=Głosy
 conversation.like.loading=Zapisane głosy...
-</content>
+
+## Forum Administration Section
+forum.administration.configuration.title=Konfiguracja</content>
 </xwikidoc>

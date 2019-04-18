@@ -270,5 +270,8 @@ tour.topicTour.topicDetails.title=Détails du sujet
 tour.topicTour.topicModeration.content=Boutons d'édition et de suppression d'un sujet
 tour.topicTour.topicModeration.title=Modération d'un sujet
 tour.topicTour.vote.content=Vote d'un sujet
-tour.topicTour.vote.title=Vote</content>
+tour.topicTour.vote.title=Vote
+
+## Forum Administration Section
+forum.administration.configuration.title=Configuration</content>
 </xwikidoc>

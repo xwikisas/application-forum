@@ -182,5 +182,7 @@ forum.applicationsPanelEntryLabel=Форумы
 rating.saveexception=Ошибка в процессе сохранения голоса.
 rating.votenotvalid=Голос не допустим.
 rating.voteoutofbounds=Голос не допустим.
-</content>
+
+## Forum Administration Section
+forum.administration.configuration.title=конфигурация</content>
 </xwikidoc>

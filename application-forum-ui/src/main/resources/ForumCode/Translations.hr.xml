@@ -254,5 +254,7 @@ tour.topicTour.topicModeration.content=Ovdje su gumbi za uređivanje i brisanje.
 tour.topicTour.topicModeration.title=Moderiranje teme
 tour.topicTour.vote.content=Glas za temu.
 tour.topicTour.vote.title=Glas
-</content>
+
+## Forum Administration Section
+forum.administration.configuration.title=Konfiguracija</content>
 </xwikidoc>
