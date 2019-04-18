@@ -39,12 +39,59 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content/>
+  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
+
+{{velocity}}
+#set ($mainReference = $services.model.createDocumentReference('', 'ForumCode', 'ConfigurationClass'))
+#if (!$services.licensing.licensor.hasLicensureForEntity($mainReference))
+
+  {{error}}#getMissingLicenseMessage('forum.extension.name'){{/error}}
+
+#else
+  {{include reference="ForumCode.FlagsHome"/}}
+
+  == $services.localization.render('forum.administration.configuration.title') ==
+#end
+{{/velocity}}
+</content>
   <object>
     <name>ForumCode.ConfigurationAdmin</name>
     <number>0</number>
+    <className>ForumCode.ConfigurationClass</className>
+    <guid>32ae790c-727e-4f27-8d79-0519154cbb2d</guid>
+    <class>
+      <name>ForumCode.ConfigurationClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <enableSocialButtons>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>enableSocialButtons</name>
+        <number>1</number>
+        <prettyName>Enable social buttons</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </enableSocialButtons>
+    </class>
+    <property>
+      <enableSocialButtons>0</enableSocialButtons>
+    </property>
+  </object>
+  <object>
+    <name>ForumCode.ConfigurationAdmin</name>
+    <number>1</number>
     <className>XWiki.ConfigurableClass</className>
-    <guid>c60d2f70-03f8-4820-a20b-bdac900e9003</guid>
+    <guid>20049862-b645-4d3c-9316-5d8f74e10e57</guid>
     <class>
       <name>XWiki.ConfigurableClass</name>
       <customClass/>
@@ -223,10 +270,18 @@
       </sectionOrder>
     </class>
     <property>
-      <codeToExecute>{{include reference="ForumCode.FlagsHome"/}}</codeToExecute>
+      <categoryIcon/>
     </property>
     <property>
-      <configurationClass/>
+      <codeToExecute>{{include reference="ForumCode.ConfigurationAdmin"/}}
+
+#set ($mainReference = $services.model.createDocumentReference('', 'ForumCode', 'ConfigurationClass'))
+#if (!$services.licensing.licensor.hasLicensureForEntity($mainReference))
+  #set ($discard = $app.set('configurationClass', ''))
+#end</codeToExecute>
+    </property>
+    <property>
+      <configurationClass>ForumCode.ConfigurationClass</configurationClass>
     </property>
     <property>
       <configureGlobally>1</configureGlobally>
