@@ -501,20 +501,12 @@ Moderator / Admin
 --------------------------------------------------------------------------------------------------
 */
 
-.topic-moderation, 
+.topic-moderation,
 .answer-moderation,
 .comment-moderation {
   position: absolute;
   right: 40px;
-  top: 20px;
-}
-
-.topic-moderation {
-  top: 35px; 
-}
-
-.comment-moderation {
-  right: 35px;
+  top: 35px;
 }
 
 .topic-moderation .edit, .answer-moderation .edit, .comment-moderation .edit,
