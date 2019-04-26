@@ -549,7 +549,6 @@
     #set ($topicComments = 0)
     #set ($topicAnswers = [])
     #getTopicAnswers($topicSpace $topicAnswers)
-    #set ($notAllowed = ($services.ratings.getRating($topicReference, $xcontext.user) != $util.null))
     #if ($topicAnswers)
       #foreach ($topicAnswer in $topicAnswers)
         #set ($answerDoc = $xwiki.getDocument($topicAnswer))
@@ -558,10 +557,6 @@
       #set ($nbCommentsAnswers = $topicAnswers.size() + $topicComments)
     #else
       #set ($nbCommentsAnswers = 0)
-    #end
-    #set ($voteAllowedClass = '')
-    #if (!$isGuest)
-      #set ($voteAllowedClass = 'allow-vote')
     #end
     &lt;div class="topic"&gt;
       &lt;div class="topic-layout"&gt;
@@ -596,16 +591,7 @@
               &lt;/span&gt;
               &lt;span class="topic-date"&gt;$xwiki.formatDate($topicDoc.date)&lt;/span&gt; ## Maybe it should be creation date ?
               &lt;span class="topic-answers" title="$services.localization.render('conversations.topic.tooltip.totalanswers')"&gt;$topicAnswers.size() $services.localization.render('conversations.answer.count')&lt;/span&gt;
-              #if ($notAllowed)
-                #set ($voteAllowedClass = '')
-              #else
-                #set ($voteAllowedClass = 'allow-vote')
-              #end
-              &lt;div class="topic-vote $voteAllowedClass conversation-like" #if ($services.ratings.getRating($topicReference, $xcontext.user) == $util.null) title="$services.localization.render('conversation.like.button.tooltip')"#else title="$services.localization.render('conversation.like.button.alreadyliked.tooltip')"#end&gt;
-                #set ($rating = $services.ratings.getAverageRating($topicReference).nbVotes)
-                &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($topicReference)" /&gt;
-                &lt;span class="conversation-score" title="$services.localization.render('conversation.like.score.tooltip', [$rating])"&gt;$!rating&lt;/span&gt;
-              &lt;/div&gt;
+              #displayVoteButton($topicReference)
             &lt;/span&gt;
           &lt;/div&gt;
         &lt;/div&gt;
@@ -634,6 +620,21 @@
       &lt;/div&gt;
     &lt;/div&gt;
   #end
+#end
+##
+#macro (displayVoteButton $documentReference)
+  ## An user can vote only if didn't already vote and if is authenticated.
+  #set ($canVote = ($services.ratings.getRating($topicReference, $xcontext.user) == $util.null) &amp;&amp; !$isGuest)
+  #set ($voteButtonTitleKey = 'conversation.like.button.alreadyliked.tooltip')
+  #if ($canVote)
+    #set ($voteAllowedClass = 'allow-vote')
+    #set ($voteButtonTitleKey = 'conversation.like.button.tooltip')
+  #end
+  &lt;div class="topic-vote $!voteAllowedClass conversation-like" title="$services.localization.render($voteButtonTitleKey)"&gt;
+    #set ($rating = $services.ratings.getAverageRating($topicReference).nbVotes)
+    &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($topicReference)" /&gt;
+    &lt;span class="conversation-score" title="$services.localization.render('conversation.like.score.tooltip', [$rating])"&gt;$!rating&lt;/span&gt;
+  &lt;/div&gt;
 #end
 ##
 #macro(displayAnswers)
