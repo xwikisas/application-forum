@@ -797,8 +797,8 @@ function conversationLikeHandler(event) {
     }.bind(this),
     onSuccess : function (response) {
       topicLikeBlock._x_notification.replace(new XWiki.widgets.Notification("$escapetool.javascript($services.localization.render('conversation.like.done'))", 'done'));
-      // get the conversation score which is the sibling of the like block
-      var scoreDisplayer = topicLikeBlock.up('.topic').down('.conversation-score');
+      // get the conversation score which is the child of the like block
+      var scoreDisplayer = topicLikeBlock.down('.conversation-score');
       if (scoreDisplayer) {
         scoreDisplayer.update(response.responseJSON.totalvotes);
       }
