@@ -624,15 +624,15 @@
 ##
 #macro (displayVoteButton $documentReference)
   ## An user can vote only if didn't already vote and if is authenticated.
-  #set ($canVote = ($services.ratings.getRating($topicReference, $xcontext.user) == $util.null) &amp;&amp; !$isGuest)
+  #set ($canVote = ($services.ratings.getRating($documentReference, $xcontext.user) == $util.null) &amp;&amp; !$isGuest)
   #set ($voteButtonTitleKey = 'conversation.like.button.alreadyliked.tooltip')
   #if ($canVote)
     #set ($voteAllowedClass = 'allow-vote')
     #set ($voteButtonTitleKey = 'conversation.like.button.tooltip')
   #end
   &lt;div class="topic-vote $!voteAllowedClass conversation-like" title="$services.localization.render($voteButtonTitleKey)"&gt;
-    #set ($rating = $services.ratings.getAverageRating($topicReference).nbVotes)
-    &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($topicReference)" /&gt;
+    #set ($rating = $services.ratings.getAverageRating($documentReference).nbVotes)
+    &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($documentReference)" /&gt;
     &lt;span class="conversation-score" title="$services.localization.render('conversation.like.score.tooltip', [$rating])"&gt;$!rating&lt;/span&gt;
   &lt;/div&gt;
 #end
@@ -661,11 +661,7 @@
                 &lt;span class="answer-meta"&gt;
                   &lt;span class="user"&gt;$xwiki.getUserName($topicAnswerDoc.creator)&lt;/span&gt;
                   &lt;span class="time"&gt;$services.localization.render('conversation.updatedate', [$xwiki.formatDate($topicAnswerDoc.date)])&lt;/span&gt;
-                  &lt;span class="votes conversation-ratings"&gt;
-                    &lt;span class="conversation-like" #if ($services.ratings.getRating($answerReference, $xcontext.user) == $util.null)class="canVote" title="$services.localization.render('conversation.like.button.tooltip')"#else title="$services.localization.render('conversation.like.button.alreadyliked.tooltip')"#end &gt;
-                      &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($answerReference)" /&gt;
-                    &lt;/span&gt;
-                  &lt;/span&gt;
+                  #displayVoteButton($answerReference)
                   &lt;span class="comments" objtype="nbComments" title="$services.localization.render('conversations.topic.answer.tooltip.totalcomments')"&gt;$comments.size() $services.localization.render('conversations.comment.count')&lt;/span&gt;
                 &lt;/span&gt;
                 &lt;div class="answer-content"&gt;
