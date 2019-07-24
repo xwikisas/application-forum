@@ -43,7 +43,7 @@
   <scm>
     <connection>scm:git:git://github.com/xwikisas/application-forum.git</connection>
     <developerConnection>scm:git:git@github.com:xwikisas/application-forum.git</developerConnection>
-    <url>https://github.com/xwikisas/application-forum/</url>
+    <url>https://github.com/xwikisas/application-forum/tree/master</url>
     <tag>HEAD</tag>
   </scm>
   <modules>
