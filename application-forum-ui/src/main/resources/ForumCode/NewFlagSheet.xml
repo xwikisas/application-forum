@@ -60,14 +60,23 @@
   ## sending email
   #set($emailRegex = "[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}")
   #set($adminEmail = $xwiki.getXWikiPreference('admin_email'))
+  #if ("${adminEmail}" == '')
+    ## Get admin email from global administration settings
+    #set ($configDocName = 'Mail.MailConfig')
+    #set ($configDoc = $xwiki.getDocument($configDocName))
+    #set ($configClassName = 'Mail.SendMailConfigClass')
+    #set ($configObj = $configDoc.getObject($configClassName))
+    #set ($adminEmail = $configObj.from)
+  #end
   #if (!$adminEmail.matches($emailRegex))
     #set($adminEmail = '')
   #end
-  #set($moderator = $flagDoc.getValue('moderator'))
-  #if("$!{moderator}" != '')
-    #set($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
-    #if(!$moderatorEmail.matches($emailRegex))
-      #set($moderatorEmail = '')
+
+  #set ($moderator = $flagDoc.getValue('moderator'))
+  #if ("$!{moderator}" != '')
+    #set ($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
+    #if (!$moderatorEmail.matches($emailRegex))
+      #set ($moderatorEmail = '')
     #end
   #end
 
@@ -75,11 +84,22 @@
 
   $services.localization.render('conversations.flag.success.dialog.message')
 
-  #if("$!{adminEmail}" != '' &amp;&amp; "$!{moderatorEmail}" != '')
-    #set($mailTo = "${adminEmail},${moderatorEmail}")
-    #set($url = $flagDoc.getExternalURL())
-    #set($res = $xwiki.mailsender.sendMessageFromTemplate($adminEmail, $mailTo, $util.null, $util.null, '', 'ForumCode.MailTemplateFlag', $xcontext.vcontext))
-    #if ($res != 0)
+  #if ("$!{adminEmail}" != '')
+    #set ($mailTo = "${adminEmail}")
+    #if ("$!{moderatorEmail}" != '')
+      #set ($mailTo = "${mailTo}, {moderatorEmail}")
+    #end
+    ## Create the message to be send
+    #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
+    #set ($configDoc = $xwiki.getDocument($templateReference))
+    #set ($configClassName = 'XWiki.Mail')
+    #set ($configObj = $configDoc.getObject($configClassName))
+    #set ($subject = $configObj.subject)
+    #set ($mailMessage = $services.mailsender.createMessage($mailTo, $subject))
+    #set ($discard = $mailMessage.addPart("xwiki/template", $templateReference, {'velocityVariables' : { 'var1' : 'value1' }}))
+    #set ($res = $services.mailsender.sendAsynchronously([$mailMessage], 'database'))
+    $res.statusResult.waitTillProcessed(10000)
+    #if ($res.statusResult.isProcessed() != true)
       {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
     #end
   #else
