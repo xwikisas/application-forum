@@ -332,8 +332,8 @@ XWIKI STYLES
   position: relative;
 }
 
-.topic-author img{
-margin-right: 5px;
+.topic-author img {
+  margin-right: 5px;
 }
 
 .topics .topic {
