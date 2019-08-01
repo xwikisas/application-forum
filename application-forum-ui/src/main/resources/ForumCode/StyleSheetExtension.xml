@@ -332,6 +332,10 @@ XWIKI STYLES
   position: relative;
 }
 
+.topic-author img{
+margin-right: 5px;
+}
+
 .topics .topic {
   margin-top: 50px;
 }
@@ -629,6 +633,7 @@ Answers and Comments for a Topic
   border-radius: 5px;
   height: 50px;
   width: 50px;
+  margin-right: 5px;
 }
 
 .answer-reply { 
