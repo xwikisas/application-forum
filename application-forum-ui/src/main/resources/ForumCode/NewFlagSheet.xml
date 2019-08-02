@@ -66,14 +66,23 @@
     #set ($configObj = $configDoc.getObject('Mail.SendMailConfigClass'))
     #set ($adminEmail = $configObj.from)
   #end
+
+  ## mailTo contains email addresses at which the email notification will be send.
+  #set ($mailTo = $collectionstool.set)
+
   #if (!$adminEmail.matches($emailRegex))
     #set($adminEmail = '')
+  #else
+    #set ($discard = $mailTo.add($adminEmail))
   #end
+
   #set ($moderator = $flagDoc.getValue('moderator'))
   #if ("$!moderator" != '')
     #set ($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
     #if (!$moderatorEmail.matches($emailRegex))
       #set ($moderatorEmail = '')
+    #else
+       #set ($discard = $mailTo.add($moderatorEmail))
     #end
   #end
 
@@ -81,13 +90,6 @@
 
   $services.localization.render('conversations.flag.success.dialog.message')
 
-  #set ($mailTo = $collectionstool.set)
-  #if ("$!adminEmail" != '')
-    #set ($discard = $mailTo.add($adminEmail))
-  #end
-  #if ("$!moderatorEmail" != '')
-    #set ($discard = $mailTo.add($moderatorEmail))
-  #end
   #if ($mailTo.size() &gt; 0)
     ## Create the message to be send
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
