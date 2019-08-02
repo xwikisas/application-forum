@@ -202,6 +202,7 @@ forum.admin.action.delete.confiramtion_text=Êtes-vous sûr de vouloir supprimer
 forum.admin.action.delete.failed=Le forum n'a pas pu être supprimé. Il y a des pages que vous n'êtes pas autorisé à supprimer. Veuillez contacter un administrateur du forum.
 forum.admin.action.delete.inprogress=Suppression en cours ...
 forum.admin.action.delete.success=Forums supprimé(s)
+forum.app.HomePageEntryNameLabel=Nom de l'entrée\:
 forum.applicationsPanelEntryLabel=Forums
 
 ForumCode.FlagClass_reason=Choisissez
