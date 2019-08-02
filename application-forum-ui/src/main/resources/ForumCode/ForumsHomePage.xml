@@ -324,7 +324,7 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
     this.urlTemplate = trigger.next('input[type=hidden]').value;
 
     this.input = new Element('input', {type: 'text'});
-    this.addButton = new Element('input', {type: 'image', src: '$xwiki.getSkinFile('icons/silk/add.png')', alt: '$escapetool.javascript($services.localization.render('forum.appHomePageAddEntryNameLabel'))'});
+    this.addButton = new Element('input', {type: 'image', src: '$xwiki.getSkinFile('icons/silk/add.png')', alt: '$escapetool.javascript($services.localization.render('forum.appHomePageAddEntryLabel'))'});
 
     var container = new Element('div', {id: 'entryNamePopup'});
     container.insert(this.input);
@@ -334,7 +334,7 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
       show: {method: this.showDialog, keys: []},
       add: {method: this._onAdd, keys: ['Enter']}
     }, {
-      title: '$escapetool.javascript($services.localization.render('forum.appHomePageAddEntryNameLabel'))',
+      title: '$escapetool.javascript($services.localization.render('forum.appHomePageEntryNameLabel'))',
       verticalPosition: 'top'
     });
   },
