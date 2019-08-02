@@ -81,16 +81,19 @@
 
   $services.localization.render('conversations.flag.success.dialog.message')
 
+  #set ($mailTo = $collectionstool.set)
   #if ("$!adminEmail" != '')
-    #set ($mailTo = $adminEmail)
-    #if ("$!moderatorEmail" != '')
-      #set ($mailTo = "$mailTo, $moderatorEmail")
-    #end
+    #set ($discard  = $mailTo.add($adminEmail))
+  #end
+  #if ("$!moderatorEmail" != '')
+    #set ($discard  = $mailTo.add($moderatorEmail))
+  #end
+  #if ($mailTo.size())
     ## Create the message to be send
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
     #set ($templateDoc = $xwiki.getDocument($templateReference))
     #set ($mailObj = $templateDoc.getObject('XWiki.Mail'))
-    #set ($mailMessage = $services.mailsender.createMessage($mailTo, $mailObj.subject))
+    #set ($mailMessage = $services.mailsender.createMessage($stringtool.join($mailTo, ', '), $mailObj.subject))
     #set ($discard = $mailMessage.addPart('xwiki/template', $templateReference))
     #set ($res = $services.mailsender.sendAsynchronously([$mailMessage], 'database'))
     $res.statusResult.waitTillProcessed(10000)
