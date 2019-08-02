@@ -60,20 +60,17 @@
   ## sending email
   #set($emailRegex = "[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}")
   #set($adminEmail = $xwiki.getXWikiPreference('admin_email'))
-  #if ("${adminEmail}" == '')
+  #if ($adminEmail == '')
     ## Get admin email from global administration settings
-    #set ($configDocName = 'Mail.MailConfig')
-    #set ($configDoc = $xwiki.getDocument($configDocName))
-    #set ($configClassName = 'Mail.SendMailConfigClass')
-    #set ($configObj = $configDoc.getObject($configClassName))
+    #set ($configDoc = $xwiki.getDocument('Mail.MailConfig'))
+    #set ($configObj = $configDoc.getObject('Mail.SendMailConfigClass'))
     #set ($adminEmail = $configObj.from)
   #end
   #if (!$adminEmail.matches($emailRegex))
     #set($adminEmail = '')
   #end
-
   #set ($moderator = $flagDoc.getValue('moderator'))
-  #if ("$!{moderator}" != '')
+  #if ("$!moderator" != '')
     #set ($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
     #if (!$moderatorEmail.matches($emailRegex))
       #set ($moderatorEmail = '')
@@ -84,19 +81,17 @@
 
   $services.localization.render('conversations.flag.success.dialog.message')
 
-  #if ("$!{adminEmail}" != '')
-    #set ($mailTo = "${adminEmail}")
-    #if ("$!{moderatorEmail}" != '')
-      #set ($mailTo = "${mailTo}, {moderatorEmail}")
+  #if ("$!adminEmail" != '')
+    #set ($mailTo = $adminEmail)
+    #if ("$!moderatorEmail" != '')
+      #set ($mailTo = "$mailTo, $moderatorEmail")
     #end
     ## Create the message to be send
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
-    #set ($configDoc = $xwiki.getDocument($templateReference))
-    #set ($configClassName = 'XWiki.Mail')
-    #set ($configObj = $configDoc.getObject($configClassName))
-    #set ($subject = $configObj.subject)
-    #set ($mailMessage = $services.mailsender.createMessage($mailTo, $subject))
-    #set ($discard = $mailMessage.addPart("xwiki/template", $templateReference, {'velocityVariables' : { 'var1' : 'value1' }}))
+    #set ($templateDoc = $xwiki.getDocument($templateReference))
+    #set ($mailObj = $templateDoc.getObject('XWiki.Mail'))
+    #set ($mailMessage = $services.mailsender.createMessage($mailTo, $mailObj.subject))
+    #set ($discard = $mailMessage.addPart('xwiki/template', $templateReference))
     #set ($res = $services.mailsender.sendAsynchronously([$mailMessage], 'database'))
     $res.statusResult.waitTillProcessed(10000)
     #if ($res.statusResult.isProcessed() != true)
