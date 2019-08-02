@@ -88,7 +88,7 @@
   #if ("$!moderatorEmail" != '')
     #set ($discard = $mailTo.add($moderatorEmail))
   #end
-  #if ($mailTo.size())
+  #if ($mailTo.size() &gt; 0)
     ## Create the message to be send
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
     #set ($templateDoc = $xwiki.getDocument($templateReference))
