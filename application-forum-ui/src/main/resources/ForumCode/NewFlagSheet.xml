@@ -83,10 +83,10 @@
 
   #set ($mailTo = $collectionstool.set)
   #if ("$!adminEmail" != '')
-    #set ($discard  = $mailTo.add($adminEmail))
+    #set ($discard = $mailTo.add($adminEmail))
   #end
   #if ("$!moderatorEmail" != '')
-    #set ($discard  = $mailTo.add($moderatorEmail))
+    #set ($discard = $mailTo.add($moderatorEmail))
   #end
   #if ($mailTo.size())
     ## Create the message to be send
