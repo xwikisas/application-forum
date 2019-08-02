@@ -60,14 +60,29 @@
   ## sending email
   #set($emailRegex = "[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}")
   #set($adminEmail = $xwiki.getXWikiPreference('admin_email'))
+  #if ($adminEmail == '')
+    ## Get admin email from global administration settings
+    #set ($configDoc = $xwiki.getDocument('Mail.MailConfig'))
+    #set ($configObj = $configDoc.getObject('Mail.SendMailConfigClass'))
+    #set ($adminEmail = $configObj.from)
+  #end
+
+  ## mailTo contains email addresses at which the email notification will be send.
+  #set ($mailTo = $collectionstool.set)
+
   #if (!$adminEmail.matches($emailRegex))
     #set($adminEmail = '')
+  #else
+    #set ($discard = $mailTo.add($adminEmail))
   #end
-  #set($moderator = $flagDoc.getValue('moderator'))
-  #if("$!{moderator}" != '')
-    #set($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
-    #if(!$moderatorEmail.matches($emailRegex))
-      #set($moderatorEmail = '')
+
+  #set ($moderator = $flagDoc.getValue('moderator'))
+  #if ("$!moderator" != '')
+    #set ($moderatorEmail = $xwiki.getUserName($moderator, "$email", false))
+    #if (!$moderatorEmail.matches($emailRegex))
+      #set ($moderatorEmail = '')
+    #else
+       #set ($discard = $mailTo.add($moderatorEmail))
     #end
   #end
 
@@ -75,17 +90,22 @@
 
   $services.localization.render('conversations.flag.success.dialog.message')
 
-  #if("$!{adminEmail}" != '' &amp;&amp; "$!{moderatorEmail}" != '')
-    #set($mailTo = "${adminEmail},${moderatorEmail}")
-    #set($url = $flagDoc.getExternalURL())
-    #set($res = $xwiki.mailsender.sendMessageFromTemplate($adminEmail, $mailTo, $util.null, $util.null, '', 'ForumCode.MailTemplateFlag', $xcontext.vcontext))
-    #if ($res != 0)
+  ## sending notification email
+  #if ($mailTo.size() &gt; 0)
+    ## Create the message to be send
+    #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
+    #set ($templateDoc = $xwiki.getDocument($templateReference))
+    #set ($mailObj = $templateDoc.getObject('XWiki.Mail'))
+    #set ($mailMessage = $services.mailsender.createMessage($stringtool.join($mailTo, ', '), $mailObj.subject))
+    #set ($discard = $mailMessage.addPart('xwiki/template', $templateReference))
+    #set ($res = $services.mailsender.sendAsynchronously([$mailMessage], 'database'))
+    #set ($discard = $res.statusResult.waitTillProcessed(10000))
+    #if ($res.statusResult.isProcessed() != true)
       {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
     #end
   #else
     {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
   #end
-  ## sending notification email
 
   [[$services.localization.render('conversations.flag.success.dialog.goback') &gt;&gt;$request.target]]
 #else
