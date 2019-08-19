@@ -34,7 +34,7 @@
   <name>Forum Application - Parent POM</name>
   <description>Forum application with multiple forums, topics, answers, comments, supporting Wysiwyg and Votes</description>
   <properties>
-    <licensing.version>1.13.8</licensing.version>
+    <licensing.version>1.14.1</licensing.version>
   </properties>
   <issueManagement>
     <system>GitHub</system>
