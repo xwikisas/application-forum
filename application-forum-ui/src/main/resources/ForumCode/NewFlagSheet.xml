@@ -68,7 +68,7 @@
   #end
 
   ## mailTo contains email addresses at which the email notification will be send.
-  #set ($mailTo = $collectionstool.set)
+  #set ($mailTo = [])
 
   #if (!$adminEmail.matches($emailRegex))
     #set($adminEmail = '')
@@ -93,15 +93,23 @@
   ## sending notification email
   #if ($mailTo.size() &gt; 0)
     ## Create the message to be send
+    #set ($velocityVariables = {})
+    #set ($discard = $velocityVariables.put('message', "$request.get('ForumCode.FlagClass_0_message').trim()"))
+    #set ($templateParameters = {'type' : 'Comment flag raised', 'language' : $xcontext.language,
+      'velocityVariables' : $velocityVariables})
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
-    #set ($templateDoc = $xwiki.getDocument($templateReference))
-    #set ($mailObj = $templateDoc.getObject('XWiki.Mail'))
-    #set ($mailMessage = $services.mailsender.createMessage($stringtool.join($mailTo, ', '), $mailObj.subject))
-    #set ($discard = $mailMessage.addPart('xwiki/template', $templateReference))
-    #set ($res = $services.mailsender.sendAsynchronously([$mailMessage], 'database'))
-    #set ($discard = $res.statusResult.waitTillProcessed(10000))
-    #if ($res.statusResult.isProcessed() != true)
+    #set ($parameters = {'hint': 'template', 'parameters' : $templateParameters, 'source' : $templateReference })
+    #set ($source = {'emails' : $mailTo})
+
+    ## Create the message
+    #set ($messageIterator = $services.mailsender.createMessages('usersandgroups', $source, $parameters))
+    #if ($services.mailsender.lastError)
       {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
+    #else
+      #set ($mailResult = $services.mailsender.send([$messageIterator], 'database'))
+      #if ($services.mailsender.lastError)
+        {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
+      #end
     #end
   #else
     {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
