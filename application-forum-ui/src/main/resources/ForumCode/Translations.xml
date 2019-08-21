@@ -295,7 +295,10 @@ templateProvider.forum.name=Forum
 templateProvider.forum.description=Start a conversation
 
 ## Forum Administration Section
-forum.administration.configuration.title=Configuration</content>
+forum.administration.configuration.title=Configuration
+
+## Emails
+forum.comment.flag.email.type=Comment flag raised</content>
   <object>
     <name>ForumCode.Translations</name>
     <number>0</number>
