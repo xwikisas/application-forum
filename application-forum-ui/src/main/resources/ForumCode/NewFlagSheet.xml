@@ -93,11 +93,15 @@
   ## sending notification email
   #if ($mailTo.size() &gt; 0)
     ## Create the message to be send
-    #set ($velocityVariables = {})
-    #set ($discard = $velocityVariables.put('message', "$request.get('ForumCode.FlagClass_0_message').trim()"))
-    #set ($discard = $velocityVariables.put('url', $flagDoc.getExternalURL()))
-    #set ($templateParameters = {'type' : 'Comment flag raised', 'language' : $xcontext.language,
-      'velocityVariables' : $velocityVariables})
+    #set ($velocityVariables = {
+      'message' : $request.get('ForumCode.FlagClass_0_message').trim(),
+      'url' : $flagDoc.externalURL
+    })
+    #set ($templateParameters = {
+      'type' : 'Comment flag raised',
+      'language' : $xcontext.language,
+      'velocityVariables' : $velocityVariables
+    })
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
     #set ($parameters = {'hint': 'template', 'parameters' : $templateParameters, 'source' : $templateReference })
     #set ($source = {'emails' : $mailTo})
