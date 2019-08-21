@@ -95,8 +95,9 @@
     ## Create the message to be send
     #set ($velocityVariables = {})
     #set ($discard = $velocityVariables.put('message', "$request.get('ForumCode.FlagClass_0_message').trim()"))
-    #set ($templateParameters = {'type' : 'Comment flag raised', 'language' : $xcontext.language,
-      'velocityVariables' : $velocityVariables})
+    #set ($discard = $velocityVariables.put('url', $flagDoc.getExternalURL()))
+    #set ($templateParameters = {'type' : $services.localization.render('forum.comment.flag.email.type'),
+      'language' : $xcontext.language, 'velocityVariables' : $velocityVariables})
     #set ($templateReference = $services.model.createDocumentReference('', 'ForumCode', 'MailTemplateFlag'))
     #set ($parameters = {'hint': 'template', 'parameters' : $templateParameters, 'source' : $templateReference })
     #set ($source = {'emails' : $mailTo})
@@ -106,7 +107,7 @@
     #if ($services.mailsender.lastError)
       {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
     #else
-      #set ($mailResult = $services.mailsender.send([$messageIterator], 'database'))
+      #set ($mailResult = $services.mailsender.send($messageIterator, 'database'))
       #if ($services.mailsender.lastError)
         {{warning}}$services.localization.render('conversations.flag.error.nomailsent'){{/warning}}
       #end
