@@ -275,8 +275,5 @@ tour.topicTour.vote.content=Vote d'un sujet
 tour.topicTour.vote.title=Vote
 
 ## Forum Administration Section
-forum.administration.configuration.title=Configuration
-
-## Emails
-forum.comment.flag.email.type=Commentaire inapproprié</content>
+forum.administration.configuration.title=Configuration</content>
 </xwikidoc>
