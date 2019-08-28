@@ -39,12 +39,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
-
-{{velocity}}
-  {{error}}#getMissingLicenseMessage('forum.extension.name'){{/error}}
-{{/velocity}}
-</content>
+  <content/>
   <object>
     <name>Forums.WebHome</name>
     <number>0</number>
