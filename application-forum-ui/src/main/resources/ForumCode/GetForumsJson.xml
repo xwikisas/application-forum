@@ -51,7 +51,7 @@
       "&lt;ul class='users'&gt;
         &lt;li class='user'&gt;
           &lt;div class='user-avatar-wrapper'&gt;#resizedUserAvatar($forumDoc.creator 30)&lt;/div&gt;
-          &lt;div class='user-name'&gt;#if (!$creatorDoc.isNew() &amp;&amp; $creatorDoc.URL)&lt;span class='wikilink'&gt;&lt;a href='$creatorDoc.URL'&gt;$creatorDoc.name&lt;/a&gt;&lt;/span&gt;#else${forumDoc.creator}#end&lt;/div&gt;
+          &lt;div class='user-name'&gt;#if (!$creatorDoc.isNew() &amp;&amp; $creatorDoc.URL)&lt;span class='wikilink'&gt;&lt;a href='$creatorDoc.URL'&gt;$creatorDoc.documentReference.name&lt;/a&gt;&lt;/span&gt;#else${forumDoc.creator}#end&lt;/div&gt;
           &lt;div&gt;&lt;span class='user-alias'&gt;$xwiki.getUserName($creatorDoc.fullName, false)&lt;/span&gt;&lt;/div&gt;
         &lt;/li&gt;
       &lt;/ul&gt;"))
