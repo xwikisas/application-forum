@@ -20,8 +20,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Forums.ApplicationsPanelEntry" locale="">
-  <web>Forums</web>
+<xwikidoc version="1.3" reference="ForumCode.ApplicationsPanelEntry" locale="">
+  <web>ForumCode</web>
   <name>ApplicationsPanelEntry</name>
   <language/>
   <defaultLanguage/>
@@ -41,7 +41,7 @@
   <hidden>true</hidden>
   <content/>
   <object>
-    <name>Forums.ApplicationsPanelEntry</name>
+    <name>ForumCode.ApplicationsPanelEntry</name>
     <number>0</number>
     <className>XWiki.UIExtensionClass</className>
     <guid>f5e580ed-0f16-4747-a315-bcc65442b063</guid>
