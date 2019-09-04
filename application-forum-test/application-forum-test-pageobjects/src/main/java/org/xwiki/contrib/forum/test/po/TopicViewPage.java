@@ -150,7 +150,8 @@ public class TopicViewPage extends ViewPage
     {
         step0.click();
         step1.click();
-        step2.click();
+        // We need to skip step2 since the social media buttons are disabled by default.
+        // step2.click();
         step3.click();
         step4.click();
         step5.click();
