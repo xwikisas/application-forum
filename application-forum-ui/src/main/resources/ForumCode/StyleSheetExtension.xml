@@ -332,6 +332,7 @@ XWIKI STYLES
   position: relative;
 }
 
+.forum-author img,
 .topic-author img {
   margin-right: 10px;
 }
