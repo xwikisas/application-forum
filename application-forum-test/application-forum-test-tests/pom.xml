@@ -42,6 +42,17 @@
       <artifactId>application-forum-ui</artifactId>
       <type>xar</type>
       <version>${project.version}</version>
+      <exclusions>
+        <!-- Exclude these dependency to prevent RequireUpperBoundDeps error caused by lower versions declared in Tour UI -->
+        <exclusion>
+          <groupId>org.xwiki.platform</groupId>
+          <artifactId>xwiki-platform-icon-ui</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.xwiki.rendering</groupId>
+          <artifactId>xwiki-rendering-macro-box</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>

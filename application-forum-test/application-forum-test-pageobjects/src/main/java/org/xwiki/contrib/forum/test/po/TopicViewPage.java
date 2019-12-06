@@ -61,22 +61,22 @@ public class TopicViewPage extends ViewPage
     private WebElement answerTarget;
 
     // Tour steps
-    @FindBy(css = "#step-0 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step0;
 
-    @FindBy(css = "#step-1 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step1;
 
-    @FindBy(css = "#step-2 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step2;
 
-    @FindBy(css = "#step-3 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step3;
 
-    @FindBy(css = "#step-4 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step4;
 
-    @FindBy(css = "#step-5 [data-role = 'end']")
+    @FindBy(css = "#bootstrap_tour_end")
     private WebElement step5;
 
     @Inject
@@ -106,8 +106,7 @@ public class TopicViewPage extends ViewPage
     public AnswerAddElement clickAddAnswerActivator()
     {
         addAnswerActivator.click();
-        AnswerAddElement answerAddForm = new AnswerAddElement();
-        return answerAddForm;
+        return new AnswerAddElement();
     }
 
     /**
@@ -134,13 +133,12 @@ public class TopicViewPage extends ViewPage
     public FlagAddElement flagAnswer()
     {
         flagButton.click();
-        FlagAddElement flagAddForm = new FlagAddElement();
-        return flagAddForm;
+        return new FlagAddElement();
     }
 
     public boolean checkFlaggedAnswer()
     {
-        return answerTarget != null ? true : false;
+        return answerTarget != null;
     }
 
     /**
@@ -150,8 +148,7 @@ public class TopicViewPage extends ViewPage
     {
         step0.click();
         step1.click();
-        // We need to skip step2 since the social media buttons are disabled by default.
-        // step2.click();
+        step2.click();
         step3.click();
         step4.click();
         step5.click();

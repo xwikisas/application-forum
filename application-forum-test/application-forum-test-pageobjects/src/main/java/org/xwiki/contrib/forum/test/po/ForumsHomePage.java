@@ -45,16 +45,16 @@ public class ForumsHomePage extends ViewPage
     private WebElement addForumEntryButton;
 
     // Forums homepage tour steps
-    @FindBy(css = "#step-0 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step0;
 
-    @FindBy(css = "#step-1 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step1;
 
-    @FindBy(css = "#step-2 [data-role = 'next']")
+    @FindBy(css = "#bootstrap_tour_next")
     private WebElement step2;
 
-    @FindBy(css = "#step-3 [data-role = 'end']")
+    @FindBy(css = "#bootstrap_tour_end")
     private WebElement step3;
 
     @FindBy(xpath = "//tbody[@id='forums-display']//tr")
