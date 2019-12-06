@@ -58,16 +58,8 @@
 #else
   #initForum($doc.space)
   #set ($statement = 'from doc.object(ForumCode.TopicClass) as topic where doc.space like :space')
-  #if ($services.query.parameter())
-    ## Binding a LIKE value starting 8.4.5, 9.3RC1
-    #set ($topicsQuery = $services.query.xwql($statement))
-    #set ($topicsQuery = $topicsQuery.bindValue('space').literal("${doc.space}.").anyChars().query())
-  #else
-    ## Binding a LIKE value before 8.4.5, 9.3RC1.
-    #set ($statement = "$statement escape'!'")
-    #set ($topicsQuery = $services.query.xwql($statement))
-    #set ($topicsQuery = $topicsQuery.bindValue('space', $doc.space.replaceAll('([%_!])', '!$1').concat('.%')))
-  #end
+  #set ($topicsQuery = $services.query.xwql($statement))
+  #set ($topicsQuery = $topicsQuery.bindValue('space').literal("${doc.space}.").anyChars().query())
   #set ($topics = $topicsQuery.execute())
   #set ($totalTopicsTitle = $escapetool.xml($services.localization.render('conversations.forum.tooltip.totaltopics')))
   #displayAlertsMessages()
