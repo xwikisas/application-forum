@@ -23,6 +23,8 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
@@ -35,7 +37,6 @@ import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.api.Document;
 import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.objects.BaseObject;
 import com.xwiki.forum.ForumManager;
 
 /**
@@ -55,6 +56,9 @@ public class DefaultForumManager implements ForumManager
     private DocumentReferenceResolver<String> documentResolver;
 
     @Inject
+    private Logger logger;
+
+    @Inject
     private Provider<XWikiContext> xcontext;
 
     @Override
@@ -64,7 +68,7 @@ public class DefaultForumManager implements ForumManager
         boolean hasForumEdit =
             authManager.hasAccess(Right.EDIT, xcontext.get().getUserReference(), forumReference);
 
-        return (hasCommentRight || hasForumEdit) ? true : false;
+        return (hasCommentRight || hasForumEdit);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class DefaultForumManager implements ForumManager
         boolean hasForumDelete =
             authManager.hasAccess(Right.DELETE, xcontext.get().getUserReference(), forumReference);
 
-        return (hasCommentRight || hasForumDelete) ? true : false;
+        return (hasCommentRight || hasForumDelete);
     }
 
     private boolean checkCommentRight(int commentNb, Document answer)
@@ -99,7 +103,7 @@ public class DefaultForumManager implements ForumManager
         boolean hasForumEdit =
             authManager.hasAccess(Right.EDIT, xcontext.get().getUserReference(), forumReference);
 
-        return (hasAnswerRight || hasForumEdit) ? true : false;
+        return (hasAnswerRight || hasForumEdit);
     }
 
     @Override
@@ -109,7 +113,7 @@ public class DefaultForumManager implements ForumManager
         boolean hasContributedComments = checkContributedComments(answer);
         boolean hasForumDelete =
             authManager.hasAccess(Right.DELETE, xcontext.get().getUserReference(), forumReference);
-        return (hasAnswerRight && !hasContributedComments || hasForumDelete) ? true : false;
+        return ((hasAnswerRight && !hasContributedComments) || hasForumDelete);
     }
 
     private boolean checkDocumentRight(Document document)
@@ -166,7 +170,8 @@ public class DefaultForumManager implements ForumManager
                 }
             }
         } catch (XWikiException e) {
-            e.printStackTrace();
+            logger.warn("Could not check the contributed answers for [{}]. Root cause is [{}].", document,
+                ExceptionUtils.getRootCauseMessage(e));
         }
         return false;
     }
