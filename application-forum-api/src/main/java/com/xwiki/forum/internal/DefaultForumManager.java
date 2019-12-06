@@ -83,11 +83,8 @@ public class DefaultForumManager implements ForumManager
         DocumentReference commentClass = new DocumentReference(xcontext.get().getWikiId(), XWiki.SYSTEM_SPACE,
             XWikiDocument.COMMENTSCLASS_REFERENCE.getName());
 
-        XWikiDocument answerDoc = answer.getDocument();
-
-        BaseObject commentObj = answerDoc.getXObject(commentClass, commentNb);
-
-        String commentAuthor = commentObj.getStringValue(AUTHOR);
+        Object commentObj = answer.getObject(commentClass.toString(), commentNb);
+        String commentAuthor = (String) commentObj.getValue(AUTHOR);
         DocumentReference authorReference = documentResolver.resolve(commentAuthor);
 
         DocumentReference currentUserReference = xcontext.get().getUserReference();
@@ -117,16 +114,14 @@ public class DefaultForumManager implements ForumManager
 
     private boolean checkDocumentRight(Document document)
     {
-        XWikiDocument xwikiDocument = document.getDocument();
-        DocumentReference creatorReference = xwikiDocument.getCreatorReference();
+        DocumentReference creatorReference = document.getCreatorReference();
         DocumentReference currentUserReference = xcontext.get().getUserReference();
         return creatorReference.equals(currentUserReference);
     }
 
     private boolean checkContributedComments(Document document)
     {
-        XWikiDocument xwikiDocument = document.getDocument();
-        DocumentReference documentCreatorReference = xwikiDocument.getCreatorReference();
+        DocumentReference documentCreatorReference = document.getCreatorReference();
 
         for (Object object : document.getComments()) {
             String commentCreator = object.get(AUTHOR).toString();
@@ -150,12 +145,13 @@ public class DefaultForumManager implements ForumManager
 
     private boolean checkContributedAnswers(Document document)
     {
-        XWikiDocument xwikiDocument = document.getDocument();
-        DocumentReference documentCreatorReference = xwikiDocument.getCreatorReference();
+        DocumentReference documentCreatorReference = document.getCreatorReference();
 
         try {
             boolean hasContributedComments = false;
-            for (DocumentReference childReference : xwikiDocument.getChildrenReferences(xcontext.get())) {
+
+            for (String child : document.getChildren()) {
+                DocumentReference childReference = documentResolver.resolve(child);
                 XWikiDocument childXWikiDocument = xcontext.get().getWiki().getDocument(childReference, xcontext.get());
                 DocumentReference childCreatorReference = childXWikiDocument.getCreatorReference();
 

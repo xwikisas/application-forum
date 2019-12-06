@@ -56,7 +56,7 @@
   #set($discard = $flagDoc.updateObjectFromRequest('ForumCode.FlagClass'))
   #set($discard = $flagDoc.set('status', 'open'))
   #set($discard = $flagDoc.setSpace('Flags'))
-  #set($discard = $flagDoc.saveWithProgrammingRights())
+  #set($discard = $flagDoc.save())
   ## sending email
   #set($emailRegex = "[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}")
   #set($adminEmail = $xwiki.getXWikiPreference('admin_email'))

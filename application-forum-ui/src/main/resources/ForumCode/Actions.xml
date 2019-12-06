@@ -86,7 +86,7 @@
           #set($discard = $averageObj.set('method', 'average'))
           #set($discard = $entityDoc.setTitle($title))
           #set($discard = $entityDoc.setParent("$!request.parent"))
-          #set($discard = $entityDoc.saveWithProgrammingRights())
+          #set($discard = $entityDoc.save())
           #if ("$!request.xredirect" != '')
             #set($discard = $response.sendRedirect("$!request.xredirect"))
           #end
@@ -105,10 +105,10 @@
     #if ("$!request.space" != '')
       #set ($title = "Answer_${datetool.date.time}_${mathtool.random(1, 99)}")
       #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
-      #if ($entityDoc.hasAccessLevel('edit')) 
+      #if ($entityDoc.hasAccessLevel('edit'))
         #set($discard = $entityDoc.setParent("${request.parent}"))
         #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.AnswerClass'))
-        #set($discard = $entityDoc.saveWithProgrammingRights())
+        #set($discard = $entityDoc.save())
         #if ("$!request.xredirect" != '')
           #set($discard = $response.sendRedirect("$!request.xredirect"))
         #end
