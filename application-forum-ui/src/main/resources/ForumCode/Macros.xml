@@ -816,7 +816,7 @@
   #set ($discard = $spacePreferencesObject.set('showRightPanels', 1))
   #set ($discard = $spacePreferencesObject.set('rightPanels', 'ForumCode.MostActiveTopicsPanel'))
   #set ($discard = $spacePreferencesDoc.setHidden(true))
-  #set ($discard = $spacePreferencesDoc.saveWithProgrammingRights('Display most active topics panel', true))
+  #set ($discard = $spacePreferencesDoc.save('Display most active topics panel', true))
 #end
 #**
  * Displays different kinds of messages (info ,success ,warning ,error)
