@@ -56,7 +56,6 @@
   &lt;/div&gt;
   {{/html}}
 #else
-  #initForum($doc.space)
   #set ($statement = 'from doc.object(ForumCode.TopicClass) as topic where doc.space like :space')
   #set ($topicsQuery = $services.query.xwql($statement))
   #set ($topicsQuery = $topicsQuery.bindValue('space').literal("${doc.space}.").anyChars().query())

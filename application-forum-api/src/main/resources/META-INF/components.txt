@@ -1,2 +1,3 @@
 com.xwiki.forum.script.ForumScriptService
 com.xwiki.forum.internal.DefaultForumManager
+com.xwiki.forum.internal.ForumDocumentListener
