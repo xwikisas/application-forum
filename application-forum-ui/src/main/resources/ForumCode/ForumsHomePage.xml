@@ -40,6 +40,8 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
+#set ($forumsHomePage = $xwiki.getDocument('Forums.WebHome'))
+{{html clean="false"}}$!forumsHomePage.getRenderedContent($forumsHomePage.content, $doc.syntax.toIdString()){{/html}}
 #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css'))
 {{html clean='false'}}
 &lt;div class="row"&gt;
