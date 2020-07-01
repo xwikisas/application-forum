@@ -33,6 +33,9 @@
   <properties>
     <xwiki.extension.licensing.excludedDocuments>
       ForumCode.ConfigurationAdmin,
+      ForumCode.ForumTour,
+      ForumCode.ForumsHomepageTour,
+      ForumCode.TopicTour,
       Forums.WebPreferences,
       Forums.WebHome
     </xwiki.extension.licensing.excludedDocuments>
