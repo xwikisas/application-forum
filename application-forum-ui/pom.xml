@@ -64,6 +64,7 @@
           <artifactId>xwiki-rendering-syntax-plain</artifactId>
         </exclusion>
       </exclusions>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
