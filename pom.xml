@@ -49,6 +49,7 @@
   <modules>
     <module>application-forum-api</module>
     <module>application-forum-ui</module>
+    <module>application-forum-xip</module>
   </modules>
   <profiles>
     <profile>
