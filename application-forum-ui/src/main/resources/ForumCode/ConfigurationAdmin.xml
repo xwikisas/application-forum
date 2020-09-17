@@ -39,8 +39,8 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Licenses.Code.VelocityMacros"/}}
-
+  <content>{{include reference='Licenses.Code.VelocityMacros'/}}
+{{include reference='ForumCode.Macros' /}}
 {{velocity}}
 #set ($mainReference = $services.model.createDocumentReference('', 'ForumCode', 'ConfigurationClass'))
 #if (!$services.licensing.licensor.hasLicensureForEntity($mainReference))
@@ -48,12 +48,14 @@
   {{error}}#getMissingLicenseMessage('forum.extension.name'){{/error}}
 
 #else
-  {{include reference="ForumCode.FlagsHome"/}}
-
+  {{include reference='ForumCode.FlagsHome'/}}
   == $services.localization.render('forum.administration.configuration.title') ==
+  #checkIfHostNameIsValid($doc.getExternalURL(), $result)
+  #if ($result == 'false')
+    {{warning}}$services.localization.render('forum.administration.warningMessage'){{/warning}}
+  #end
 #end
-{{/velocity}}
-</content>
+{{/velocity}}</content>
   <object>
     <name>ForumCode.ConfigurationAdmin</name>
     <number>0</number>

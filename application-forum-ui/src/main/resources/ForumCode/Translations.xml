@@ -295,7 +295,8 @@ templateProvider.forum.name=Forum
 templateProvider.forum.description=Start a conversation
 
 ## Forum Administration Section
-forum.administration.configuration.title=Configuration</content>
+forum.administration.configuration.title=Configuration
+forum.administration.warningMessage=It seems like you're trying to access this instance locally.\nThis functionally works only for valid (extern) hosts.</content>
   <object>
     <name>ForumCode.Translations</name>
     <number>0</number>
