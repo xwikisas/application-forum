@@ -480,15 +480,15 @@
 #end
 ##
 #macro(checkIfHostNameIsValid $stringURL $result)
-  ## @since 12.8RC1
+  ## getURLFromString is available from 12.8RC1
   #set ($hostName = $urltool.getURLFromString($stringURL).getHost())
   #if (!$hostName)
     #set ($hostName = $stringURL.split('//')[1].split('/')[0].split(':')[0])
   #end
   #if ($hostName.contains('.'))
-    #set ($result = true)
+    #setVariable('$result', 'true')
   #else
-    #set ($result = false)
+    #setVariable('$result', 'false')
   #end
 #end
 ##
