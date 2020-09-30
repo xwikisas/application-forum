@@ -41,6 +41,7 @@
   <hidden>true</hidden>
   <content>{{include reference="Licenses.Code.VelocityMacros"/}}
 {{include reference='ForumCode.Macros'/}}
+
 {{velocity}}
 #set ($mainReference = $services.model.createDocumentReference('', 'ForumCode', 'ConfigurationClass'))
 #if (!$services.licensing.licensor.hasLicensureForEntity($mainReference))
@@ -49,10 +50,11 @@
 
 #else
   {{include reference='ForumCode.FlagsHome'/}}
+
   == $services.localization.render('forum.administration.configuration.title') ==
-  #checkIfHostNameIsValid($doc.getExternalURL(), $result)
+  #checkIfURLCanBeShared($doc.getExternalURL(), $result)
   #if ($result == 'false')
-    {{warning}}$services.localization.render('forum.administration.warningMessage'){{/warning}}
+    {{warning}}$services.localization.render('forum.administration.cannotShareURLWarning'){{/warning}}
   #end
 #end
 {{/velocity}}</content>

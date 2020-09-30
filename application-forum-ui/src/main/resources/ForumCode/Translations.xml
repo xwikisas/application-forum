@@ -296,7 +296,7 @@ templateProvider.forum.description=Start a conversation
 
 ## Forum Administration Section
 forum.administration.configuration.title=Configuration
-forum.administration.warningMessage=It seems like you're trying to access this instance locally.\nThis functionally works only for valid (extern) hosts.</content>
+forum.administration.cannotShareURLWarning=It seems like you're accessing this instance through localhost. This will prevent you from sharing URLs on social media.</content>
   <object>
     <name>ForumCode.Translations</name>
     <number>0</number>
