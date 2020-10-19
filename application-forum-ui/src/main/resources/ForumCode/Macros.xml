@@ -480,8 +480,8 @@
 #end
 ##
 #macro(checkIfURLCanBeShared $stringURL $result)
-  ## getUrl is available from 12.8RC1
-  #set ($hostName = $urltool.getUrl($stringURL).getHost())
+  ## toURL is available from 12.9RC1
+  #set ($hostName = $urltool.toURL($stringURL).getHost())
   #if (!$hostName)
     #set ($hostName = $stringURL.split('//')[1].split('/')[0].split(':')[0])
   #end
