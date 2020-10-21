@@ -295,7 +295,8 @@ templateProvider.forum.name=Forum
 templateProvider.forum.description=Start a conversation
 
 ## Forum Administration Section
-forum.administration.configuration.title=Configuration</content>
+forum.administration.configuration.title=Configuration
+forum.administration.cannotShareURLWarning=It seems like you're accessing this instance through localhost. This will prevent you from sharing URLs on social media.</content>
   <object>
     <name>ForumCode.Translations</name>
     <number>0</number>
