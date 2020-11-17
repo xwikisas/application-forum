@@ -30,6 +30,7 @@
   <artifactId>application-forum-ui</artifactId>
   <packaging>xar</packaging>
   <name>Forum Application - UI</name>
+  <description>Discuss and collaborate in XWiki with forums, topics, answers and comments. Add votes and like answers. Flag inappropriate content. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
     <xwiki.extension.licensing.excludedDocuments>
       ForumCode.ConfigurationAdmin,
