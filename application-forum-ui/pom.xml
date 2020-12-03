@@ -44,6 +44,17 @@
     <xwiki.extension.name>Forum Application (Pro)</xwiki.extension.name>
     <xwiki.extension.category>application</xwiki.extension.category>
   </properties>
+  <!-- Prevent RequireUpperBoundDeps error caused by lower versions declared in Tour application. -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.xwiki.rendering</groupId>
+        <artifactId>xwiki-rendering-syntax-plain</artifactId>
+        <version>${rendering.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.xwiki.licensing</groupId>
@@ -58,16 +69,9 @@
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-tour-ui</artifactId>
+      <version>${tour.version}</version>
       <type>xar</type>
-      <version>1.3.3</version>
       <scope>runtime</scope>
-      <exclusions>
-        <!-- Exclude this dependency to prevent RequireUpperBoundDeps error caused by lower version declared in Tour UI -->
-        <exclusion>
-          <groupId>org.xwiki.rendering</groupId>
-          <artifactId>xwiki-rendering-syntax-plain</artifactId>
-        </exclusion>
-      </exclusions>
       <optional>true</optional>
     </dependency>
     <dependency>

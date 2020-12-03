@@ -25,7 +25,14 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.xwiki.contrib.forum.test.po.*;
+import org.xwiki.contrib.forum.test.po.AnswerAddElement;
+import org.xwiki.contrib.forum.test.po.FlagAddElement;
+import org.xwiki.contrib.forum.test.po.FlagViewPage;
+import org.xwiki.contrib.forum.test.po.ForumEditPage;
+import org.xwiki.contrib.forum.test.po.ForumViewPage;
+import org.xwiki.contrib.forum.test.po.ForumsHomePage;
+import org.xwiki.contrib.forum.test.po.TopicAddElement;
+import org.xwiki.contrib.forum.test.po.TopicViewPage;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.panels.test.po.ApplicationsPanel;
 import org.xwiki.test.ui.AbstractTest;
@@ -54,8 +61,6 @@ public class ForumsTest extends AbstractTest
     private static final String TOPIC_TITLE = "MyTopic";
 
     private static final String TOPIC_DESCRIPTION = "MyTopic Description";
-
-    private static final String ANSWER = "Hello! This is my answer!";
 
     private static final String FLAG_MESSAGE = "This message promotes hate or violence.";
 

@@ -36,29 +36,43 @@
     <!-- Functional tests are allowed to output content to the console -->
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
+  <!-- Prevent RequireUpperBoundDeps error caused by lower versions declared in Tour application. -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.xwiki.rendering</groupId>
+        <artifactId>xwiki-rendering-macro-box</artifactId>
+        <version>${rendering.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.xwiki.platform</groupId>
+        <artifactId>xwiki-platform-icon-ui</artifactId>
+        <version>${platform.version}</version>
+        <type>xar</type>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>application-forum-ui</artifactId>
       <type>xar</type>
       <version>${project.version}</version>
-      <exclusions>
-        <!-- Exclude these dependency to prevent RequireUpperBoundDeps error caused by lower versions declared in Tour UI -->
-        <exclusion>
-          <groupId>org.xwiki.platform</groupId>
-          <artifactId>xwiki-platform-icon-ui</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.xwiki.rendering</groupId>
-          <artifactId>xwiki-rendering-macro-box</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-panels-ui</artifactId>
       <type>xar</type>
       <version>${platform.version}</version>
+    </dependency>
+    <!-- Include the optional dependencies. -->
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-tour-ui</artifactId>
+      <version>${tour.version}</version>
+      <type>xar</type>
     </dependency>
     <!-- Test dependencies -->
     <dependency>
