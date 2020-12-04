@@ -44,19 +44,6 @@ public class ForumsHomePage extends ViewPage
     @FindBy(xpath = "//div[@id = 'entryNamePopup']//input[@type = 'image']")
     private WebElement addForumEntryButton;
 
-    // Forums homepage tour steps
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step0;
-
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step1;
-
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step2;
-
-    @FindBy(css = "#bootstrap_tour_end")
-    private WebElement step3;
-
     @FindBy(xpath = "//tbody[@id='forums-display']//tr")
     private List<WebElement> forums;
 
@@ -100,14 +87,16 @@ public class ForumsHomePage extends ViewPage
     }
 
     /**
-     * Navigates through the Forums homepage tour.
+     * Navigates through the Forums home page tour.
      */
     public void viewTour()
     {
-        step0.click();
-        step1.click();
-        step2.click();
-        step3.click();
+        // Go through the tour steps.
+        for (int i = 0; i < 3; i++) {
+            getDriver().findElementById("bootstrap_tour_next").click();
+        }
+        // Finish the tour.
+        getDriver().findElementById("bootstrap_tour_end").click();
     }
 
     /**
