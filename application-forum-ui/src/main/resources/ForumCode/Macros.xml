@@ -155,9 +155,9 @@
         #set ($commentEditRedirect = $commentDoc.getURL('get', $escapetool.url({'xpage': 'xpart', 'vm': 'conversations.vm'})))
         #set ($editQueryString = $escapetool.url({'number': $comment.number,
                                                   'xredirect': $commentEditRedirect,
-                                                  'xpage': 'xpart',
-                                                  'vm': 'commentsinline.vm'}))
-        #set ($editURL = $commentDoc.getURL('view', $editQueryString))
+                                                  'xpage': 'get',
+                                                  'commentEditForm': 'true'}))
+        #set ($editURL = $commentDoc.getURL('get', $editQueryString))
         &lt;a class="edit" href="$editURL" title="$services.localization.render('core.viewers.comments.edit')"&gt;
           $services.localization.render('core.viewers.comments.edit')
         &lt;/a&gt;
