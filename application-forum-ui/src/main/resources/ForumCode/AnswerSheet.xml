@@ -53,17 +53,22 @@
         &lt;/dl&gt; 
       &lt;/div&gt;
     {{/html}}
-    #elseif ($request.commentEditForm == 'true')
-    {{html}}
+  #elseif ($request.commentEditForm == 'true')
+    {{html clean="false"}}
+      ## XWIKI-17318
       #set ($commentEditForm = "#template('commentsinline.vm')")
-      #if (!$commentEditForm.contains('&lt;textarea/&gt;'))
+      #if (!$commentEditForm.contains('&lt;/textarea&gt;'))
+        ## XWiki 12.6+
         #set ($discard = $doc.use('XWiki.XWikiComments', $request.number))
         #set ($commentEditField = $doc.display('comment', 'edit'))
         #set ($insertPosition = $commentEditForm.indexOf('&lt;!-- loaded by javascript'))
         #if ($insertPosition != -1)
-          #set ($commentEditForm = $commentEditForm.substring(0, $insertPosition) + $commentEditField + $commentEditForm.substring($insertPosition))
+          #set ($commentEditBuilder = $commentEditForm.substring(0, $insertPosition) + $commentEditField)
+          #set ($commentEditForm = $commentEditBuilder + $commentEditForm.substring($insertPosition))
         #end
       #end
+      ## Remove HTML macro here, because in lower version macro came from commentEditForm
+      ## and from new version came from commentEditField.
       #set ($commentEditForm = $stringtool.remove($commentEditForm, '{{html clean="false" wiki="false"}}'))
       #set ($commentEditForm = $stringtool.remove($commentEditForm, '{{/html}}'))
       $commentEditForm
