@@ -55,20 +55,21 @@
     {{/html}}
   #elseif ($request.commentEditForm == 'true')
     {{html clean="false"}}
-      ## XWIKI-17318
+      ## XWIKI-17318: Rich editor integration on comments and annotations textareas
       #set ($commentEditForm = "#template('commentsinline.vm')")
       #if (!$commentEditForm.contains('&lt;/textarea&gt;'))
-        ## XWiki 12.6+
+        ## Starting with XWiki 12.6 the comments template was changed to not output textarea
+        ## but a dedicated zone for the comment editor.
         #set ($discard = $doc.use('XWiki.XWikiComments', $request.number))
         #set ($commentEditField = $doc.display('comment', 'edit'))
         #set ($insertPosition = $commentEditForm.indexOf('&lt;!-- loaded by javascript'))
         #if ($insertPosition != -1)
-          #set ($commentEditBuilder = $commentEditForm.substring(0, $insertPosition) + $commentEditField)
-          #set ($commentEditForm = $commentEditBuilder + $commentEditForm.substring($insertPosition))
+          #set ($commentEditForm = $commentEditForm.substring(0, $insertPosition) + $commentEditField
+            + $commentEditForm.substring($insertPosition))
         #end
       #end
-      ## Remove HTML macro here, because in lower version macro came from commentEditForm
-      ## and from new version came from commentEditField.
+      ## Remove the HTML macro here because in older versions of XWiki the macro comes from commentEditForm
+      ## (commentsinline.vm) and in newer versions it comes from commentEditField ($doc.display()).
       #set ($commentEditForm = $stringtool.remove($commentEditForm, '{{html clean="false" wiki="false"}}'))
       #set ($commentEditForm = $stringtool.remove($commentEditForm, '{{/html}}'))
       $commentEditForm
