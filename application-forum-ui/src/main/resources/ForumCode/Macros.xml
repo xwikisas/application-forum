@@ -153,6 +153,7 @@
         ## Although this will fail if the javascript is not working, we assume it's always working
         ## so edit comment will redirect to the conversations view of the article for which we edited comment, so that we have a correct reloading after save
         #set ($commentEditRedirect = $commentDoc.getURL('get', $escapetool.url({'xpage': 'xpart', 'vm': 'conversations.vm'})))
+        ## 'xpage': 'get' is needed because commentsinline.vm checks the xpage request parameter
         #set ($editQueryString = $escapetool.url({'number': $comment.number,
                                                   'xredirect': $commentEditRedirect,
                                                   'xpage': 'get',
