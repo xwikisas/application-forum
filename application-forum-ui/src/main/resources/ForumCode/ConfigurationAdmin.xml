@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -27,12 +27,9 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1412780057000</creationDate>
   <parent>WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1575558865000</date>
-  <contentUpdateDate>1575558865000</contentUpdateDate>
   <version>1.1</version>
   <title/>
   <comment/>
@@ -134,17 +131,29 @@
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </codeToExecute>
       <configurationClass>
+        <cache>0</cache>
+        <classname/>
         <customDisplay/>
         <disabled>0</disabled>
+        <displayType>input</displayType>
+        <hint/>
+        <idField/>
+        <multiSelect>0</multiSelect>
         <name>configurationClass</name>
         <number>3</number>
-        <picker>0</picker>
+        <picker>1</picker>
         <prettyName>configurationClass</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
         <size>30</size>
+        <sort>none</sort>
+        <sql/>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.PageClass</classType>
       </configurationClass>
       <configureGlobally>
         <customDisplay/>
@@ -291,6 +300,12 @@
       <configureGlobally>1</configureGlobally>
     </property>
     <property>
+      <displayBeforeCategory/>
+    </property>
+    <property>
+      <displayInCategory/>
+    </property>
+    <property>
       <displayInSection>Forums</displayInSection>
     </property>
     <property>
@@ -304,6 +319,9 @@
     </property>
     <property>
       <propertiesToShow/>
+    </property>
+    <property>
+      <sectionOrder/>
     </property>
   </object>
 </xwikidoc>

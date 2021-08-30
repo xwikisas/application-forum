@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -27,12 +27,9 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1593619756000</creationDate>
   <parent>xwiki:ForumCode.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1593619763000</date>
-  <contentUpdateDate>1593619763000</contentUpdateDate>
   <version>1.1</version>
   <title>Forum tour</title>
   <comment/>
@@ -190,6 +187,9 @@
       </title>
     </class>
     <property>
+      <action/>
+    </property>
+    <property>
       <backdrop>1</backdrop>
     </property>
     <property>
@@ -205,6 +205,12 @@ $services.localization.render('tour.forumTour.forumDetails.content')
     </property>
     <property>
       <placement>top</placement>
+    </property>
+    <property>
+      <queryString/>
+    </property>
+    <property>
+      <reflex/>
     </property>
     <property>
       <targetPage/>
@@ -363,6 +369,9 @@ $services.localization.render('tour.forumTour.forumDetails.content')
       </title>
     </class>
     <property>
+      <action/>
+    </property>
+    <property>
       <backdrop>1</backdrop>
     </property>
     <property>
@@ -378,6 +387,12 @@ $services.localization.render('tour.forumTour.addTopic.content')
     </property>
     <property>
       <placement>top</placement>
+    </property>
+    <property>
+      <queryString/>
+    </property>
+    <property>
+      <reflex/>
     </property>
     <property>
       <targetPage/>
@@ -536,6 +551,9 @@ $services.localization.render('tour.forumTour.addTopic.content')
       </title>
     </class>
     <property>
+      <action/>
+    </property>
+    <property>
       <backdrop>1</backdrop>
     </property>
     <property>
@@ -551,6 +569,12 @@ $services.localization.render('tour.forumTour.sortTopics.content')
     </property>
     <property>
       <placement>top</placement>
+    </property>
+    <property>
+      <queryString/>
+    </property>
+    <property>
+      <reflex/>
     </property>
     <property>
       <targetPage/>
@@ -709,6 +733,9 @@ $services.localization.render('tour.forumTour.sortTopics.content')
       </title>
     </class>
     <property>
+      <action/>
+    </property>
+    <property>
       <backdrop>1</backdrop>
     </property>
     <property>
@@ -724,6 +751,12 @@ $services.localization.render('tour.forumTour.listOfTopics.content')
     </property>
     <property>
       <placement>top</placement>
+    </property>
+    <property>
+      <queryString/>
+    </property>
+    <property>
+      <reflex/>
     </property>
     <property>
       <targetPage/>
