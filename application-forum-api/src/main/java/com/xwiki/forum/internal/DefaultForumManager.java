@@ -132,7 +132,7 @@ public class DefaultForumManager implements ForumManager
         for (Object object : document.getComments()) {
             String commentCreator = object.get(AUTHOR).toString();
             DocumentReference commentCreatorReference = documentResolver.resolve(commentCreator);
-            if (!documentCreatorReference.equals(commentCreatorReference)) {
+            if (!Objects.equals(documentCreatorReference, commentCreatorReference)) {
                 return true;
             }
         }
@@ -161,7 +161,7 @@ public class DefaultForumManager implements ForumManager
                 XWikiDocument childXWikiDocument = xcontext.get().getWiki().getDocument(childReference, xcontext.get());
                 DocumentReference childCreatorReference = childXWikiDocument.getCreatorReference();
 
-                if (!documentCreatorReference.equals(childCreatorReference)) {
+                if (!Objects.equals(documentCreatorReference, childCreatorReference)) {
                     return true;
                 }
 
