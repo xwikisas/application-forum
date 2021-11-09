@@ -21,9 +21,7 @@ package org.xwiki.contrib.forum.test.ui;
 
 import java.util.Arrays;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.xwiki.contrib.forum.test.po.AnswerAddElement;
 import org.xwiki.contrib.forum.test.po.FlagAddElement;
@@ -35,21 +33,22 @@ import org.xwiki.contrib.forum.test.po.TopicAddElement;
 import org.xwiki.contrib.forum.test.po.TopicViewPage;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.panels.test.po.ApplicationsPanel;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.SuperAdminAuthenticationRule;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.ViewPage;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * UI tests for the Forum application.
  *
  * @version $Id$
- * @since 1.9.4
+ * @since 2.9
  */
-public class ForumsTest extends AbstractTest
+@UITest
+class ForumIT
 {
-    @Rule
-    public SuperAdminAuthenticationRule authenticationRule = new SuperAdminAuthenticationRule(getUtil());
-
     private static final String FORUM_SPACE = "Forums";
 
     private static final String FORUM_TITLE = "MyForum";
@@ -65,23 +64,23 @@ public class ForumsTest extends AbstractTest
     private static final String FLAG_MESSAGE = "This message promotes hate or violence.";
 
     @Test
-    public void testApplicationPanelLinksToForumsHomePage()
+    void applicationPanelLinksToForumsHomePage()
     {
         ApplicationsPanel applicationPanel = ApplicationsPanel.gotoPage();
         ViewPage vp = applicationPanel.clickApplication(FORUM_SPACE);
 
         DocumentReference reference = new DocumentReference("wiki", Arrays.asList(FORUM_SPACE), WEBHOME);
 
-        Assert.assertEquals(reference.toString(), String.format("wiki:%s", vp.getMetaDataValue("document")));
+        assertEquals(reference.toString(), String.format("wiki:%s", vp.getMetaDataValue("document")));
     }
 
     @Test
-    public void testCreateForumEntities() throws Exception
+    void createForumEntities(TestUtils setup) throws Exception
     {
         ForumsHomePage forumsHomePage = ForumsHomePage.gotoPage();
         // View Forums homepage tour.
         forumsHomePage.viewTour();
-        waitUntilTourDisappears();
+        waitUntilTourDisappears(setup);
         // Create new forum.
         forumsHomePage.clickAddForumButton();
         forumsHomePage.setAddForumEntryInput(FORUM_TITLE);
@@ -91,12 +90,12 @@ public class ForumsTest extends AbstractTest
         forumEditPage.clickSaveAndView();
 
         ForumViewPage forumViewPage = new ForumViewPage();
-        Assert.assertEquals(FORUM_TITLE, forumViewPage.getDocumentTitle());
-        Assert.assertEquals(FORUM_DESCRIPTION, forumViewPage.getDescription());
+        assertEquals(FORUM_TITLE, forumViewPage.getDocumentTitle());
+        assertEquals(FORUM_DESCRIPTION, forumViewPage.getDescription());
 
         // View Forum tour.
         forumViewPage.viewTour();
-        waitUntilTourDisappears();
+        waitUntilTourDisappears(setup);
         // Create new topic.
         TopicAddElement topicAddForm = forumViewPage.clickAddTopicActivator();
         topicAddForm.getEditForm().setTitle(TOPIC_TITLE);
@@ -104,17 +103,17 @@ public class ForumsTest extends AbstractTest
         forumViewPage = topicAddForm.clickAddTopicButton();
 
         TopicViewPage topicViewPage = TopicViewPage.gotoPage();
-        Assert.assertEquals(TOPIC_TITLE, topicViewPage.getDocumentTitle());
-        Assert.assertEquals(TOPIC_DESCRIPTION, topicViewPage.getDescription());
+        assertEquals(TOPIC_TITLE, topicViewPage.getDocumentTitle());
+        assertEquals(TOPIC_DESCRIPTION, topicViewPage.getDescription());
 
         // View Topic tour.
         topicViewPage.viewTour();
-        waitUntilTourDisappears();
+        waitUntilTourDisappears(setup);
 
         // Create multiple answers.
         createAnswer(topicViewPage, "Hello\nworld!\n!@#$%^&*()_\"';:`~");
         createAnswer(topicViewPage, "Another message");
-        Assert.assertEquals(2, topicViewPage.getAnswersNumber());
+        assertEquals(2, topicViewPage.getAnswersNumber());
 
         // Flag the answer.
         FlagAddElement flagAddForm = topicViewPage.flagAnswer();
@@ -124,7 +123,7 @@ public class ForumsTest extends AbstractTest
 
         FlagViewPage flagViewPage = FlagViewPage.goToPage();
         TopicViewPage flagTopicView = flagViewPage.clickTargetURL();
-        Assert.assertEquals(true, flagTopicView.checkFlaggedAnswer());
+        assertEquals(true, flagTopicView.checkFlaggedAnswer());
 
         // Add multiple comments.
         createComment(flagTopicView, "Hello\\nworld!\\n!@#$%^&*()_\\\"';:`~1");
@@ -150,16 +149,16 @@ public class ForumsTest extends AbstractTest
         forumsHomePage.deleteForumPage(page);
 
         // Verify that the forum has been deleted.
-        Assert.assertTrue(forumsHomePage.getNotification().contains("Forum deleted"));
+        assertTrue(forumsHomePage.getNotification().contains("Forum deleted"));
 
     }
 
-    private void waitUntilTourDisappears()
+    private void waitUntilTourDisappears(TestUtils setup)
     {
         // Waiting for all the tour elements to disappear instead of the last one because the order varies.
-        getDriver().waitUntilElementDisappears(By.className("tour-backdrop"));
-        getDriver().waitUntilElementDisappears(By.className("tour-step-background"));
-        getDriver().waitUntilElementDisappears(By.cssSelector("id^='step-'"));
+        setup.getDriver().waitUntilElementDisappears(By.className("tour-backdrop"));
+        setup.getDriver().waitUntilElementDisappears(By.className("tour-step-background"));
+        setup.getDriver().waitUntilElementDisappears(By.cssSelector("id^='step-'"));
 
     }
 }

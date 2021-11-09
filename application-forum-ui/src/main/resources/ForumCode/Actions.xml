@@ -238,9 +238,7 @@
   #set ($entityDocReference = $services.model.createDocumentReference('WebHome', $entitySpaceReference))
   ## Rename the fake document with the real one in order to keep initial actions performed in the form (e.g: attaching an image).
   #set ($fakeDocRef = $services.model.resolveDocument($fakeDocName))
-  #set ($renameRequest = $services.refactoring.createRenameRequest($fakeDocRef, $entityDocReference))
-  #set ($discard = $renameRequest.setDeleteSource(true))
-  #set ($discard = $services.refactoring.rename($renameRequest).join())
+  #set ($discard = $services.refactoring.rename($fakeDocRef, $entityDocReference).join())
   #set ($entityDoc = $xwiki.getDocument($entityDocReference))
   ## The default language is set on a document at the moment of the first edit, when the document is created.
   ## This condition is not met with the current "Fake document" strategy and we need to explicitly set the locale.

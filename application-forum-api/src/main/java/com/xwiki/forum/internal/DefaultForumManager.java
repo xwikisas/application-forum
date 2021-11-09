@@ -19,6 +19,8 @@
  */
 package com.xwiki.forum.internal;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -31,11 +33,11 @@ import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.security.authorization.AuthorizationManager;
 import org.xwiki.security.authorization.Right;
 
-import com.xpn.xwiki.api.Object;
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.api.Document;
+import com.xpn.xwiki.api.Object;
 import com.xpn.xwiki.doc.XWikiDocument;
 import com.xwiki.forum.ForumManager;
 
@@ -120,7 +122,7 @@ public class DefaultForumManager implements ForumManager
     {
         DocumentReference creatorReference = document.getCreatorReference();
         DocumentReference currentUserReference = xcontext.get().getUserReference();
-        return creatorReference.equals(currentUserReference);
+        return Objects.equals(creatorReference, currentUserReference);
     }
 
     private boolean checkContributedComments(Document document)
