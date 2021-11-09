@@ -21,6 +21,7 @@ package org.xwiki.contrib.forum.test.ui;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.xwiki.contrib.forum.test.po.AnswerAddElement;
@@ -62,6 +63,12 @@ class ForumIT
     private static final String TOPIC_DESCRIPTION = "MyTopic Description";
 
     private static final String FLAG_MESSAGE = "This message promotes hate or violence.";
+
+    @BeforeAll
+    void setUp(TestUtils setup)
+    {
+        setup.loginAsSuperAdmin();
+    }
 
     @Test
     void applicationPanelLinksToForumsHomePage()

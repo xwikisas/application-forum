@@ -25,6 +25,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.test.ui.po.LiveTableElement;
 import org.xwiki.test.ui.po.ViewPage;
 
 /**
@@ -58,6 +59,17 @@ public class ForumsHomePage extends ViewPage
         DocumentReference reference = new DocumentReference("wiki", "Forums", "WebHome");
         getUtil().gotoPage(reference);
         return new ForumsHomePage();
+    }
+
+    public ForumsHomePage()
+    {
+        // Make sure the forums live table is ready.
+        getForumsLiveTable().waitUntilReady();
+    }
+
+    public LiveTableElement getForumsLiveTable()
+    {
+        return new LiveTableElement("forums");
     }
 
     /**
