@@ -611,7 +611,10 @@
 ##
 #macro (displayVoteButton $documentReference)
   ## An user can vote only if didn't already vote and if is authenticated.
-  #set ($canVote = ($services.ratings.getRating($documentReference, $xcontext.userReference) == $util.null) &amp;&amp; !$isGuest)
+  #set ($pageRating = $services.ratings.getRating($documentReference, $xcontext.userReference))
+  ## On newer versions of services.ratings, the API returns an Optional object, thus we also have to check if the
+  ## object is empty or it returned a value.
+  #set ($canVote = ($pageRating == $util.null || $pageRating.isPresent() == false) &amp;&amp; !$isGuest)
   #set ($voteButtonTitleKey = 'conversation.like.button.alreadyliked.tooltip')
   #if ($canVote)
     #set ($voteAllowedClass = 'allow-vote')
@@ -619,6 +622,11 @@
   #end
   &lt;div class="topic-vote $!voteAllowedClass conversation-like" title="$services.localization.render($voteButtonTitleKey)"&gt;
     #set ($rating = $services.ratings.getAverageRating($documentReference).nbVotes)
+    ## In newer versions, services.ratings returns Optional values to most of its functions so we have to retrieve the
+    ## value accordingly.
+    #if ("$!rating" == '')
+      #set ($rating = $services.ratings.getAverageRating($documentReference).get().getNbVotes())
+    #end
     &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($documentReference)" /&gt;
     &lt;span class="conversation-score" title="$services.localization.render('conversation.like.score.tooltip', [$rating])"&gt;$!rating&lt;/span&gt;
   &lt;/div&gt;
