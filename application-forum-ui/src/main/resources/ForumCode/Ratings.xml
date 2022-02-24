@@ -43,10 +43,11 @@
   #set ($discard = $services.ratings.setRating($docRef, $xcontext.userReference, 1))
 #end
 #set ($avgRating = $services.ratings.getAverageRating($docRef))
-#set ($nbVotes = $avgRating.nbVotes)
-## Newer versions of services.ratings API return Optional objects so we have to retrieve the value from within.
+## Use the latest API
+#set ($nbVotes = $avgRating.get().getNbVotes())
+## For versions before 12.9 we need to use the old API.
 #if ("$!nbVotes" == '')
-  #set ($nbVotes = $avgRating.get().getNbVotes())
+  #set ($nbVotes = $avgRating.nbVotes)
 #end
 $jsontool.serialize({'totalvotes' : "$!{nbVotes}"})
 {{/velocity}}</content>

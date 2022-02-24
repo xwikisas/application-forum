@@ -805,8 +805,7 @@ function conversationLikeHandler(event) {
         scoreDisplayer.update(response.responseJSON.totalvotes);
         var scoreTitle = scoreDisplayer.title;
         var matches = scoreTitle.match(/\d+/g);
-        var noVotes = parseInt(matches[0]) + parseInt(response.responseJSON.totalvotes);
-        scoreDisplayer.title = scoreTitle.replace(matches[0], noVotes)
+        scoreDisplayer.title = scoreTitle.replace(matches[0], response.responseJSON.totalvotes)
       }
       // and now remove this listener from the like button, since the current user shouldn't be able to vote again ...
       topicLikeBlock.stopObserving('click');
