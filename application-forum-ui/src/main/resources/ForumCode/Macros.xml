@@ -614,7 +614,7 @@
   #if (!$isGuest)
       ## An user can vote only if didn't already vote and if is authenticated.
       #set ($pageRating = $services.ratings.getRating($documentReference, $xcontext.userReference))
-      ## On newer versions of services.ratings, the API returns an Optional object, thus we also have to check if the
+      ## Since version 12.9 of services.ratings, the API returns an Optional object, thus we also have to check if the
       ## object is empty or it returned a value.
       #set ($canVote = ($pageRating == $util.null || $pageRating.isPresent() == false))
   #end
