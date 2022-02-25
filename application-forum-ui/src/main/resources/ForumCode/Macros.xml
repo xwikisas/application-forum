@@ -610,15 +610,27 @@
 #end
 ##
 #macro (displayVoteButton $documentReference)
-  ## An user can vote only if didn't already vote and if is authenticated.
-  #set ($canVote = ($services.ratings.getRating($documentReference, $xcontext.userReference) == $util.null) &amp;&amp; !$isGuest)
+  #set ($canVote = false)
+  #if (!$isGuest)
+      ## An user can vote only if didn't already vote and if is authenticated.
+      #set ($pageRating = $services.ratings.getRating($documentReference, $xcontext.userReference))
+      ## Since version 12.9 of services.ratings, the API returns an Optional object, thus we also have to check if the
+      ## object is empty or it returned a value.
+      #set ($canVote = ($pageRating == $util.null || $pageRating.isPresent() == false))
+  #end
+
   #set ($voteButtonTitleKey = 'conversation.like.button.alreadyliked.tooltip')
   #if ($canVote)
     #set ($voteAllowedClass = 'allow-vote')
     #set ($voteButtonTitleKey = 'conversation.like.button.tooltip')
   #end
   &lt;div class="topic-vote $!voteAllowedClass conversation-like" title="$services.localization.render($voteButtonTitleKey)"&gt;
-    #set ($rating = $services.ratings.getAverageRating($documentReference).nbVotes)
+    ## Use the latest API
+    #set ($rating = $services.ratings.getAverageRating($documentReference).get().getNbVotes())
+    ## For versions before 12.9 we need to use the old API.
+    #if ("$!rating" == '')
+      #set ($rating = $services.ratings.getAverageRating($documentReference).nbVotes)
+    #end
     &lt;input type="hidden" name="documenttolike" value="$escapetool.xml($documentReference)" /&gt;
     &lt;span class="conversation-score" title="$services.localization.render('conversation.like.score.tooltip', [$rating])"&gt;$!rating&lt;/span&gt;
   &lt;/div&gt;
