@@ -25,7 +25,7 @@
   <parent>
     <groupId>com.xwiki.parent</groupId>
     <artifactId>xwikisas-parent-platform</artifactId>
-    <version>11.10</version>
+    <version>13.10-3</version>
   </parent>
   <groupId>com.xwiki.forum</groupId>
   <artifactId>application-forum</artifactId>
@@ -34,8 +34,8 @@
   <name>Forum Application - Parent POM</name>
   <description>Discuss and collaborate in XWiki with forums, topics, answers and comments. Add votes and like answers. Flag inappropriate content. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
-    <licensing.version>1.22</licensing.version>
-    <tour.version>1.3.3</tour.version>
+    <licensing.version>1.24.1</licensing.version>
+    <tour.version>1.3.7</tour.version>
   </properties>
   <issueManagement>
     <system>GitHub</system>
@@ -148,6 +148,14 @@
         </configuration>
       </plugin>
     </plugins>
+    <extensions>
+      <!-- Needed to add support for the "xip" packaging -->
+      <extension>
+        <groupId>org.xwiki.commons</groupId>
+        <artifactId>xwiki-commons-tool-extension-plugin</artifactId>
+        <version>${commons.version}</version>
+      </extension>
+    </extensions>
   </build>
   <modules>
     <module>application-forum-api</module>
