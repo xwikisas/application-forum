@@ -34,7 +34,7 @@
   <name>Forum Application - Parent POM</name>
   <description>Discuss and collaborate in XWiki with forums, topics, answers and comments. Add votes and like answers. Flag inappropriate content. The app can be purchased individually or part of the XWiki Pro package. Try it free.</description>
   <properties>
-    <licensing.version>1.24.3</licensing.version>
+    <licensing.version>1.25</licensing.version>
     <tour.version>1.3.7</tour.version>
   </properties>
   <issueManagement>
