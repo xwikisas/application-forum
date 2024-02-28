@@ -47,7 +47,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id$
  * @since 2.9
  */
-@UITest
+@UITest(
+    // Needed for the dependency to the mentions macro that uses solr.
+    extraJARs = {
+        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:13.10"
+    })
 class ForumIT
 {
     private static final String FORUM_SPACE = "Forums";
