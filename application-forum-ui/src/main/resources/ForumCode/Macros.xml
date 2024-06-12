@@ -166,7 +166,7 @@
                                                     'conversationdoc': $commentDoc.fullName,
                                                     'commentnumber': $comment.number,
                                                     'xredirect': $xredirect}))
-        #set ($deleteURL = $xwiki.getURL('ForumCode.Actions', 'view', $deleteQueryString))
+        #set ($deleteURL = $xwiki.getURL('ForumCode.Actions', 'get', $deleteQueryString))
         &lt;a class="delete" href="$deleteURL" title="$services.localization.render('core.viewers.comments.delete')"&gt;
           $services.localization.render('core.viewers.comments.delete')
         &lt;/a&gt;
