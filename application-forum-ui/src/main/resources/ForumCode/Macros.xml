@@ -782,7 +782,13 @@
         #set ($topicDoc = $xwiki.getDocument($topic))  
         #if ($topicDoc)
           #set ($topicTitle = $topicDoc.title)
-          #set ($rating = $services.ratings.getAverageRating($topicReference).nbVotes)
+          #set ($avgRating = $services.ratings.getAverageRating($topicDoc))
+          ## Use the latest API
+          #set ($nbVotes = $avgRating.get().getNbVotes())
+          ## For versions before 12.9 we need to use the old API.
+          #if ("$!nbVotes" == '')
+            #set ($nbVotes = $avgRating.nbVotes)
+          #end
           #set ($topicComments = 0)
           #set ($topicAnswers = [])
           #getTopicAnswers($topicDoc.space $topicAnswers)
@@ -802,7 +808,7 @@
           #end
           &lt;tr class="${topicodd}"&gt;
             &lt;td class="topic"&gt;&lt;a href="$topicDoc.getURL()"&gt;$!topicTitle&lt;/a&gt;&lt;/td&gt;
-            &lt;td class="votes"&gt;$!rating&lt;/td&gt;
+            &lt;td class="votes"&gt;$!nbVotes&lt;/td&gt;
             &lt;td class="comments"&gt;$!nbCommentsAnswers&lt;/td&gt;
           &lt;/tr&gt;
         #end
