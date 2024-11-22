@@ -41,8 +41,7 @@ public class FlagViewPage extends BaseElement
 
     public static FlagViewPage goToPage()
     {
-        DocumentReference reference = new DocumentReference("wiki", "Flags", "Flag");
-        getUtil().gotoPage(reference);
+        getUtil().gotoPage("Flags", "Flag");
         return new FlagViewPage();
     }
 
