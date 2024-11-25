@@ -88,9 +88,7 @@ public class TopicViewPage extends ViewPage
      */
     public static TopicViewPage gotoPage()
     {
-        DocumentReference reference =
-            new DocumentReference("wiki", Arrays.asList("Forums", "MyForum", "MyTopic"), "WebHome");
-        getUtil().gotoPage(reference);
+        getUtil().gotoPage(List.of("Forums", "MyForum", "MyTopic"), "WebHome", "view", "");
         return new TopicViewPage();
     }
 

@@ -56,8 +56,7 @@ public class ForumsHomePage extends ViewPage
      */
     public static ForumsHomePage gotoPage()
     {
-        DocumentReference reference = new DocumentReference("wiki", "Forums", "WebHome");
-        getUtil().gotoPage(reference);
+        getUtil().gotoPage("Forums", "WebHome");
         return new ForumsHomePage();
     }
 
