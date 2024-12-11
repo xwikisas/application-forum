@@ -55,7 +55,8 @@
       &lt;/a&gt;
       #set ($entryDoc = $services.model.createDocumentReference('', ['Forums', '__entryName__'], 'WebHome'))
       #set ($queryString = $escapetool.url({'editor': 'inline', 'title': '__entryName__',
-        'template': 'ForumCode.ForumTemplate', 'parent': 'Forums.WebHome', 'form_token': $escapetool.xml($services.csrf.token)}))
+        'template': 'ForumCode.ForumTemplate', 'parent': 'Forums.WebHome',
+        'form_token': $escapetool.xml($services.csrf.token)}))
       &lt;input type="hidden" value="$escapetool.xml($xwiki.getURL($entryDoc, 'edit', $queryString))" /&gt;
     &lt;/div&gt;
   #end
