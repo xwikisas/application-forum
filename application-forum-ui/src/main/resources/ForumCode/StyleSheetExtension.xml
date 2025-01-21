@@ -237,7 +237,7 @@ XWIKI STYLES
 /* profile sections */
 .blue, .members .headerbar, .groups .headerbar, .form-wrp fieldset h3 { background: #164891; }
 
-.none, .hidden { display: none; }
+.hidden { display: none; }
 
 /*
 ==================================================================================================
