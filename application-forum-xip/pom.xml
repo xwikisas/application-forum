@@ -25,7 +25,7 @@
   <parent>
     <groupId>com.xwiki.forum</groupId>
     <artifactId>application-forum</artifactId>
-    <version>2.10.1-SNAPSHOT</version>
+    <version>2.10.1</version>
   </parent>
   <artifactId>application-forum-xip</artifactId>
   <packaging>xip</packaging>
