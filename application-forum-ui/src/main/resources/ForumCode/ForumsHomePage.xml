@@ -359,8 +359,21 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
     this.input.clear().focus();
   },
   _onAdd : function() {
+    var url = new XWiki.Document().getURL("get");
     if (this.input.value != '') {
-      window.self.location = this.urlTemplate.replace('__entryName__', encodeURIComponent(this.input.value)).replace('__entryName__', encodeURIComponent(this.input.value));
+      fetch(url + '?' + new URLSearchParams({
+        'xpage': 'entitynamevalidation_json',
+        'outputSyntax': 'plain',
+        'name': this.input.value,
+        'form_token': "$services.csrf.token"
+      })).then(data =&gt; data.json()).then(data =&gt; {
+        if (data.transformedName != '') { // Should also check for already existing page probably.
+          window.self.location = this.urlTemplate.replaceAll('__entryName__', encodeURIComponent(data.transformedName));
+        } else {
+          // Should be a more visible error message here.
+          this.input.focus();
+        }
+      });
     } else {
       this.input.focus();
     }

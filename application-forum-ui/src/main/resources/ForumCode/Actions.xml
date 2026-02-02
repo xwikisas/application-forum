@@ -234,7 +234,8 @@
 #end
 #macro (getForumEntityDoc $parentSpace $fakeDocName $title $entityDoc)
   #set ($parentReference = $services.model.resolveSpace($parentSpace))
-  #set ($entitySpaceReference = $services.model.createSpaceReference($title, $parentReference))
+  #set ($entitySpaceReference = $services.model.createSpaceReference(
+    $services.modelvalidation.transformName($title), $parentReference))
   #set ($entityDocReference = $services.model.createDocumentReference('WebHome', $entitySpaceReference))
   ## Rename the fake document with the real one in order to keep initial actions performed in the form (e.g: attaching an image).
   #set ($fakeDocRef = $services.model.resolveDocument($fakeDocName))
