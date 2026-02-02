@@ -367,7 +367,7 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
         'name': this.input.value,
         'form_token': "$services.csrf.token"
       })).then(data =&gt; data.json()).then(data =&gt; {
-        if (data.transformedName != '') { // Should also check for already existing page probably.
+        if (data.transformedName != '') {
           window.self.location = this.urlTemplate.replaceAll('__entryName__', encodeURIComponent(data.transformedName));
         } else {
           // Should be a more visible error message here.
