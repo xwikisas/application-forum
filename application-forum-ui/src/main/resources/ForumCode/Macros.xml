@@ -281,12 +281,12 @@
     #set ($currentfield = $request.sortfield)
   #else
     #set ($currentfield = 'date')
-  #end   
+  #end
   #if ($request.sortorder)
     #set ($currentorder = $request.sortorder)
   #else
     #set ($currentorder = 'desc')
-  #end  
+  #end
   #set ($nextorder = 'desc')
   #if ($currentfield == $field)
     #set ($sortclass = 'forum-sort-button-active')
@@ -331,7 +331,7 @@
               &lt;dt&gt;&lt;label&gt;$services.localization.render("ForumCode.${entity}Class_title")&lt;/label&gt;&lt;/dt&gt;
               &lt;dd&gt;&lt;input type="text" name="title" /&gt;&lt;/dd&gt;
               ## Cannot choose status, will always create as in progress
-              &lt;input type="hidden" name="ForumCode.${entity}Class_${fakeEntity.number}_status" value="inprogress" /&gt; 
+              &lt;input type="hidden" name="ForumCode.${entity}Class_${fakeEntity.number}_status" value="inprogress" /&gt;
             #end
             &lt;dt&gt;&lt;label&gt;$services.localization.render("ForumCode.${entity}Class_description")&lt;/label&gt;&lt;/dt&gt;
             &lt;dd&gt;#cleanHTMLMacro($fakeEntityDoc.display('description', 'edit', $fakeEntity))&lt;/dd&gt;
@@ -352,7 +352,7 @@
 #end
 #*
 #set ($option == {
-  'nonZeroQuery' : $nonZeroQuery,         
+  'nonZeroQuery' : $nonZeroQuery,
   'coutNonZeroQuery' : $coutNonZeroQuery,
   'zeroQuery' : $zeroQuery,
   'countZeroQuery' : $countZeroQuery,
@@ -427,9 +427,9 @@
     #set ($countZeroQuery = "select count(distinct doc.fullName) from XWikiDocument doc $zeroQueryPart")
     #set ($query = $services.query)
     #set ($option = {
-      'nonZeroQuery' : $query.hql($nonZeroQuery),         
-      'coutNonZeroQuery' : $query.hql($countNonZeroQuery),  
-      'zeroQuery' : $query.hql($zeroQuery),  
+      'nonZeroQuery' : $query.hql($nonZeroQuery),
+      'coutNonZeroQuery' : $query.hql($countNonZeroQuery),
+      'zeroQuery' : $query.hql($zeroQuery),
       'countZeroQuery' : $query.hql($countZeroQuery)
     })
     #if (!$allTopics)
@@ -465,7 +465,7 @@
       #if ($count != $step)
         #displayForumTopic($topic false)
         #set ($count = $count + 1)
-      #end 
+      #end
     #end
   #else
     &lt;p class="noitems"&gt;$services.localization.render('conversations.topic.empty')&lt;/p&gt;
@@ -552,7 +552,7 @@
         #end
         &lt;div class="topic-container"&gt;
           #if (!$withdetails)
-            &lt;h3 class="topic-title"&gt;&lt;a href="$topicDoc.getURL()" title="$escapetool.xml($topicTitle)"&gt;$topicTitle&lt;/a&gt;&lt;/h3&gt;
+            &lt;h3 class="topic-title"&gt;&lt;a href="$topicDoc.getURL()" title="$escapetool.xml($topicTitle)"&gt;$escapetool.xml($topicTitle)&lt;/a&gt;&lt;/h3&gt;
           #end
           &lt;span class="topic-comments" title="$services.localization.render('conversations.topic.tooltip.totalcommentsandanswers')"&gt;$nbCommentsAnswers&lt;/span&gt;
           &lt;div class="topic-description"&gt;
@@ -740,15 +740,15 @@
   #else
     #set ($nextOrder = 'desc')
   #end
-  
+
   #set ($topicsDoc = $xwiki.getDocument($topicsPage))
   #set ($commentsurl = $topicsDoc.getURL('get', "xpage=plain&amp;sortfield=comments&amp;sortorder=${nextOrder}"))
   #set ($votesurl = $topicsDoc.getURL('get', "xpage=plain&amp;sortfield=votes&amp;sortorder=${nextOrder}"))
   #set ($datesurl = $topicsDoc.getURL('get', "xpage=plain&amp;sortfield=dates&amp;sortorder=${nextOrder}"))
   #if (!$request.xpage)
     #set ($sortField = 'date')
-    ## Discussions Sidebar Block 
-    &lt;div id="discussionTopics"&gt;    
+    ## Discussions Sidebar Block
+    &lt;div id="discussionTopics"&gt;
   #end
 
   #if ($sortField == 'votes')
@@ -756,7 +756,7 @@
   #elseif ($sortField == 'comments')
     #set ($commentsorder = $currentorder)
   #else
-    #set ($datesorder = $currentorder)  
+    #set ($datesorder = $currentorder)
   #end
 
   #set ($isPanelSort = 1)
@@ -779,7 +779,7 @@
       &lt;/tr&gt;
       #foreach ($topic in $topics)
         #set ($topicReference = $services.model.resolveDocument($topic))
-        #set ($topicDoc = $xwiki.getDocument($topic))  
+        #set ($topicDoc = $xwiki.getDocument($topic))
         #if ($topicDoc)
           #set ($topicTitle = $topicDoc.title)
           #set ($avgRating = $services.ratings.getAverageRating($topicDoc))
@@ -807,7 +807,7 @@
             #set ($topicodd = 'even')
           #end
           &lt;tr class="${topicodd}"&gt;
-            &lt;td class="topic"&gt;&lt;a href="$topicDoc.getURL()"&gt;$!topicTitle&lt;/a&gt;&lt;/td&gt;
+            &lt;td class="topic"&gt;&lt;a href="$topicDoc.getURL()"&gt;$escapetool.xml($!topicTitle)&lt;/a&gt;&lt;/td&gt;
             &lt;td class="votes"&gt;$!nbVotes&lt;/td&gt;
             &lt;td class="comments"&gt;$!nbCommentsAnswers&lt;/td&gt;
           &lt;/tr&gt;
@@ -824,7 +824,7 @@
   &lt;/div&gt;
   #if (!$request.xpage)
     &lt;/div&gt;
-  #end 
+  #end
 #end
 #**
  * Displays different kinds of messages (info ,success ,warning ,error)
@@ -860,7 +860,7 @@
         #if ("$!title" == '')
           #set ($title = $doc.title)
         #end
-        &lt;input name='title' type="text" value="$escapetool.xml($title)" id="forum-title" /&gt;
+        &lt;input name='title' type='text' value="$escapetool.xml($title)" id='forum-title' /&gt;
       &lt;/dd&gt;
   #end
 #end
