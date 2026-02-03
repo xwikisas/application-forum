@@ -368,7 +368,8 @@ XWiki.EntryNamePopup = Class.create(XWiki.widgets.ModalPopup, {
         'form_token': "$services.csrf.token"
       })).then(data =&gt; data.json()).then(data =&gt; {
         if (data.transformedName != '') {
-          window.self.location = this.urlTemplate.replaceAll('__entryName__', encodeURIComponent(data.transformedName));
+          window.self.location = this.urlTemplate.replace('__entryName__', encodeURIComponent(data.transformedName))
+            .replace('__entryName__', encodeURIComponent(this.input.value));
         } else {
           // Should be a more visible error message here.
           this.input.focus();
