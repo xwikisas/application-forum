@@ -96,9 +96,9 @@
     </dependency>
     <!-- Include the optional dependencies. -->
     <dependency>
-      <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-tour-ui</artifactId>
-      <version>${tour.version}</version>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-tour-ui</artifactId>
+      <version>${platform.version}</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>
@@ -120,6 +120,12 @@
       <artifactId>xwiki-platform-panels-test-pageobjects</artifactId>
       <version>${platform.version}</version>
       <scope>test</scope>
+    </dependency>
+    <!-- For some reason required after 15.10 parent upgrade. -->
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-logging-common</artifactId>
+      <version>${commons.version}</version>
     </dependency>
   </dependencies>
   <build>

@@ -67,9 +67,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.xwiki.contrib</groupId>
-      <artifactId>application-tour-ui</artifactId>
-      <version>${tour.version}</version>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-tour-ui</artifactId>
+      <version>${platform.version}</version>
       <type>xar</type>
       <scope>runtime</scope>
       <optional>true</optional>

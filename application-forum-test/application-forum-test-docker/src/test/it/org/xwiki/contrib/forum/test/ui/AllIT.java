@@ -30,7 +30,7 @@ import org.xwiki.test.docker.junit5.UITest;
  * @since 2.9
  */
 @UITest
-class AllITs
+class AllIT
 {
     @Nested
     @DisplayName("Overall Forum UI")

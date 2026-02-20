@@ -6,7 +6,7 @@ Forum application with multiple forums, topics, answers, comments, supporting WY
 * [Documentation](https://store.xwiki.com/xwiki/bin/view/Extension/ForumApplication)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [Chat]( http://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Development Practices](http://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 14.10
+* Minimal XWiki version supported: XWiki 15.10
 * License: LGPL v3
 * Translations: N/A
 * Sonar Dashboard: N/A
