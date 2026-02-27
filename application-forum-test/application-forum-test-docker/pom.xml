@@ -121,13 +121,6 @@
       <version>${platform.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- AllIT needs this dependency after the 15.10 parent upgrade. -->
-    <dependency>
-      <groupId>org.xwiki.commons</groupId>
-      <artifactId>xwiki-commons-logging-common</artifactId>
-      <version>${commons.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <build>
     <testSourceDirectory>src/test/it</testSourceDirectory>
