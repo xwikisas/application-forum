@@ -1,7 +1,7 @@
 # Issue URL
 
 <!-- Add the link to the corresponding issue referenced in a commit message. Unless this is a [Misc] commit,
-see https://dev.xwiki.org/xwiki/bin/view/Community/DevelopmentPractices#HRule:Don27tcreateunnecessaryissues
+see https://dev.xwiki.org/xwiki/bin/view/Community/IssueTracker/JIRA/#HRule:Don27tcreateunnecessaryissues
 -->
 
 # Changes
