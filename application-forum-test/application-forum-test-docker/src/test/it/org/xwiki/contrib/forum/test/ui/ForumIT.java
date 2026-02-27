@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @UITest(
     // Needed for the dependency to the mentions macro that uses solr.
     extraJARs = {
-        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:14.10"
+        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:15.10"
     })
 class ForumIT
 {
@@ -169,7 +169,6 @@ class ForumIT
         // Waiting for all the tour elements to disappear instead of the last one because the order varies.
         setup.getDriver().waitUntilElementDisappears(By.className("tour-backdrop"));
         setup.getDriver().waitUntilElementDisappears(By.className("tour-step-background"));
-        setup.getDriver().waitUntilElementDisappears(By.cssSelector("id^='step-'"));
-
+        setup.getDriver().waitUntilElementDisappears(By.cssSelector("[id^='step-']"));
     }
 }

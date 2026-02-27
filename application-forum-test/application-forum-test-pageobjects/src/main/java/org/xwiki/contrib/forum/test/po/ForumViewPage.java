@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.forum.test.po;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.ViewPage;
@@ -36,19 +37,6 @@ public class ForumViewPage extends ViewPage
 
     @FindBy(css = ".forum-description")
     private WebElement description;
-
-    // Tour steps
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step0;
-
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step1;
-
-    @FindBy(css = "#bootstrap_tour_next")
-    private WebElement step2;
-
-    @FindBy(css = "#bootstrap_tour_end")
-    private WebElement step3;
 
     /**
      * @return the form to enter new topic
@@ -72,9 +60,9 @@ public class ForumViewPage extends ViewPage
      */
     public void viewTour()
     {
-        step0.click();
-        step1.click();
-        step2.click();
-        step3.click();
+        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
+        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
+        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
+        getDriver().findElement(By.cssSelector("#bootstrap_tour_end")).click();
     }
 }
