@@ -19,10 +19,10 @@
  */
 package org.xwiki.contrib.forum.test.po;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.xwiki.test.ui.po.ViewPage;
+import org.xwiki.tour.test.po.PageWithTour;
 
 /**
  * Represents the Forum view page.
@@ -60,9 +60,10 @@ public class ForumViewPage extends ViewPage
      */
     public void viewTour()
     {
-        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
-        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
-        getDriver().findElement(By.cssSelector("#bootstrap_tour_next")).click();
-        getDriver().findElement(By.cssSelector("#bootstrap_tour_end")).click();
+        PageWithTour tourPage = new PageWithTour();
+        tourPage.nextStep();
+        tourPage.nextStep();
+        tourPage.nextStep();
+        tourPage.end();
     }
 }
