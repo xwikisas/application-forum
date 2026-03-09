@@ -74,7 +74,7 @@
       #if ("$!request.space" != '')
         #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
         #if ($entityDoc.hasAccessLevel('edit'))
-          ## Make sure that the attachments are preserved on the new entityDoc.
+          ## Make sure that the attachments are preserved on the new entityDoc when creating a new topic.
           #set ($fakeDocRef = $services.model.resolveDocument($request.fakeDocName))
           #foreach ($file in $services.temporaryAttachments.listAllAttachments($fakeDocRef))
             #set ($discard = $entityDoc.addAttachment($file.getFilename(), $file.getContentInputStream()))
@@ -108,7 +108,7 @@
       #set ($title = "Answer_${datetool.date.time}_${mathtool.random(1, 99)}")
       #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
       #if ($entityDoc.hasAccessLevel('edit'))
-        ## Make sure that the attachments are preserved on the new entityDoc.
+        ## Make sure that the attachments are preserved on the new entityDoc when adding an answer.
         #set ($fakeDocRef = $services.model.resolveDocument($request.fakeDocName))
         #foreach ($file in $services.temporaryAttachments.listAllAttachments($fakeDocRef))
           #set ($discard = $entityDoc.addAttachment($file.getFilename(), $file.getContentInputStream()))
