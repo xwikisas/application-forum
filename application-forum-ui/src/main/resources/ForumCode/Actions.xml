@@ -74,6 +74,11 @@
       #if ("$!request.space" != '')
         #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
         #if ($entityDoc.hasAccessLevel('edit'))
+          ## Make sure that the attachments are preserved on the new entityDoc when creating a new topic.
+          #set ($fakeDocRef = $services.model.resolveDocument($request.fakeDocName))
+          #foreach ($file in $services.temporaryAttachments.listAllAttachments($fakeDocRef))
+            #set ($discard = $entityDoc.addAttachment($file.getFilename(), $file.getContentInputStream()))
+          #end
           ## Add the TopicClass object
           #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.TopicClass'))
           ## We add a XWiki.AverageRatingsClass object to simplify sorting topics by votes
@@ -103,6 +108,11 @@
       #set ($title = "Answer_${datetool.date.time}_${mathtool.random(1, 99)}")
       #getForumEntityDoc($request.space $request.fakeDocName $title $entityDoc)
       #if ($entityDoc.hasAccessLevel('edit'))
+        ## Make sure that the attachments are preserved on the new entityDoc when adding an answer.
+        #set ($fakeDocRef = $services.model.resolveDocument($request.fakeDocName))
+        #foreach ($file in $services.temporaryAttachments.listAllAttachments($fakeDocRef))
+          #set ($discard = $entityDoc.addAttachment($file.getFilename(), $file.getContentInputStream()))
+        #end
         #set($discard = $entityDoc.setParent("${request.parent}"))
         #set($discard = $entityDoc.updateObjectFromRequest('ForumCode.AnswerClass'))
         #set($discard = $entityDoc.save())
@@ -237,9 +247,6 @@
   #set ($entitySpaceReference = $services.model.createSpaceReference(
     $services.modelvalidation.transformName($title), $parentReference))
   #set ($entityDocReference = $services.model.createDocumentReference('WebHome', $entitySpaceReference))
-  ## Rename the fake document with the real one in order to keep initial actions performed in the form (e.g: attaching an image).
-  #set ($fakeDocRef = $services.model.resolveDocument($fakeDocName))
-  #set ($discard = $services.refactoring.rename($fakeDocRef, $entityDocReference).join())
   #set ($entityDoc = $xwiki.getDocument($entityDocReference))
   ## The default language is set on a document at the moment of the first edit, when the document is created.
   ## This condition is not met with the current "Fake document" strategy and we need to explicitly set the locale.
