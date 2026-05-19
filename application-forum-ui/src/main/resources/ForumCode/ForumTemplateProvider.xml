@@ -256,9 +256,7 @@
       <name>templateProvider.forum.name</name>
     </property>
     <property>
-      <spaces>
-        <value>Forums</value>
-      </spaces>
+      <spaces/>
     </property>
     <property>
       <template>ForumCode.ForumTemplate</template>
