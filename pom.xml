@@ -26,6 +26,7 @@
     <groupId>com.xwiki.parent</groupId>
     <artifactId>xwikisas-parent-platform</artifactId>
     <version>15.10</version>
+    <!-- when updating, please search TODO in the code -->
   </parent>
   <groupId>com.xwiki.forum</groupId>
   <artifactId>application-forum</artifactId>

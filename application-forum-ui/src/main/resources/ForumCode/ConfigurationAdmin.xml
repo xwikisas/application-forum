@@ -45,10 +45,10 @@
 #else
   {{include reference='ForumCode.FlagsHome'/}}
 
-  == $services.localization.render('forum.administration.configuration.title') ==
+  == {{translation key="forum.administration.configuration.title"/}} ==
   #checkIfURLCanBeShared($doc.getExternalURL(), $result)
   #if ($result == 'false')
-    {{warning}}$services.localization.render('forum.administration.cannotShareURLWarning'){{/warning}}
+    {{warning}}{{translation key="forum.administration.cannotShareURLWarning"/}}{{/warning}}
   #end
 #end
 {{/velocity}}</content>
