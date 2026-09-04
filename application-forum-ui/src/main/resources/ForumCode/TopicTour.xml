@@ -193,9 +193,7 @@
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.topicDetails.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.topicDetails.content"/}}</content>
     </property>
     <property>
       <element>#xwikicontent&gt;.topic</element>
@@ -375,9 +373,7 @@ $services.localization.render('tour.topicTour.topicDetails.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.flagAndPermalink.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.flagAndPermalink.content"/}}</content>
     </property>
     <property>
       <element>.topic .actions&gt;.left</element>
@@ -557,9 +553,7 @@ $services.localization.render('tour.topicTour.flagAndPermalink.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.socialMedia.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.socialMedia.content"/}}</content>
     </property>
     <property>
       <element>.topic .actions&gt;.right&gt;.topic-addthis</element>
@@ -739,9 +733,7 @@ $services.localization.render('tour.topicTour.socialMedia.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.topicModeration.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.topicModeration.content"/}}</content>
     </property>
     <property>
       <element>#moderation-buttons</element>
@@ -921,9 +913,7 @@ $services.localization.render('tour.topicTour.topicModeration.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.vote.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.vote.content"/}}</content>
     </property>
     <property>
       <element>.topic-vote</element>
@@ -1103,9 +1093,7 @@ $services.localization.render('tour.topicTour.vote.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.addAnswer.content')
-{{/velocity}}</content>
+      <content>{{translation key="tour.topicTour.addAnswer.content"/}}</content>
     </property>
     <property>
       <element>.addanswer-container-button&gt;.addconversation-activator</element>
@@ -1285,10 +1273,7 @@ $services.localization.render('tour.topicTour.addAnswer.content')
       <backdrop>1</backdrop>
     </property>
     <property>
-      <content>{{velocity}}
-$services.localization.render('tour.topicTour.addAnswer.content')
-{{/velocity}}
-</content>
+      <content>{{translation key="tour.topicTour.addAnswer.content"/}}</content>
     </property>
     <property>
       <element>#xwikicontent&gt;.answers</element>

@@ -43,7 +43,7 @@
 {{html clean='false'}}
 &lt;div class="row"&gt;
   &lt;div class="col-md-7"&gt;
-    &lt;h3 class="forums-title"&gt;$services.localization.render('conversations.forum.all')&lt;/h3&gt;
+    &lt;h3 class="forums-title"&gt;$escapetool.xml($services.localization.render('conversations.forum.all'))&lt;/h3&gt;
   &lt;/div&gt;
   ## only allow users that have create page right on this page to create a forum. This is a way to restrict the users which can create a forum.
   #if ($hasCreatePage)
@@ -51,7 +51,7 @@
     #set ($discard = $xwiki.jsx.use('ForumCode.ForumsHomePage', {'language' : $xcontext.locale, 'derfer' : false}))
     &lt;div class="col-md-5" id="actionBox"&gt;
       &lt;a class="btn btn-success" href="#AddNewEntry"&gt;
-        $!services.icon.renderHTML('add') $services.localization.render('conversations.forum.add')
+        $!services.icon.renderHTML('add') $escapetool.xml($services.localization.render('conversations.forum.add'))
       &lt;/a&gt;
       #set ($entryDoc = $services.model.createDocumentReference('', ['Forums', '__entryName__'], 'WebHome'))
       #set ($queryString = $escapetool.url({'editor': 'inline', 'title': '__entryName__',
@@ -207,10 +207,10 @@
           }
         },
         {
-          confirmationText: "$services.localization.render('forum.admin.action.delete.confiramtion_text')",
-          progressMessageText : "$services.localization.render('forum.admin.action.delete.inprogress')",
-          successMessageText : "$services.localization.render('forum.admin.action.delete.success')",
-          failureMessageText : "$services.localization.render('forum.admin.action.delete.failed')"
+          confirmationText: $jsontool.serialize($services.localization.render('forum.admin.action.delete.confiramtion_text')),
+          progressMessageText : $jsontool.serialize($services.localization.render('forum.admin.action.delete.inprogress')),
+          successMessageText : $jsontool.serialize($services.localization.render('forum.admin.action.delete.success')),
+          failureMessageText : $jsontool.serialize($services.localization.render('forum.admin.action.delete.failed'))
         }
       );
     }
