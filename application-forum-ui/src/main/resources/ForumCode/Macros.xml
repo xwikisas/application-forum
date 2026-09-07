@@ -300,9 +300,7 @@
       #set ($nextorder = 'desc')
     #end
   #end
-  #if ($field == 'date' || $field == 'votes' || $fields == 'comments')
-    &lt;span class="${sortclass} ${style}"&gt;&lt;a href="$escapetool.xml($doc.getURL('view', "sortfield=${field}&amp;sortorder=${nextorder}"))" onclick=""&gt;$escapetool.xml($services.localization.render("conversations.forum.sorttopicsby.${field}"))&lt;/a&gt;&lt;/span&gt;
-  #end
+  &lt;span class="${sortclass} ${style}"&gt;&lt;a href="$escapetool.xml($doc.getURL('view', "sortfield=${field}&amp;sortorder=${nextorder}"))" onclick=""&gt;$escapetool.xml($services.localization.render("conversations.forum.sorttopicsby.${field}"))&lt;/a&gt;&lt;/span&gt;
 #end
 ##
 #macro (displayAddConversationButton $space $entity)
@@ -342,7 +340,7 @@
           &lt;/div&gt;
           &lt;dl&gt;
             #if ($entity == 'Topic')
-              &lt;dt&gt;&lt;label&gt;$escapetool.xml($services.localization.render("ForumCode.TopicClass_title"))&lt;/label&gt;&lt;/dt&gt;
+              &lt;dt&gt;&lt;label&gt;$escapetool.xml($services.localization.render("${entityClassName}_title"))&lt;/label&gt;&lt;/dt&gt;
               &lt;dd&gt;&lt;input type="text" name="title" /&gt;&lt;/dd&gt;
               ## Cannot choose status, will always create as in progress
               &lt;input type="hidden" name="ForumCode.TopicClass_${fakeEntity.number}_status" value="inprogress" /&gt;
