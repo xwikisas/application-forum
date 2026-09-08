@@ -124,7 +124,7 @@
         &lt;span class="time"&gt;$!xwiki.formatDate($date)&lt;/span&gt;
       &lt;/span&gt;
       &lt;div class="comment-content"&gt;
-        $commentDoc.getRenderedContent($comment.getValue('comment'), $doc.syntax.toIdString())
+        $commentDoc.getRenderedContentRestricted($comment.getProperty('comment').getValue(), $doc.getSyntax().toIdString())
         &lt;span class="actions"&gt;
           #getFlagAction($doc.fullName $conversationId)
           ## compose the comment permalink in conversation carefully, taking care of making it point to the article's conversation view and not to the conversation itself
