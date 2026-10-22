@@ -117,12 +117,15 @@ class ForumIT
         assertEquals(TOPIC_TITLE, topicViewPage.getDocumentTitle());
         assertEquals(TOPIC_DESCRIPTION, topicViewPage.getDescription());
 
-        // View Topic tour.
-        topicViewPage.viewTour();
-        waitUntilTourDisappears(setup);
+        // TODO: Figure out why the Topic tour isn't triggering here, it shows up when testing manually.
 
         // Create multiple answers.
         createAnswer(topicViewPage, "Hello\nworld!\n!@#$%^&*()_\"';:`~");
+
+        // View Topic tour (it doesn't appear on first load for some reason, it only appears after adding an answer).
+        topicViewPage.viewTour();
+        waitUntilTourDisappears(setup);
+
         createAnswer(topicViewPage, "Another message");
         assertEquals(2, topicViewPage.getAnswersNumber());
 

@@ -56,7 +56,7 @@
     #if ($xwiki.hasAccessLevel('delete', $xcontext.user, $forumDoc))
       #set ($escapedText = $escapetool.xml($services.localization.render('platform.livetable._actions.delete')))
       #set ($deleteURL = 'javascript:void(0)')
-      #set ($actionsLink = "&lt;a href='escapetool.xml($deleteURL)' class='action actiondelete deleteforum' space='$escapetool.xml($forumDoc.space)'&gt;$escapedText&lt;/a&gt;")
+      #set ($actionsLink = "&lt;a href='$escapetool.xml($deleteURL)' class='action actiondelete deleteforum' space='$escapetool.xml($forumDoc.space)'&gt;$escapedText&lt;/a&gt;")
     #end
     #if ($xwiki.hasAccessLevel('edit', $xcontext.user, $forumDoc))
       #set ($editURL = $forumDoc.getURL('edit'))

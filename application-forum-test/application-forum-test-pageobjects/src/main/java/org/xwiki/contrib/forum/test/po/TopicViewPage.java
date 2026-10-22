@@ -144,14 +144,12 @@ public class TopicViewPage extends ViewPage
      */
     public void viewTour()
     {
-        // TODO: Figure why the tour is not showing up when running the test. (it shows when manually testing on
-        //  instance)
-//        step0.click();
-//        step1.click();
-//        step2.click();
-//        step3.click();
-//        step4.click();
-//        step5.click();
+       step0.click();
+       step1.click();
+       step2.click();
+       step3.click();
+       step4.click();
+       step5.click();
     }
 
     public void addComment(String comment)
